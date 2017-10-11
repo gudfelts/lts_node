@@ -1,0 +1,32 @@
+{
+  "name": "lts_node",
+  "version": "1.0.0",
+  "description": "流通所node服务端",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gudfelts/lts_node.git"
+  },
+  "author": "hao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gudfelts/lts_node/issues"
+  },
+  "homepage": "https://github.com/gudfelts/lts_node#readme",
+  "dependencies": {
+    "config-lite": "2.1.0",
+    "ejs": "2.5.7",
+    "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^3.0.1",
+    "koa-router": "7.2.1",
+    "koa-static": "4.0.1",
+    "koa-views": "6.1.1",
+    "koa2": "2.0.0-alpha.7",
+    "koa2-cors": "2.0.3",
+    "mysql": "2.15.0",
+    "path": "0.12.7"
+  }
+}
