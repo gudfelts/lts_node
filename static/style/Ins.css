@@ -1,0 +1,185 @@
+
+
+    /*-- 内容栏新闻css Start--*/
+
+
+
+.detail_colu
+{
+    width: 820px;    
+    margin: 0 auto;
+    padding: 15px 0px 35px 0;
+}
+
+
+
+.colu_news_list li ::before
+{
+    content: "\02022";
+    color: #006771;
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+.colu_news_list li a
+{
+    font-size: 20px;
+    color: #565656;
+    margin-left: 5px;
+
+}
+
+.personList
+{
+    width: 98%;
+    margin: 0px auto;
+    text-align: center;
+   
+}
+
+.personList::after
+{
+    clear: both;
+    content: '';
+    display: block;
+
+}
+
+.personList::before
+{
+    clear: both;
+    content: '';
+    display: block;
+
+}
+
+
+.personList .list_item
+{
+    display: block;
+    width:220px; ;
+    height:270px;
+    margin: 30px 20px;
+    text-align: center;
+    border-radius: 10px;
+    background: rgba(7,17,27,.05);
+    box-shadow: 10px 10px 10px 0px rgba(7, 17, 27, 0.2);
+    float: left;
+}
+   
+
+.list_img
+{
+    border-radius: 50%;
+    width:100px;
+    height:100px;
+    margin: 0  auto;
+    position: relative;
+    top: -15px;
+  
+
+}
+
+
+.list_name
+{
+    font-size: 15px;
+    text-align: center;
+    width: 100%;
+    margin: 0  auto;
+    display: block;
+    position: relative;
+    top: -10px;
+}
+
+.list_title
+{
+    font-size: 15px;
+    width: 100%;
+    margin: 0  auto;
+    text-align: center;
+    display: block;
+    position: relative;
+    top: -10px;
+}
+
+.list_content
+{
+    display: block;
+    width: 140px;
+    height: 100px;
+    font-size: 10px;   
+    margin: 0 auto;
+    text-align: center;
+    line-height:20px;
+    overflow: hidden;
+    position: relative;
+    top:0;
+}
+.list_item:hover{
+    background-color: rgba(250, 250, 250, 0.85);
+  
+}
+.list_item:hover > .list_img
+{
+    transform: scale(.86);
+    transition: transform 0.8s;
+    transform-origin: 50% top;
+    
+}
+.list_item:hover > .list_content{
+    top:-10px;
+    transition: top 0.8s;
+    transition-timing-function:ease-out;
+    overflow: visible;
+  
+    
+}
+.list_item:hover > .list_name,.list_item:hover > .list_title
+{
+    transition: transform 0.8s;
+    display: none;
+}
+
+
+   /*-- 内容栏新闻css end--*/
+
+
+   /* -- Ins 机构介绍内容css  Start--*/
+
+.colu_info
+ {
+    padding: 50px;
+   
+}
+.colu_news p
+{
+    text-indent: 2em;
+    font-size: 18px;
+    color:#565656;
+    line-height: 35px;
+}
+
+.colu_info img 
+{
+    width: 820px;
+    height: 820px;
+}
+
+
+.colu_name h3:hover
+{
+    color: #006771;
+}
+
+.colu_news_list li a:hover
+{
+    color: #006771;
+}
+
+   /* -- Ins 机构介绍内容css  end--*/
+
+
+
+
+/*--内容栏css end--*/

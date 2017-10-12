@@ -1,0 +1,90 @@
+
+
+.detail
+{
+    width: 70%;
+    margin: 0 auto;
+   
+    background:rgba(255, 255, 255, 0.97);
+}
+
+.top
+{
+    width: 60%;
+    margin: 0 auto;
+}
+.cont
+{
+    text-align: center;
+    margin: 15px auto;
+    line-height: 30px;
+}
+
+.cont::after
+{
+    clear: both;
+    content: '';
+    display: block;
+}
+
+.top-img
+{
+    width: 200px;
+    margin:0 auto;
+
+}
+.top img 
+{
+    width: 200px;
+    height: 250px;
+    
+   
+
+}
+
+.name
+{
+    font-size: 24px;
+    color: #8A7A7A;
+    display: block;
+
+
+}
+
+.title
+{
+    
+    font-size: 20px;
+    color: #8A7A7A;
+    display: block;
+    
+}
+
+.job
+{
+    font-size: 16px;
+    color: #8A7A7A;
+    display: block;
+    width: 400px;
+    margin: 0 auto;
+
+}
+
+
+
+.main
+{
+    width: 60%;
+    margin: 0 auto;
+    line-height: 40px;
+    padding: 30px 0;
+}
+
+.main p
+{
+    text-indent: 2em;
+    font-size: 18px;
+    color: #514A4A;
+  
+}
+

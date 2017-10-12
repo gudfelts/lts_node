@@ -1,0 +1,64 @@
+
+.flexbox{
+    margin-bottom: 100px;
+}
+.boxRight{
+    width: 800px;
+    /* border: 1px solid rgb(230, 230, 230); */
+}
+.part-title{
+    margin-top: 10px;
+}
+.tit{
+    margin-top: 12.8px;
+    margin-left: 38.4px;
+}
+.boxRight .tit a{
+    font-size: 33.28px;
+    color: #FF9D54;
+}
+/*标题下面的横线*/
+.tit::after{
+    content: '';
+    display: inline-block;
+    width: 95%;
+    height: 1px;
+    background-color: gray;
+}
+
+
+.detail ul{
+   
+    width: 100%;
+    margin: 10px auto;
+}
+
+.detail ul li{
+    /*list-style-type: square;*/
+    margin-top: 12.8px;
+    font-size: 16px;
+}
+
+  .detail ul li:before{
+    content: "\02022";
+    color: #006771;
+    font-size: 25.6px;
+}
+
+  .detail ul li a{
+    margin-left: 12.8px;
+    font-size: 19.2px;
+    color: rgb(51, 51, 51);
+}
+
+/*分页组件*/
+.pageBox{
+    /* float: left;
+    top: 870.4px;
+    left: 420px; */
+    width: 90%;
+    margin: 100px auto;
+}
+
+
+

@@ -1,18 +1,38 @@
-const koa        = require("koa2");
-const static     = require("koa-static");
-const path       = require("path");
-const fs         = require("fs");
-const router     = require("koa-router");
-const Router     = require("./router");
-const bodyParser = require("koa-bodyparser");
-const logger     = require("koa-logger");
-const cors       = require("koa2-cors");
-const config     = require("config-lite")(__dirname);
-const routers    = router();
-const app        = new koa();
+const koa         = require("koa2");
+const static      = require("koa-static");
+const path        = require("path");
+const fs          = require("fs");
+const router      = require("koa-router");
+const bodyParser  = require("koa-bodyparser");
+const logger      = require("koa-logger");
+const cors        = require("koa2-cors");
+const views       = require('koa-views');
+const config      = require("config-lite")(__dirname);
+const apiRoute    = require('./router/apiRouter');
+const renderRoute = require('./router/renderRouter');
+const session     = require('koa-session');
+const staticCache = require('koa-static-cache');
 
+const routers     = router();
+const app         = new koa();
 app.use(bodyParser());
 app.use(logger());
+
+
+app.keys = ['lts_node'];
+
+const CONFIG = {
+  key: 'lts_node', /** (string) cookie key (default is koa:sess) */
+  /** (number || 'session') maxAge in ms (default is 1 days) */
+  /** 'session' will result in a cookie that expires when session/browser is closed */
+  /** Warning: If a session cookie is stolen, this cookie will never expire */
+  maxAge: 86400000,
+  overwrite: true, /** (boolean) can overwrite or not (default true) */
+  httpOnly: true, /** (boolean) httpOnly or not (default true) */
+  signed: true, /** (boolean) signed or not (default true) */
+  rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. default is false **/
+};
+app.use(session(CONFIG, app));
 
 //跨域
 app.use(
@@ -38,17 +58,27 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-// app.use(async (ctx, next)=> {
-//   ctx.set("Access-Control-Allow-Origin", ctx.request.header.origin)
-//   ctx.set("Access-Control-Allow-Credentials", true);
-//   await next();
-// })
+
 
 //设置静态资源
-const staticPath = "./static";
+const staticPath = "/static";
 app.use(static(path.join(__dirname, staticPath)));
+app.use(staticCache(path.join(__dirname, staticPath), {
+  maxAge: 365 * 24 * 60 * 60
+}));
 
-Router(routers);
+// 加载模板引擎
+app.use(views(path.join(__dirname, './view'), {
+  extension: 'ejs'
+}))
 
-app.use(routers.routes(), routers.allowedMethods());
-app.listen(config.serverPort, () => console.log(`Koa2 is running at ${config.serverPort}`));
+// api 路由
+app.use(apiRoute.routes())
+.use(apiRoute.allowedMethods());
+
+// 渲染 路由
+app.use(renderRoute.routes())
+.use(renderRoute.allowedMethods());
+
+
+app.listen(config.serverPort, () => console.log(`Server is running at ${config.serverPort}`));

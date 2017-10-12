@@ -1,0 +1,283 @@
+@import 'mixin.scss';
+body,html{
+    font:14px/1.5 ,"PingFang SC","微软雅黑","Microsoft YaHei",Helvetica,"Helvetica Neue",Tahoma,Arial,sans-serif;
+}
+body, div, span, header, footer, nav, section, aside, article, ul, ol,dl, dt, dd, li, a, p, h1, h2, h3, h4,h5, h6, i, b, textarea, button, input, select, figure
+{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-style: normal;
+    text-decoration: none;
+    border: none;
+    color: #333;
+    font-weight: normal;
+    font-family: "Microsoft Yahei";
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+img{
+     /*兼容ie*/
+     border: 0px;
+}
+/*共用*/
+/*每个框左上角的title*/
+
+.part-title {
+    display: block;
+    font-weight: bolder;
+    font-size: 30px;
+    position: relative;
+    margin-bottom: 40px;
+}
+/*标题后面的英文*/
+.part-title::after {
+    content: "";
+    color: rgb(153, 153, 153);
+    font-style: italic;
+    font-size: 20px;
+    margin-left: 8px;
+}
+/*标题下面的横线*/
+.part-title::before {
+    content: '';
+    width: 100%;
+    height: 3px;
+    background-color: #006771;
+    margin-bottom: -10px;
+    position: absolute;
+    bottom: 0;
+}
+/*顶部栏*/
+header {
+    width: 100%;
+    // height: 90px;
+    position: relative;
+    background:$green; /* 一些不支持背景渐变的浏览器 */  
+    // text-align: center;
+    -webkit-box-shadow: 0 12px 24px 0 rgba(7,17,27,0.2);
+            box-shadow: 0 12px 24px 0 rgba(7,17,27,0.2);
+    font-size: 15px;
+    -webkit-box-shadow: 10px 10px 50px 10px rgba(7,17,27,.06);
+            box-shadow: 10px 10px 50px 10px rgba(7,17,27,.06);
+    margin-bottom: 30px;
+    min-width: 1600px;
+    
+    text-align: center;
+}
+.header_banner{
+    background:#00868B;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    letter-spacing:10px;
+}
+
+.header_banner .banner_a{
+    font-size: 22px;
+    text-align: center;
+    color:#F5FFFA;
+    margin: 2px;
+}
+.header_nav{
+    width: 100%;
+    padding: 0 280px  0 360px;
+    height: 90px;
+}
+
+//子容器
+
+.container-types{
+    width:1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 0;
+}
+
+
+/*顶部栏logo*/
+
+.logo {
+    height: 100%;
+    padding-left:20px;
+    float: left;
+    position: absolute;
+    left: 0;
+   
+}
+
+.logo_img {
+    width: 300px;
+    height: 150%;
+    margin-top: -45px;
+     /*兼容ie*/
+     border: 0px;
+    
+}
+
+
+/*顶部栏导航*/
+
+
+/*顶部栏导航栏子栏目*/
+.nav_box{
+    // position: absolute;
+    // margin: 0 auto;
+    display: inline-block;
+    margin: 0 auto;
+}
+.nav_item {
+   
+    float: left;
+    margin: 0 10px;
+    a {
+        display: block;
+        // color: #4D555D;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    > a {
+        line-height: 90px;
+        width: 100px;
+        font-weight: bolder;
+    }
+    
+}
+
+/*访问导航栏变色*/
+
+a:hover {
+    color: rgb(235, 170, 110) !important;
+    
+}
+/*内容可能会溢出*/
+.contont-overflow{
+    overflow:hidden;
+}
+
+/*导航栏箭头*/
+
+.nav_icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    @include bis(url('../images/icons/nav_toBottom.png'));
+     margin-bottom: -9px;
+    -webkit-transition: transform .5s;
+    -webkit-transition: -webkit-transform .5s;
+    transition: -webkit-transform .5s;
+    transition: transform .5s;
+    transition: transform .5s, -webkit-transform .5s;
+}
+
+
+/*导航栏让箭头旋转*/
+
+.nav_item>a:hover .nav_icon {
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    /* IE 9 */
+    -moz-transform: rotate(180deg);
+    /* Firefox */
+    -webkit-transform: rotate(180deg);
+    /* Safari 和 Chrome */
+    -o-transform: rotate(180deg);
+    /* Opera */
+    -webkit-filter: drop-shadow(0 0 red);
+    filter: drop-shadow(0 0 red);
+}
+
+
+/*导航栏子栏目*/
+
+.item_content {
+    display: none;
+    position: absolute;
+    background-color:$green;
+    top: 100%;
+    z-index: 1000;
+    -webkit-transition: transform .5s;
+    -webkit-transition: -webkit-transform .5s;
+    transition: -webkit-transform .5s;
+    transition: transform .5s;
+    transition: transform .5s, -webkit-transform .5s;
+    margin-left: -20px;
+    -webkit-transition: height .4s;
+    transition: height .4s;
+    /*导航栏子栏目中的小箭头*/
+    
+    // &::before {
+    //     content: '';
+    //     display: inline-block;
+    //     border-bottom: 10px solid #006771;
+    //     border-top: 10px solid transparent;
+    //     border-left: 10px solid transparent;
+    //     border-right: 10px solid transparent;
+    //     position: absolute;
+    //     top: 0;
+    //     left: 50%;
+    //     -webkit-transform: translate(-50%, -100%);
+    //     transform: translate(-50%, -100%);
+    // }
+
+    a {
+        font-size: 15px;
+        padding: 12px 100px 12px 20px;
+        width: 100%;
+        text-align: left;
+        display: block;
+        &:hover{
+            background-color:#006771;
+        }
+    }
+}
+
+
+
+
+/*底部栏*/
+footer{
+    width: 100%;
+    padding: 36px 0;
+    margin-top: 50px;
+    background-color: #f8fafc;
+    -webkit-box-shadow: 0 -2px 8px 0 rgba(7,17,27,.06);
+            box-shadow: 0 -2px 8px 0 rgba(7,17,27,.06)
+}
+.footer-box{
+    width: 80%;
+    margin: 0 auto;
+    
+}
+.footer-link{
+
+    margin-bottom: 10px;
+    a{
+        color: #99a1a6; 
+        margin-right: 40px;
+        &:hover{
+            color: black;
+        }
+    
+    }
+}
+.footer-copyright{
+
+    p{
+        color: #99a1a6; 
+        font-size: 17px;
+        cursor: default;
+    
+    }
+}
+.copyright-left{
+    display: inline-block;
+}
+.copyright-right{
+    display: inline-block;
+    margin-left: 100px;
+}
