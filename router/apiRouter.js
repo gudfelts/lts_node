@@ -1,8 +1,9 @@
 const router      = require("koa-router")();
-const user       = require('../controllers/user');
-const api         = require('config-lite')(__dirname).api;  
+const user        = require('../controllers/user');
+const article     = require('../controllers/article');
+const api         = require('config-lite')(__dirname).api;
 
-router.post(api.login, user.login);
-router.get(api.logout, user.logout);
+router.use(api.user.self, user.routes(), user.allowedMethods())
+router.use(api.article.self, article.routes(), article.allowedMethods());
 
 module.exports = router;

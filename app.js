@@ -15,7 +15,7 @@ const staticCache = require('koa-static-cache');
 
 const routers     = router();
 const app         = new koa();
-app.use(bodyParser());
+app.use(bodyParser({formLimit: '1mb'}));
 app.use(logger());
 
 
@@ -50,7 +50,11 @@ app.use(
     allowHeaders: ["Content-Type", "Authorization", "Accept"]
   })
 );
-
+app.use(async (ctx, next)=> {
+  ctx.set("Access-Control-Allow-Origin", ctx.request.header.origin)
+  ctx.set("Access-Control-Allow-Credentials", true);
+  await next();
+})
 app.use(async (ctx, next) => {
   const start = new Date();
   await next();
@@ -82,3 +86,4 @@ app.use(renderRoute.routes())
 
 
 app.listen(config.serverPort, () => console.log(`Server is running at ${config.serverPort}`));
+

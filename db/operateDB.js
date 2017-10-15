@@ -1,32 +1,53 @@
 const query = require("./db").query;
-const sql = require("config-lite")(__dirname).sql;
+const sql   = require('config-lite')(__dirname).sql;
+
 module.exports = {
-  getIndexCir: () => {
+
+  //获取用户
+  getUser: val => {
     return new Promise((resolve, reject) => {
-      query(sql.getIndexCir, (err, result) => {
+     
+      query(sql.getUser, val,(err, result) => {
+        if (err) throw err;
+        resolve(result[0]);
+
+      });
+    });
+  },
+  //更新用户信息
+  updateUser : val =>{
+    return new Promise((resolve, reject) => {
+      query(sql.changePassword, val, (err, result) => {
         if (err) throw err;
         resolve(result);
       });
     });
   },
-  getCirOne : id =>{
+  
+
+
+  //获取文章
+  getArticle : (sql, val) =>{
     return new Promise((resolve, reject) => {
-      query(sql.getCirOne, id, (err, result) => {
+      query(sql, val, (err, result) => {
         if (err) throw err;
         resolve(result);
       });
     })
   },
-  saveAcademicPapers: Article => {
+
+  //存储文章
+  saveArticle: (sql,Article) => {
     return new Promise((resolve, reject) => {
       query(
-        sql.saveAcademicPapers,
+        sql,
         {
           title: Article.title,
           author: Article.author,
           time: Article.time,
           content: Article.content,
-          source: Article.source
+          source: Article.source,
+          type : Article.type
         },
         function(err, result) {
           if (err) throw err;
@@ -35,27 +56,13 @@ module.exports = {
       );
     });
   },
-  getCirculationNews: id => {
+  
+  getNum : (sql)=>{
     return new Promise((resolve, reject) => {
-      query();
-    });
-  },
-  saveCirculationNews: Article => {
-    return new Promise((resolve, reject) => {
-      query(
-        "INSERT INTO CirculationNews SET ?",
-        {
-          title: Article.title,
-          author: Article.author,
-          time: Article.time,
-          content: Article.content,
-          source: Article.source
-        },
-        function(err, result) {
-          if (err) throw err;
-          resolve();
-        }
-      );
-    });
+      query(sql,  (err, result) => {
+        if (err) throw err;
+        resolve(result);
+      });
+    })
   }
 };

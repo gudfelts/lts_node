@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="style/mixin.min.css">
     <link rel="stylesheet" href="style/index.min.css">
 
-    <title><%=data.title%></title>
+    <title><%=title%></title>
 </head>
 <body>
     <%- include('./component/header')%>
@@ -47,18 +47,18 @@
             <p class='part-title info-title'>科研资讯</p>
             <div class='flexbox'>
                 <div class='newsLeft'>
-                    <a href="/showArticle/cri?id=<%=data.banner.id%>">
-                        <img src='images/info.jpg'>
-                        <h4><%=data.banner.title%></h4>
+                    <a href="/showArticle/cri">
+                        <img <%=info.banner.src%>>
+                        <h4><%=info.banner.title%></h4>
                     </a>
                     <p>
-                        中国物流学术年会和全国物流职业教育教学指导委员会在2016年11月26日召开的“第十五次中国物流学术年会”大会上，表彰了第五届“物华图书奖”，广东财经大学流通经济研究所所长王先庆教授专著《渠道控制权》荣获三等奖。</p>
+                        <%=info.banner.summary%></p>
                 </div>
                 <div class='newsRight'>
                     <ul class='news-box'>
-                    <%for(var i = 0;i < data.cri.aNew.length;i++){%>
+                    <%for(var i = 0;i < 8;i++){%>
                         <li class='new-item'>
-                            <a href='/showArticle/cri?id=<%=data.cri.aNew[i].id%>'><%=data.cri.aNew[i].title%></a>
+                            <a href='/showArticle/cri?id=<%=info.aNew[i].id%>'><%=info.aNew[i].title%></a>
                         </li>
                         <%}%>
                     </ul>
