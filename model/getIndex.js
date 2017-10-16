@@ -1,6 +1,6 @@
 const getIndex = require("../model/getData").getIndex;
 const getNum = require("../model/getData").getNum;
-const sql = require("config-lite")(__dirname).sql;
+const SQL = require("config-lite")(__dirname).sql;
 const trimHtml = require("trim-html");
 /**
  * 截取摘要
@@ -11,18 +11,14 @@ const pickSummary = content => {
   console.log(summary);
   return summary;
 };
-/**
- * 选取大图资讯
- * @param {*} aNew 
- */
 
-const pickBanner = aNew => {
+
+const pickBanner = (aNew) => {
   let banner = {};
   const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
   const patt2 = /src='[\'\"]?([^\'\"]*)[\'\"]?'/i;
   let flag = false;
-
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < aNew.length; i++) {
     let content = aNew[i].content;
     if (patt1.test(content)) {
       banner = aNew[i];
@@ -45,13 +41,11 @@ const getInfo = async () => {
     info_n = 8;
   let info = {};
   //获取表格行数
-  const NUM = await getNum(sql.getNumInfo);
+  const NUM = await getNum('information');
   //获取从info_m到info_n的数据
-  let aNew = await getIndex(sql.getIndexInfo, [info_m, info_n]);
-
+  let aNew = await getIndex('information', [info_m, info_n]);
   //获取带图的文章
   let data = pickBanner(aNew);
-
   //从info_m到info_n的文章有一个带图的文章
   if (!!data) {
     data.banner.summary = pickSummary(data.banner.content);
@@ -67,8 +61,8 @@ const getInfo = async () => {
     info_n = info_n * 2 > NUM ? NUM : info_n * 2;
 
     while (NUM >= info_n) {
-      aNew = await getIndex(sql.getIndexInfo, [info_m, info_n]);
-
+      aNew = await getIndex('information', [info_m, info_n]);
+      console.log(aNew)
       let data = pickBanner(aNew);
 
       if (!!data) {
@@ -83,7 +77,7 @@ const getInfo = async () => {
 
     //不存在都没有带图文章，不存在的V●ᴥ●V
   }
-
+  
   return info;
 };
 const getData = async () => {

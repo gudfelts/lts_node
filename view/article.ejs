@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style/common.min.css">
+    <link rel="stylesheet" href="/style/info.css">
+    <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
+    <script src='/js/common.js'></script>
+
+    <title><%=data.title%></title>
+</head>
+<body>
+      <%- include('./component/header')%>
+
+    <div class="container">
+        <div class="content container-types">
+            <article>
+                <div class="content-title">
+                    <h3><%=data.title%></h3>
+                    <div class="tit-info">
+                        <span class="date"><%=data.time%></span>
+                        <span class="post">投稿：<%=data.author%></span>
+                        <span class="number">浏览次数：715</span>
+                    </div>
+                </div>
+
+                <div class="content-main">
+                   <%-data.content%>
+                </div>
+            </article>
+            <div class="parise-box">
+                <input type='radio' class='parise-btn' id='parise-btn'>
+                    <label class='icon-parise' for="parise-btn">
+                    </label>
+                 <p class='parise-num'><%=data.praise%>人推荐</p>   
+            </div>    
+        </div>
+    </div>
+    <%- include('./component/footer') -%>
+
+    
+    <!--回到顶部-->
+    <div id="goTop"></div>
+
+    <script>
+       $().ready(function(e){
+            $(".parise-btn").change(function(){
+                
+                var icon =$(".icon-parise");
+                                
+                icon.addClass("icon-parise-animate");
+                
+                var pariseNum = $('.parise-num');
+                var reg = /\d+/g;
+                var str = pariseNum.html();
+                var nowNum = parseInt(str.match(reg))+1;
+                pariseNum.html(str.replace(reg,nowNum));
+
+            })
+       })
+    </script>
+
+</body>
+</html>

@@ -1,7 +1,6 @@
 
-.flexbox{
-    margin-bottom: 100px;
-}
+
+
 .boxRight{
     width: 800px;
     /* border: 1px solid rgb(230, 230, 230); */
@@ -52,11 +51,11 @@
 }
 
 /*分页组件*/
-.pageBox{
+.M-box{
     /* float: left;
     top: 870.4px;
     left: 420px; */
-    width: 90%;
+    width: 55%;
     margin: 100px auto;
 }
 

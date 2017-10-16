@@ -41,14 +41,15 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(
         sql,
-        {
-          title: Article.title,
-          author: Article.author,
-          time: Article.time,
-          content: Article.content,
-          source: Article.source,
-          type : Article.type
-        },
+        // {
+        //   title : Article.title,
+        //   time  : Article.time,
+        //   content : Article.content,
+        //   source : Article.source,
+        //   praise : Article.praise,
+        //   type :Article.type
+        // },
+        Article,
         function(err, result) {
           if (err) throw err;
           resolve();

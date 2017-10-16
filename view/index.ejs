@@ -47,7 +47,7 @@
             <p class='part-title info-title'>科研资讯</p>
             <div class='flexbox'>
                 <div class='newsLeft'>
-                    <a href="/showArticle/cri">
+                    <a href='/showArticle/content?id=<%=info.banner.id%>&type=<%=info.banner.type%>&sort=information'>
                         <img <%=info.banner.src%>>
                         <h4><%=info.banner.title%></h4>
                     </a>
@@ -58,11 +58,11 @@
                     <ul class='news-box'>
                     <%for(var i = 0;i < 8;i++){%>
                         <li class='new-item'>
-                            <a href='/showArticle/cri?id=<%=info.aNew[i].id%>'><%=info.aNew[i].title%></a>
+                            <a href='/showArticle/content?id=<%=info.aNew[i].id%>&type=<%=info.aNew[i].type%>&sort=information'><%=info.aNew[i].title%></a>
                         </li>
                         <%}%>
                     </ul>
-                    <a href="/showArticle/catalog?type=cri" class='toMore'>more</a>
+                    <a href="/showArticle/catalog?sort=information&type=1" class='toMore'>more</a>
                 </div>
             </div>
     
