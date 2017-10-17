@@ -55,8 +55,8 @@
                     <%=title%>
                 </div>
                 <div class="detail">
-                    <ul>
-                <% for(var i = 0;i < data.length;i++){%>
+                    <ul class='detail-box'>
+                <% for(var i =  0;i < data.length ;i++){%>
                     
                         <li>
                             <a href='/showArticle/content?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><%=data[i].title %></a>

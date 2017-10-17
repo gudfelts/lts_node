@@ -12,18 +12,19 @@ const pickSummary = content => {
   return summary;
 };
 
-
-const pickBanner = (aNew) => {
+const pickBanner = aNew => {
   let banner = {};
   const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
-  const patt2 = /src='[\'\"]?([^\'\"]*)[\'\"]?'/i;
+  const patt2 = /src="[\'\"]?([^\'\"]*)[\'\"]?"/gi;
   let flag = false;
   for (let i = 0; i < aNew.length; i++) {
     let content = aNew[i].content;
+    // console.log(content);
     if (patt1.test(content)) {
       banner = aNew[i];
       //去掉引号
-      banner.src = content.match(patt2)[0].replace(/\'/g, "");
+
+      banner.src = content.match(patt2)[0].replace(/[\'\"]?/g, "");
       flag = true;
       aNew.splice(i, 0);
       break;
@@ -41,9 +42,9 @@ const getInfo = async () => {
     info_n = 8;
   let info = {};
   //获取表格行数
-  const NUM = await getNum('information');
+  const NUM = await getNum("information");
   //获取从info_m到info_n的数据
-  let aNew = await getIndex('information', [info_m, info_n]);
+  let aNew = await getIndex("information", [info_m, info_n]);
   //获取带图的文章
   let data = pickBanner(aNew);
   //从info_m到info_n的文章有一个带图的文章
@@ -56,13 +57,16 @@ const getInfo = async () => {
     info.aNew = aNew;
 
     //继续往下遍历，找到带图的文章
-    info_m = info_n;
+    info_m += info_n;
     //防止超过表格条数
-    info_n = info_n * 2 > NUM ? NUM : info_n * 2;
+    if (info_m >= NUM) {
+      info_m = NUM;
+      info_n = 1;
+    }
 
     while (NUM >= info_n) {
-      aNew = await getIndex('information', [info_m, info_n]);
-      console.log(aNew)
+      aNew = await getIndex("information", [info_m, info_n]);
+      console.log(aNew);
       let data = pickBanner(aNew);
 
       if (!!data) {
@@ -70,21 +74,58 @@ const getInfo = async () => {
         info.banner = data.banner;
         break;
       } else {
-        info_m = info_n;
-        info_n = info_n * 2 > NUM ? NUM : info_n * 2;
+        //继续往下遍历，找到带图的文章
+        info_m += info_n;
+        //防止超过表格条数
+        if (info_m >= NUM) {
+          info_m = NUM;
+          info_n = 1;
+        }
       }
     }
 
     //不存在都没有带图文章，不存在的V●ᴥ●V
   }
-  
+
   return info;
+};
+
+const getResearch = async () => {
+  let info_m = 0,
+    info_n = 4;
+  let research = {};
+  //获取表格行数
+  const NUM = await getNum("research");
+
+  while (NUM >= info_n) {
+    //获取从info_m到info_n的数据
+    let aNew = await getIndex("research", [info_m, info_n]);
+    //获取带图的文章
+    let { banner } = pickBanner(aNew);
+
+    if (!!banner) {
+      research = banner;
+      research.summary = pickSummary(research.content);
+      break;
+    } else {
+      //继续往下遍历，找到带图的文章
+      info_m += info_n;
+      //防止超过表格条数
+      if (info_m >= NUM) {
+        info_m = NUM;
+        info_n = 1;
+      }
+    }
+  }
+  //不存在都没有带图文章，不存在的V●ᴥ●V
+
+  return research;
 };
 const getData = async () => {
   let info = await getInfo();
+  let research = await getResearch();
   let title = "首页";
-
-  return { title, info };
+  return { title, info,research};
 };
 
 module.exports = async () => {

@@ -14,13 +14,14 @@ let query = function(sql,options,callback){
           callback(err,null,null);  
       }else{  
           conn.query(sql,options,function(err,results){  
-              //释放连接  
+              //释放连接 
+  
               conn.release();  
               //事件驱动回调  
               callback(err,results);  
           });  
       }  
-  });  
+  }); 
 };  
 
 module.exports ={ query }; 

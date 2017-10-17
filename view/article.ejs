@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/style/common.min.css">
     <link rel="stylesheet" href="/style/info.css">
     <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
+    <script type="text/javascript" src="/js/article.js"></script>
     <script src='/js/common.js'></script>
 
     <title><%=data.title%></title>
@@ -18,11 +19,11 @@
         <div class="content container-types">
             <article>
                 <div class="content-title">
-                    <h3><%=data.title%></h3>
+                    <h1><%=data.title%></h1>
                     <div class="tit-info">
                         <span class="date"><%=data.time%></span>
-                        <span class="post">投稿：<%=data.author%></span>
-                        <span class="number">浏览次数：715</span>
+                        <span class="post">作者：<%-data.author%></span>
+                        <span class="number"><%=data.browse%></span>
                     </div>
                 </div>
 
@@ -30,11 +31,11 @@
                    <%-data.content%>
                 </div>
             </article>
-            <div class="parise-box">
+            <div class="parise-box" data-id=<%=data.id%> data-sort=<%=sort%>>
                 <input type='radio' class='parise-btn' id='parise-btn'>
-                    <label class='icon-parise' for="parise-btn">
+                    <label class='icon-praise' for="parise-btn">
                     </label>
-                 <p class='parise-num'><%=data.praise%>人推荐</p>   
+                 <p class='parise-show' ><i class='praise-num'><%=data.praise%></i>人推荐</p>   
             </div>    
         </div>
     </div>
@@ -45,21 +46,7 @@
     <div id="goTop"></div>
 
     <script>
-       $().ready(function(e){
-            $(".parise-btn").change(function(){
-                
-                var icon =$(".icon-parise");
-                                
-                icon.addClass("icon-parise-animate");
-                
-                var pariseNum = $('.parise-num');
-                var reg = /\d+/g;
-                var str = pariseNum.html();
-                var nowNum = parseInt(str.match(reg))+1;
-                pariseNum.html(str.replace(reg,nowNum));
-
-            })
-       })
+      
     </script>
 
 </body>

@@ -9,8 +9,10 @@ router.post(api.postArticle, async ctx => {
   const type = article.selectedOptions;
   delete article.selectedOptions;
   article.type = type[1];
+  article.time = article.time.replace(/T.*$/,'');
   article.content = await downImg(article.content);
   article.praise = 0;
+  article.browse = 0;
   await saveArticle(type[0],article);
 
   ctx.response.body = {

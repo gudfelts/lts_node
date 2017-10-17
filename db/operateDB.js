@@ -1,5 +1,5 @@
 const query = require("./db").query;
-const sql   = require('config-lite')(__dirname).sql;
+const SQL   = require('config-lite')(__dirname).sql;
 
 module.exports = {
 
@@ -7,7 +7,7 @@ module.exports = {
   getUser: val => {
     return new Promise((resolve, reject) => {
      
-      query(sql.getUser, val,(err, result) => {
+      query(SQL.getUser, val,(err, result) => {
         if (err) throw err;
         resolve(result[0]);
 
@@ -17,19 +17,35 @@ module.exports = {
   //更新用户信息
   updateUser : val =>{
     return new Promise((resolve, reject) => {
-      query(sql.changePassword, val, (err, result) => {
+      query(SQL.changePassword, val, (err, result) => {
         if (err) throw err;
         resolve(result);
       });
     });
   },
   
-
-
-  //获取文章
-  getArticle : (sql, val) =>{
+  getIndex : (sql,val)=>{
     return new Promise((resolve, reject) => {
       query(sql, val, (err, result) => {
+        if (err) throw err;
+        resolve(result);
+      });
+    });
+  },
+  getCatalog : val =>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getCatalog, val, (err, result) => {
+        console.log()
+        if (err) throw err;
+        resolve(result);
+      });
+    })
+  },
+  //获取文章
+  getArticleOne : val =>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getArticleOne, val, (err, result) => {
+        console.log()
         if (err) throw err;
         resolve(result);
       });
@@ -37,18 +53,10 @@ module.exports = {
   },
 
   //存储文章
-  saveArticle: (sql,Article) => {
+  saveArticle: (Article) => {
     return new Promise((resolve, reject) => {
       query(
-        sql,
-        // {
-        //   title : Article.title,
-        //   time  : Article.time,
-        //   content : Article.content,
-        //   source : Article.source,
-        //   praise : Article.praise,
-        //   type :Article.type
-        // },
+        SQL.saveArticle,
         Article,
         function(err, result) {
           if (err) throw err;
@@ -58,9 +66,9 @@ module.exports = {
     });
   },
   
-  getNum : (sql)=>{
+  getNum : (val)=>{
     return new Promise((resolve, reject) => {
-      query(sql,  (err, result) => {
+      query(SQL.getNum, val, (err, result) => {
         if (err) throw err;
         resolve(result);
       });

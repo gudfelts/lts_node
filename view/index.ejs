@@ -52,7 +52,7 @@
                         <h4><%=info.banner.title%></h4>
                     </a>
                     <p>
-                        <%=info.banner.summary%></p>
+                        <%-info.banner.summary%></p>
                 </div>
                 <div class='newsRight'>
                     <ul class='news-box'>
@@ -73,19 +73,19 @@
                 <div class='mix-box'>
                     <p class='part-title minx-box1-title'>
                         科学研究
-                        <a href="./pages/research1.html" class='toMore'>more</a>
+                        <a href="/showArticle/catalog?sort=research&type=1" class='toMore'>more</a>
     
                     </p>
                     <div class='box1-content'>
-                        <a href="info/info-1.html">
-                            <img src='images/pic1.jpg'>
+                        <a href='/showArticle/content?id=<%=research.id%>&type=<%=research.type%>&sort=research'>
+                            <img <%=research.src%> >
                         </a>
                         <div class='secient-content'>
                             <h3>
-                                <a href="info/info-1.html">《广州市南沙区再生资源回收网点发展规划》专家评审会召开</a>
+                                <a href='/showArticle/content?id=<%=research.id%>&type=<%=research.type%>&sort=research'><%=research.title%></a>
                             </h3>
                             <p>
-                                《广州市南沙区再生资源回收网点规划（2016-2020年）》由南沙区工业和科技信息化局、广东省商业经济学会、广东财经大学组成的课题组共同完成。课题组负责人王先庆教授对规划的背景、目标、策略、主要内容以及创新之处进行了介绍和说明。</p>
+                                <%-research.summary%></p>
                         </div>
                     </div>
                 </div>

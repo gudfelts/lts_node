@@ -82,21 +82,25 @@ article{
 .parise-btn{
     display: none;
 }
-.icon-parise{
+.icon-praise{
     display: block;
     margin: 50px auto 25px auto;
-    width: 150px;
-    height: 150px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     background: url('../images/icons/parise.png') no-repeat center;
+    background-size: 100% 100%;
     background-color: white;
     cursor: pointer;
 
 }
 
-.icon-parise-animate{
+.icon-praise-animate{
     transform-origin: 50% 50%;
     animation: parise-shake .5s ease-in-out;
     background: url('../images/icons/parise_done.png') no-repeat center;
+    background-size: 100% 100%;
+    
 }
 @keyframes parise-shake{
     0%{
