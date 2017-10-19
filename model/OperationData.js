@@ -130,6 +130,9 @@ module.exports.getNum = async sort => {
     case "train":
       result = await operateDB.getNum(sort);
       break;
+    case "team":
+      result = await operateDB.getNum(sort);
+      break;
     default:
       result = await operateDB.getNum(sort);
       break;
@@ -181,3 +184,8 @@ module.exports.addBrowse = async (sort, id, type) => {
       await operateDB.addBrowse([sort, id, type]);
   }
 };
+
+//专家团队
+module.exports.getTeam = async (start) =>  operateDB.getTeam(start);
+module.exports.getTeamOne = async (id) =>  operateDB.getTeamOne(id);
+module.exports.updateTeamOne = async (id,name,content,position,sex) =>  operateDB.getTeamOne([name,position,content,sex,id]);

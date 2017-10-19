@@ -3,7 +3,9 @@ const getIndex = require("../model/getIndex");
 const getArticleOne = require("../model/OperationData").getArticleOne;
 const getCatalog = require("../model/OperationData").getCatalog;
 const getNum = require("../model/OperationData").getNum;
+const getTeam = require("../model/OperationData").getTeam;
 const addBrowse = require("../model/OperationData").addBrowse;
+const getTeamOne = require("../model/OperationData").getTeamOne;
 
 router.get("/showArticle/content", async ctx => {
   const id = ctx.query.id,
@@ -39,4 +41,29 @@ router.get("/showArticle/catalog", async ctx => {
   await ctx.render("catalog", result);
 });
 
+
+router.get('/showTeam/person',async ctx=>{
+    const name = ctx.query.id;
+  
+    const result = await getTeamOne(id);
+  
+    await ctx.render("person", result);
+})
+router.get('/showTeam',async ctx=>{
+  let start = parseInt(ctx.query.start) || 0;
+  let result = await getTeam(start);
+
+  if (start === 0) {
+    let pageCount = await getNum('team');
+    //一页20条
+    if (pageCount % 20 > 0) {
+      pageCount = parseInt(pageCount / 20) + 1;
+    } else {
+      pageCount = pageCount / 20;
+    }
+
+    result.pageCount = pageCount;
+  }
+  await ctx.render("team", result);
+})
 module.exports = router;

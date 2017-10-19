@@ -4,6 +4,8 @@ const deleteArticle = require("../model/OperationData").deleteArticle;
 const api = require("config-lite")(__dirname).api.admin.article;
 const downImg = require("../model/transCode");
 const getCatalog = require("../model/OperationData").getCatalog;
+const getTeam = require("../model/OperationData").getTeam;
+const getTeamOne = require("../model/OperationData").getTeamOne;
 const getNum = require("../model/OperationData").getNum;
 
 router.post(api.postArticle, async ctx => {
@@ -78,7 +80,6 @@ router.get(api.getArticle, async ctx => {
 
   const data = await getArticleOne(sort, id, type);
 
-  //增加浏览数
   ctx.response.body = data;
 });
 //修改文章
@@ -97,4 +98,41 @@ router.post(api.editArticle, async ctx => {
 
   ctx.response.body = result;
 });
+//获取团队列表
+router.get('/Team',async ctx=>{
+  let start = parseInt(ctx.query.start) || 0;
+  let result = await getTeam(start);
+
+  if (start === 0) {
+    let pageCount = await getNum('team');
+    //一页20条
+    if (pageCount % 20 > 0) {
+      pageCount = parseInt(pageCount / 20) + 1;
+    } else {
+      pageCount = pageCount / 20;
+    }
+
+    result.pageCount = pageCount;
+  }
+  ctx.response.body = result;
+})
+//获取专家信息  
+router.get('/TeamOne',ctx=>{
+  const name = ctx.query.id;
+
+  const result = await getTeamOne(id);
+
+  ctx.response.body = result;
+    
+})
+//修改专家信息
+router.post('/TeamOne',ctx=>{
+  let data = ctx.request.body.params;
+  const {id,name,content,position,sex}= data;
+  
+  const result = await updateTeamOne(id,name,content,position,sex);
+
+  ctx.response.body = result;
+    
+})
 module.exports = router;

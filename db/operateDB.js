@@ -105,4 +105,31 @@ module.exports = {
       });
     })
   },
+
+  getTeam : (val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getTeam, val, (err, result) => {
+        if (err) throw err;
+        resolve(result);
+      });
+    })
+  },
+
+  getTeamOne : (val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getTeamOne, val, (err, result) => {
+        if (err) throw err;
+        resolve(result);
+      });
+    })
+  },
+
+  updateTeamOne : (val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.updateTeamOne, val, (err, result) => {
+        if (err) throw err;
+        resolve(result);
+      });
+    })
+  }
 };

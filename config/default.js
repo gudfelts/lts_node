@@ -50,7 +50,13 @@ module.exports = {
 
     //点赞
     praise: "update ?? set prasise = praise + 1 where id = ?",
-
+    //获取团队列表
+    getTeam: "select name,position,sex from team limit ?,20",
+    //获取专家信息
+    getTeamOne: "select content from team where id = ? limit 1",
+    //更新专家信息
+    updateTeamOne: "update team set name = ?,position = ?,content = ?,sex = ? where id = ? limit 1",
+    
     /*
     科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
     科研资讯，其中type数据：1为流通所新闻，2为基地资讯，3为媒体报道

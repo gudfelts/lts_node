@@ -269,36 +269,17 @@ footer {
 }
 
 /*左侧导航栏上面的装饰*/
-.navTop {
+.navTitle {
   width: 100%;
   height: 64px;
+  line-height: 64px;
   margin-bottom: 25.6px;
   position: relative;
-}
-
-.navTop .image {
-  width: 45%;
-  float: left;
-  height: 100%;
-}
-
-.navTop .image img {
-  width: 100%;
-  height: 100%;
-}
-
-/*横线*/
-.navTop .line {
-  float: left;
-  width: 55%;
-  height: 64px;
   border-bottom: 5px solid #FF9D54;
-  text-align: center;
-  line-height: 64px;
 }
 
 /*文字*/
-.boxLeft .navTop a {
+.navTitle a {
   font-size: 25.6px;
   text-decoration: none;
   color: #6C6E6C;
@@ -325,7 +306,7 @@ footer {
   cursor: pointer;
 }
 
-.boxLeft .itemUl .itemLi a {
+.itemLi a {
   display: block;
   width: 100%;
   margin: 12.8px;
@@ -336,7 +317,7 @@ footer {
   padding-left: 12.8px;
 }
 
-.boxLeft .itemUl .itemLi a:hover {
+.itemLi a:hover {
   color: #FF9D54;
 }
 
@@ -345,11 +326,18 @@ footer {
   color: whitesmoke;
 }
 
-/*左侧导航栏下面的图片*/
-.boxLeft .navBottom img {
-  margin-top: 25.6px;
-  width: 100%;
-  height: 384px;
+.hotArticle {
+  margin-top: 50px;
+}
+
+.hot-Item::before {
+  content: "\02022";
+  color: #006771;
+  font-size: 25.6px;
+}
+
+.hot-Item a {
+  margin-left: 10px;
 }
 
 /*默认选中第一个,用ID选择器提高优先级*/

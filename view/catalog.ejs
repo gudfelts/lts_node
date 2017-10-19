@@ -24,27 +24,36 @@
         <div class='container-types'>
             <div class="boxLeft">
                 <!--左侧导航栏上面的装饰-->
-                <div class="navTop">
-                    <div class="image">
-                        <img src="../images/academic1.png" alt="">
-                    </div>
-                    <div class="line">
-                        <a href="#"><%=title%></a>
-                    </div>
+                <div class="navTitle">
+                        <a href="#">智库建设</a>
                 </div>
 
                 <!--左侧导航栏-->
                 <ul class="itemUl">
-                <% for(var i = 0;i < sorts.length;i++){%>
                     <li class="itemLi">
-                        <a href="/showArticle/catalog?type=<%=i%>" id="active"><%=sorts[i]%></a>
+                        <a href="construct1.html" id="active">名家百人讲座</a>
                     </li>
-                    <%}%>
+                    <li class="itemLi">
+                        <a href="construct2.html">智库动态</a>
+                    </li>
                 </ul>
 
-                <!--左侧导航栏下面的图片-->
-                <div class="navBottom">
-                    <img src="../images/academic2.png" alt="">
+
+              <div class='hotArticle'>
+                    <div class="navTitle ">
+                        近期热门文章
+                    </div>
+                    <ul class="hotBox">
+                        <li class="hot-Item">
+                            <a href="construct1.html">名家百人讲座</a>
+                        </li>
+                        <li class="hot-Item">
+                            <a href="construct2.html">智库动态</a>
+                        </li>
+                        <li class="hot-Item">
+                            <a href="construct2.html">智库动态</a>
+                        </li>
+                    </ul>
                 </div>
 
 
