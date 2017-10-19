@@ -12,6 +12,7 @@ const apiRoute    = require('./router/apiRouter');
 const renderRoute = require('./router/renderRouter');
 const session     = require('koa-session');
 const staticCache = require('koa-static-cache');
+const favicon     = require('koa-favicon');
 
 const routers     = router();
 const app         = new koa();
@@ -33,6 +34,7 @@ const CONFIG = {
   rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. default is false **/
 };
 app.use(session(CONFIG, app));
+app.use(favicon(__dirname + '/static/favicon.ico'));
 
 //跨域
 app.use(

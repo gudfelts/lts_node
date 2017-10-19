@@ -1,5 +1,5 @@
-const getIndex = require("../model/getData").getIndex;
-const getNum = require("../model/getData").getNum;
+const getIndex = require("../model/OperationData").getIndex;
+const getNum = require("../model/OperationData").getNum;
 const SQL = require("config-lite")(__dirname).sql;
 const trimHtml = require("trim-html");
 /**
@@ -121,11 +121,19 @@ const getResearch = async () => {
 
   return research;
 };
+
+const getExchange = async ()=>{
+  let aNew = await getIndex("exchange", [0, 8]);
+  return aNew;
+}
 const getData = async () => {
   let info = await getInfo();
   let research = await getResearch();
-  let title = "首页";
-  return { title, info,research};
+  let exchange = await getExchange();
+
+  console.log(exchange);
+  
+  return {info,research,exchange};
 };
 
 module.exports = async () => {

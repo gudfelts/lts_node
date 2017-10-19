@@ -3,7 +3,6 @@ const TYPE = require("config-lite")(__dirname).type;
 const operateDB = require("../db/operateDB");
 
 module.exports.saveArticle = async (sort, val) => {
-  let result = null;
   switch (sort) {
     case "information":
       await operateDB.saveArticle([sort, val]);
@@ -23,8 +22,30 @@ module.exports.saveArticle = async (sort, val) => {
     default:
       await operateDB.saveArticle([sort, val]);
   }
-  return { data: result };
 };
+
+module.exports.deleteArticle = async (sort, id, type) => {
+  switch (sort) {
+    case "information":
+      await operateDB.deleteArticle([sort, id, type]);
+      break;
+    case "achievement":
+      await operateDB.deleteArticle([sort, id, type]);
+      break;
+    case "research":
+      await operateDB.deleteArticle([sort, id, type]);
+      break;
+    case "exchange":
+      await operateDB.deleteArticle([sort, id, type]);
+      break;
+    case "train":
+      await operateDB.deleteArticle([sort, id, type]);
+      break;
+    default:
+      await operateDB.deleteArticle([sort, id, type]);
+  }
+};
+
 module.exports.getArticleOne = async (sort, id, type) => {
   let result = null;
   switch (sort) {
@@ -86,6 +107,9 @@ module.exports.getIndex = async (sort, val) => {
     case "research":
       result = await operateDB.getIndex(SQL.getIndexResearch, val);
       break;
+    case "exchange":
+      result = await operateDB.getIndex(SQL.getIndexExchange, val);
+      break;
   }
   return result;
 };
@@ -112,26 +136,48 @@ module.exports.getNum = async sort => {
   }
   return result[0]["count(1)"];
 };
-module.exports.praise = async (sort, id)=>{
+module.exports.addPraise = async (sort, id)=>{
   switch (sort) {
     case "information":
-      result = await operateDB.praise(sort, id);
+      result = await operateDB.addPraise([sort, id]);
       break;
     case "achievement":
-      result = await operateDB.praise(sort, id);
+      result = await operateDB.addPraise([sort, id]);
       break;
     case "research":
-      result = await operateDB.praise(sort, id);
+      result = await operateDB.addPraise([sort, id]);
       break;
     case "exchange":
-      result = await operateDB.praise(sort, id);
+      result = await operateDB.addPraise([sort, id]);
       break;
     case "train":
-      result = await operateDB.praise(sort, id);
+      result = await operateDB.addPraise([sort, id]);
       break;
     default:
-      result = await operateDB.praise(sort, id);
+      result = await operateDB.addPraise([sort, id]);
       break;
   }
 
 }
+
+module.exports.addBrowse = async (sort, id, type) => {
+  switch (sort) {
+    case "information":
+      await operateDB.addBrowse([sort, id, type]);
+      break;
+    case "achievement":
+      await operateDB.addBrowse([sort, id, type]);
+      break;
+    case "research":
+      await operateDB.addBrowse([sort, id, type]);
+      break;
+    case "exchange":
+      await operateDB.addBrowse([sort, id, type]);
+      break;
+    case "train":
+      await operateDB.addBrowse([sort, id, type]);
+      break;
+    default:
+      await operateDB.addBrowse([sort, id, type]);
+  }
+};

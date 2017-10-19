@@ -26,7 +26,7 @@ $().ready(function(e) {
         endPage:'末页',
         prevContent:'上页',
         nextContent:'下页',
-        pageCount : pageCount,
+        pageCount : pageCount,              
         jump: true,
         callback:function(api){
            
@@ -35,7 +35,7 @@ $().ready(function(e) {
             $.ajax({   
                 type: 'get',  
                 dataType: "json",
-                url: 'http://localhost:3000/showArticle/catalog_ajax?start='+start+'&type='+type+'&sort='+sort,      //提交到一般处理程序请求数据   
+                url: 'http://localhost:3000/OperationData/getCatalog?start='+start+'&type='+type+'&sort='+sort,      //提交到一般处理程序请求数据   
                 
                 success: function(result) {
                     //后台服务返回数据，重新加载数据

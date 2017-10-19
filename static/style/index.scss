@@ -2,7 +2,7 @@
  * @Author: 肖志豪 
  * @Date: 2017-10-06 11:08:26 
  * @Last Modified by: 肖志豪
- * @Last Modified time: 2017-10-15 14:15:54
+ * @Last Modified time: 2017-10-19 15:22:34
  */
 
 @import 'mixin.scss';
@@ -252,63 +252,47 @@ body {
 }
 
 .box2-box{
-    background-color: #6AC7CE;
     display: inline-block;
     margin: 0 auto;    
     height: 250px;
-    @include borderRadius(10px);
-    -webkit-box-shadow: 0 12px 24px 0 rgba(7,17,27,.2);
-            box-shadow: 0 12px 24px 0 rgba(7,17,27,.2);
-    overflow: hidden;    
+    
 }
 .box2-item{
-    width:240px;
-    height: 50%;
+    width:340px;
+    height: 20%;
     float: left;
-    padding: 25px 20px;
     font-size: 18px;
     border: 1px solid white;
     border-bottom: 0;
     border-left: 0;
+    margin: 7px;
     position: relative;
-    
-    > p{
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        overflow: hidden;
-        height: 100%;
-        color: white;
-    
-    }
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    padding-left: 20px;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    box-sizing: border-box;
    
-    &:hover > p{
-        opacity: 0;
-    }
-    /*幕布动画效果*/
-    &:hover > .box2-mask{
-        opacity: 1;
-    }
+   &::before{
+       content: '';
+       display: block;
+       width: 10px;
+       height: 10px;
+       border-radius: 50%;
+       background-color:   #006771;   
+       position: absolute;
+       top: 5px; 
+       left: 0px; 
+   }
+   
 }
 .box2-item:nth-child(3),.box2-item:nth-child(6){
     border-right: 0;
-    
 }
 
 
-/*幕布*/
-.box2-mask{
-    background: hsla(0,0%,100%,.25) border-box;
-    @extend %allcover;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    -webkit-transition: opacity .4s;
-    transition: opacity .4s;
-    p{
-        @extend %center;
-    }
-}
+
 /*mix的右边框*/
 
 .mixRight {

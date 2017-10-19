@@ -3,22 +3,8 @@
  * @Author: 肖志豪 
  * @Date: 2017-10-06 11:08:26 
  * @Last Modified by: 肖志豪
- * @Last Modified time: 2017-10-15 14:15:54
+ * @Last Modified time: 2017-10-19 15:22:34
  */
-.box2-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.box2-mask p {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transform-origin: 50% 50%;
-}
-
 .newsLeft a img:hover, .box1-content a img:hover, .pic-box:hover {
   -webkit-box-shadow: 0px 10px 40px 0px #888888;
   box-shadow: 0px 10px 40px 0px #888888;
@@ -253,62 +239,43 @@ body {
 }
 
 .box2-box {
-  background-color: #6AC7CE;
   display: inline-block;
   margin: 0 auto;
   height: 250px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: 0 12px 24px 0 rgba(7, 17, 27, 0.2);
-  box-shadow: 0 12px 24px 0 rgba(7, 17, 27, 0.2);
-  overflow: hidden;
 }
 
 .box2-item {
-  width: 240px;
-  height: 50%;
+  width: 340px;
+  height: 20%;
   float: left;
-  padding: 25px 20px;
   font-size: 18px;
   border: 1px solid white;
   border-bottom: 0;
   border-left: 0;
+  margin: 7px;
   position: relative;
-  /*幕布动画效果*/
-}
-
-.box2-item > p {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  padding-left: 20px;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  height: 100%;
-  color: white;
+  box-sizing: border-box;
 }
 
-.box2-item:hover > p {
-  opacity: 0;
-}
-
-.box2-item:hover > .box2-mask {
-  opacity: 1;
+.box2-item::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #006771;
+  position: absolute;
+  top: 5px;
+  left: 0px;
 }
 
 .box2-item:nth-child(3), .box2-item:nth-child(6) {
   border-right: 0;
-}
-
-/*幕布*/
-.box2-mask {
-  background: rgba(255, 255, 255, 0.25) border-box;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  -webkit-transition: opacity .4s;
-  transition: opacity .4s;
 }
 
 /*mix的右边框*/

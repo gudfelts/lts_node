@@ -7,26 +7,41 @@ module.exports = {
     database: "lts"
   },
   api: {
-    user: {
-      self: "/admin/user",
-      login: "/login",
-      logout: "/logout",
-      changePassword: "/changePassword"
-    },
-    article: {
-      self: "/admin/article",
-      postArticle: "/postArticle",
-      deleteArticle: "/deleteArticle"
+    admin : {
+      user: {
+        self: "/admin/user",
+        login: "/login",
+        logout: "/logout",
+        changePassword: "/changePassword"
+      },
+      article: {
+        self: "/admin/article",
+        postArticle: "/postArticle",
+        getCatalog: "/getCatalog",
+        getArticle: "/getArticle",
+        deleteArticle: "/deleteArticle",
+        batchDeleteArticle: "/batchDeleteArticle",
+        editArticle: "/editArticle"
+      },
+      addTeamMember: "/admin/addTeamMember",
+      deleteTeamMember: "/admin/addTeamMember"
     },
 
-    addTeamMember: "/admin/addTeamMember",
-    deleteTeamMember: "/admin/addTeamMember"
+    fontEnd:{
+      self:'/OperationData',
+      getCatalog:'/getCatalog',
+      addPraise:'/addPraise'
+    }
+
+   
   },
   sql: {
     //首页科研资讯
-    getIndexInfo: "select * from information order by id desc limit ?,?",
+    getIndexInfo: "select title,id,type,content from information order by id desc limit ?,?",
     //首页科研研究
-    getIndexResearch: "select * from research order by id desc limit ?,?",
+    getIndexResearch: "select title,id,type,content from research order by id desc limit ?,?",
+    //首页学术交流 
+    getIndexExchange: "select title,id,type from exchange order by id desc limit ?,?",
 
     //获取管理员信息
     getUser: "select * from admin where account = ?",
@@ -45,15 +60,19 @@ module.exports = {
     智库建设，其中type数据：1为名家百人讲座，2为智库动态
     */
     saveArticle: "insert into ?? set ?",
+    //删除文章
+    deleteArticle: "delete from ?? where id = ? and type = ?",
+    //删除文章
+    addBrowse: "update  ?? set browse = browse + 1 where id = ? and type = ?",
     //获取特定资讯
-    getArticleOne: "select * from ?? where id = ? and type = ?",
+    getArticleOne: "select * from ?? where id = ? and type = ? limit 1",
     //获取目录
-    getCatalog: "select  title,id,type from ?? where type = ? order by id desc  LIMIT ?,15",
+    getCatalog: "select  title,id,type,author,source,time from ?? where type = ? order by id desc  limit ?,15",
     //获取总条数
     getNum: "select count(1) from ??",
-   
-   
-
+    //更新内容
+    editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
+  
   },
   type: {
     information: ["流通所新闻", "基地资讯", "媒体报道"],

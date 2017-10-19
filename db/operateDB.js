@@ -66,6 +66,19 @@ module.exports = {
     });
   },
   
+   //删除文章
+   deleteArticle: (val) => {
+    return new Promise((resolve, reject) => {
+      query(
+        SQL.deleteArticle,
+        val,
+        function(err, result) {
+          if (err) throw err;
+          resolve();
+        }
+      );
+    });
+  },
   getNum : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.getNum, val, (err, result) => {
@@ -73,5 +86,23 @@ module.exports = {
         resolve(result);
       });
     })
-  }
+  },
+
+  addBrowse : (val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.addBrowse, val, (err, result) => {
+        if (err) throw err;
+        resolve(result);
+      });
+    })
+  },
+
+  addPraise : (val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.praise, val, (err, result) => {
+        if (err) throw err;
+        resolve(result);
+      });
+    })
+  },
 };

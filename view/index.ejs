@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content='广东财经大学流通经济研究所,广财流通所,广州现代物流与电子商务发展研究基地' name='keywords'>
+    <meta content='广东财经大学流通经济研究所,广州现代物流与电子商务发展研究基地' name="description">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="bookmark" href="/favicon.ico" type="image/x-icon"　/>
     <script type="text/javascript" src="js/jquery-1.11.min.js"></script>
     <script type="text/javascript" src="js/slick.min.js"></script>
     <script type="text/javascript" src='js/index.js'></script>
@@ -11,11 +16,11 @@
     
     <link rel="stylesheet" href="style/slick/slick.css">
     <link rel="stylesheet" href="style/slick/slick-theme.css">
-    <link rel="stylesheet" href="style/common.min.css">
     <link rel="stylesheet" href="style/mixin.min.css">
+    <link rel="stylesheet" href="style/common.min.css">
     <link rel="stylesheet" href="style/index.min.css">
 
-    <title><%=title%></title>
+    <title>广东财经大学流通经济研究所</title>
 </head>
 <body>
     <%- include('./component/header')%>
@@ -93,50 +98,17 @@
                 <div class='mix-box'>
                     <p class='part-title minx-box2-title'>
                         学术交流
-                        <a href="./pages/academic1.html" class='toMore'>more</a>
+                        <a href="/showArticle/catalog?sort=exchange&type=1" class='toMore'>more</a>
     
                     </p>
                     <div class='box2-content'>
                         <div class='box2-box'>
-                            <a href="info/info-1.html" class='box2-item'>
-                                <p>2016年华南商业地产创新论坛成功举办</p>
-                                <div class='box2-mask'>
-                                    <p>点击进入</p>
-                                </div>
-                                <div class='blur'></div>
+                        <%for(var i = 0, len = exchange.length; i < len;i++){%>
+                            <a href='/showArticle/content?id=<%=exchange[i].id%>&type=<%=exchange[i].type%>&sort=exchange' class='box2-item'>
+                               <%-exchange[i].title%>                           
                             </a>
-                            <a href="info/info-1.html" class='box2-item'>
-                                <p>流通所、管理学院承办首届华南现代物流学术年会</p>
-                                <div class='box2-mask'>
-                                    <p>点击进入</p>
-                                </div>
-                            </a>
-                            <a href="info/info-1.html" class='box2-item'>
-                                <p>广州市现代物流与电子商务发展研究基地建设工作会议暨流通经济研究所第十一届专兼职研究人员学术交流会议在我校举行</p>
-                                <div class='box2-mask'>
-                                    <p>点击进入</p>
-                                </div>
-                            </a>
-                            <a href="info/info-1.html" class='box2-item'>
-                                <p>2014首届中国（广州）专业市场发展大会暨专业市场全国推广合作大会隆重召开</p>
-                                <div class='box2-mask'>
-                                    <p>点击进入</p>
-                                </div>
-                            </a>
-    
-                            <a href="info/info-1.html" class='box2-item'>
-                                <p>中国本土管理研究与理论建构青年学者论坛2016质性研究工作坊</p>
-                                <div class='box2-mask'>
-                                    <p>点击进入</p>
-                                </div>
-                            </a>
-                            <a href="info/info-1.html" class='box2-item'>
-                                <p>华南商界名家百人系列讲座：广百物流高艺林董事长谈物流成本</p>
-                                <div class='box2-mask'>
-                                    <p>点击进入</p>
-                                </div>
-                            </a>
-                            </p>
+                            <%}%>
+                            
                         </div>
     
                     </div>
@@ -166,7 +138,7 @@
         <section class='container-types train'>
             <p class='part-title train-title'>
                 咨询培训
-                <a href="./pages/consult1.html" class='toMore'>more</a>
+                <a href="/showArticle/catalog?sort=train&type=1" class='toMore'>more</a>
     
             </p>
     

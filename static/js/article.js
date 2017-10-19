@@ -5,7 +5,7 @@ function praise(obj){
     $.ajax({   
         type: 'get',  
         dataType: "json",
-        url: 'http://localhost:3000/showArticle/praise?id='+id+'&sort='+sort,      //提交到一般处理程序请求数据   
+        url: 'http://localhost:3000/OperationData/addPraise?id='+id+'&sort='+sort,      //提交到一般处理程序请求数据   
         
         success: function() {
             
