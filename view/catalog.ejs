@@ -44,15 +44,14 @@
                         近期热门文章
                     </div>
                     <ul class="hotBox">
+                     <% for(var i =  0;i < HotArticle.length ;i++){%>
+                     
                         <li class="hot-Item">
-                            <a href="construct1.html">名家百人讲座</a>
+                            <a href='/showArticle/content?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'><%=HotArticle[i].title %></a>
                         </li>
-                        <li class="hot-Item">
-                            <a href="construct2.html">智库动态</a>
-                        </li>
-                        <li class="hot-Item">
-                            <a href="construct2.html">智库动态</a>
-                        </li>
+                        <%}%>
+                    
+                     
                     </ul>
                 </div>
 

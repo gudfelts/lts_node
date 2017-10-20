@@ -131,5 +131,14 @@ module.exports = {
         resolve(result);
       });
     })
-  }
+  },
+
+  getHotArticle : (val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getHotArticle, val, (err, result) => {
+        if (err) throw err;
+        resolve(result);
+      });
+    })
+  },
 };

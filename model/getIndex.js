@@ -126,14 +126,19 @@ const getExchange = async ()=>{
   let aNew = await getIndex("exchange", [0, 8]);
   return aNew;
 }
+const getTrain = async ()=>{
+  let aNew = await getIndex("train", [0, 5]);
+  return aNew;
+}
 const getData = async () => {
-  let info = await getInfo();
+  let info     = await getInfo();
   let research = await getResearch();
   let exchange = await getExchange();
+  let train    = await getTrain();
 
   console.log(exchange);
   
-  return {info,research,exchange};
+  return {info,research,exchange,train};
 };
 
 module.exports = async () => {

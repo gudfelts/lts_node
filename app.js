@@ -4,7 +4,7 @@ const path        = require("path");
 const fs          = require("fs");
 const router      = require("koa-router");
 const bodyParser  = require("koa-bodyparser");
-const logger      = require("koa-logger");
+const koaLogger   = require("koa-logger");
 const cors        = require("koa2-cors");
 const views       = require('koa-views');
 const config      = require("config-lite")(__dirname);
@@ -13,11 +13,14 @@ const renderRoute = require('./router/renderRouter');
 const session     = require('koa-session');
 const staticCache = require('koa-static-cache');
 const favicon     = require('koa-favicon');
-
+const logUtil     = require('./utils/log');
 const routers     = router();
 const app         = new koa();
+
+// const env = process.env.NODE_ENV;
+
 app.use(bodyParser({formLimit: '1mb'}));
-app.use(logger());
+app.use(koaLogger());
 
 
 app.keys = ['lts_node'];
@@ -57,14 +60,23 @@ app.use(async (ctx, next)=> {
   ctx.set("Access-Control-Allow-Credentials", true);
   await next();
 })
-app.use(async (ctx, next) => {
-  const start = new Date();
-  await next();
-  const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
-});
 
 
+// app.use(env !== 'production' ? koaLogger() : async (ctx, next) => {
+// 	// 响应开始时间
+// 	const start = new Date();
+// 	// 响应间隔时间
+// 	let ms;
+// 	try {
+// 		// 开始进入到下一个中间件
+// 		await next();
+// 		ms = new Date() - start;
+// 		logUtil.logResponse(ctx, ms);		// 记录响应日志
+// 	} catch (error) {
+// 		ms = new Date() - start;
+// 		logUtil.logError(ctx, error, ms);	// 记录异常日志
+// 	}
+// });
 
 //设置静态资源
 const staticPath = "/static";

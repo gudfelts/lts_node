@@ -2,7 +2,7 @@
  * @Author: 肖志豪 
  * @Date: 2017-10-06 11:08:26 
  * @Last Modified by: 肖志豪
- * @Last Modified time: 2017-10-19 15:22:34
+ * @Last Modified time: 2017-10-20 16:14:20
  */
 
 @import 'mixin.scss';
@@ -369,89 +369,43 @@ body {
 
 
 /*咨询培训 Consultation training*/
+.bottom-block{
+    height: 500px;
+}
 .train-title::after{
     content: 'Consultation Training';
 }
-.train{
-    position: relative;
+.contruction-title::after{
+    content: 'Contruction';
 }
-.card-box{
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
-    -ms-flex-flow: wrap;
-        flex-flow: wrap;
+.train,.contruction{
+    float: left;
+    width: 42%;
+    margin: 48px;
 }
-.index-card{
-    width: 300px;
-    height: 90px;
+.train-box,.contruction-box{
+    width: 90%;
+    margin: 0 auto;
+}
+.train-item,.contruction-item{
     display: inline-block;
-    margin: 0 45px;
-    margin-bottom: 20px;
-    -webkit-box-shadow: 0 12px 24px 0 rgba(7,17,27,0.2);
-            box-shadow: 0 12px 24px 0 rgba(7,17,27,0.2);
-    -webkit-transition: all .4s;
-    transition: all .4s;
-   
-
-    &:hover{
-        -webkit-box-shadow: 0 15px 35px 5px rgba(7,17,27,0.2);
-                box-shadow: 0 15px 35px 5px rgba(7,17,27,0.2);
-    
-    }
-}
-.card-time{
-    width: 20%;
-    line-height: 35px;
-    text-align: center;
-    height: 100%;
-    float: left;    
-    p:nth-child(1){
-        width: 100%;
-        height: 50%;
-        background-color: $green;
-        color: white;            
-        border-bottom: 1px solid white;
-        
-    }
-    p:nth-child(2){
-        width: 100%;
-        height: 50%;
-        
-        background-color: $green;
-        color: white;            
-    }
-    
-}
-
-.card-content{
-    width: 80%;
-    height: 90px;
-    float: left;    
-    display: table;
-    position: relative;
-    background-color: #217980;
-   
-}
-.card-content-inner{
-    display: table-cell;
-    vertical-align: middle;
-    width: 100%;
-    padding: 0 8px;
-    text-align: left;
-    font-size: 18px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    padding: 5px 0 5px 20px ;
+    max-height: 30px;
     overflow: hidden;
-    // text-align: center;
-    p{  
-        height: 70px;
+    margin:10px 25px;
+
+    position: relative;
+    &::before{
+        content: '';
         display: block;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        overflow: hidden;
-        color: white;    
-        position: relative;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color:   #006771;   
+        position: absolute;
+        top: 15px; 
+        left:0px; 
     }
 }

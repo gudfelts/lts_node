@@ -6,6 +6,7 @@ const getNum = require("../model/OperationData").getNum;
 const getTeam = require("../model/OperationData").getTeam;
 const addBrowse = require("../model/OperationData").addBrowse;
 const getTeamOne = require("../model/OperationData").getTeamOne;
+const getHotArticle = require("../model/OperationData").getHotArticle;
 
 router.get("/showArticle/content", async ctx => {
   const id = ctx.query.id,
@@ -29,6 +30,9 @@ router.get("/showArticle/catalog", async ctx => {
   const type = ctx.query.type;
   let start = ctx.query.start || 0;
   let result = await getCatalog(sort, type, start);
+
+  //获取近期热门文章
+  let HotArticle = await getHotArticle(sort);
   let pageCount = await getNum(sort);
   
   if (pageCount % 15 > 0) {
@@ -37,7 +41,8 @@ router.get("/showArticle/catalog", async ctx => {
     pageCount = pageCount / 15;
   }
   result.data.pageCount = pageCount;
-
+  result.HotArticle = HotArticle;
+  console.log(HotArticle);
   await ctx.render("catalog", result);
 });
 

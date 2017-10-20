@@ -2,6 +2,7 @@ const SQL = require("config-lite")(__dirname).sql;
 const TYPE = require("config-lite")(__dirname).type;
 const operateDB = require("../db/operateDB");
 
+//储存文章
 module.exports.saveArticle = async (sort, val) => {
   switch (sort) {
     case "information":
@@ -24,6 +25,7 @@ module.exports.saveArticle = async (sort, val) => {
   }
 };
 
+//删除文章
 module.exports.deleteArticle = async (sort, id, type) => {
   switch (sort) {
     case "information":
@@ -46,6 +48,7 @@ module.exports.deleteArticle = async (sort, id, type) => {
   }
 };
 
+//获取单个文章
 module.exports.getArticleOne = async (sort, id, type) => {
   let result = null;
   switch (sort) {
@@ -71,6 +74,7 @@ module.exports.getArticleOne = async (sort, id, type) => {
   return { data: result[0] ,sort};
 };
 
+//获取目录
 module.exports.getCatalog = async (sort, type, start) => {
   let data = null;
 
@@ -99,6 +103,7 @@ module.exports.getCatalog = async (sort, type, start) => {
   return { data, title, sorts: TYPE[sort], sort };
 };
 
+//首页获取数据
 module.exports.getIndex = async (sort, val) => {
   switch (sort) {
     case "information":
@@ -110,9 +115,14 @@ module.exports.getIndex = async (sort, val) => {
     case "exchange":
       result = await operateDB.getIndex(SQL.getIndexExchange, val);
       break;
+    case "train":
+      result = await operateDB.getIndex(SQL.getIndexTrain, val);  
+      break;
   }
   return result;
 };
+
+//获取表格条数
 module.exports.getNum = async sort => {
   switch (sort) {
     case "information":
@@ -139,6 +149,8 @@ module.exports.getNum = async sort => {
   }
   return result[0]["count(1)"];
 };
+
+//点赞
 module.exports.addPraise = async (sort, id)=>{
   switch (sort) {
     case "information":
@@ -163,6 +175,7 @@ module.exports.addPraise = async (sort, id)=>{
 
 }
 
+//增加浏览数
 module.exports.addBrowse = async (sort, id, type) => {
   switch (sort) {
     case "information":
@@ -185,6 +198,32 @@ module.exports.addBrowse = async (sort, id, type) => {
   }
 };
 
+//获取近期热门文章
+module.exports.getHotArticle = async sort => {
+
+  let result = null;
+  switch (sort) {
+    case "information":
+      result = await operateDB.getHotArticle(sort);
+      break;
+    case "achievement":
+      result = await operateDB.getHotArticle(sort);
+      break;
+    case "research":
+      result = await operateDB.getHotArticle(sort);
+      break;
+    case "exchange":
+      result = await operateDB.getHotArticle(sort);
+      break;
+    case "train":
+      result = await operateDB.getHotArticle(sort);
+      break;
+    default:
+      result = await operateDB.getHotArticle(sort);
+      break;
+  }
+  return result.splice(15);
+};
 //专家团队
 module.exports.getTeam = async (start) =>  operateDB.getTeam(start);
 module.exports.getTeamOne = async (id) =>  operateDB.getTeamOne(id);

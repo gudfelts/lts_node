@@ -117,7 +117,7 @@ router.get('/Team',async ctx=>{
   ctx.response.body = result;
 })
 //获取专家信息  
-router.get('/TeamOne',ctx=>{
+router.get('/TeamOne',async ctx=>{
   const name = ctx.query.id;
 
   const result = await getTeamOne(id);
@@ -126,7 +126,7 @@ router.get('/TeamOne',ctx=>{
     
 })
 //修改专家信息
-router.post('/TeamOne',ctx=>{
+router.post('/TeamOne',async ctx=>{
   let data = ctx.request.body.params;
   const {id,name,content,position,sex}= data;
   

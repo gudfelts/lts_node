@@ -366,10 +366,12 @@ footer{
 .hot-Item::before{
     content: "\02022";
     color: #006771;
-    font-size: 25.6px;
+    font-size: 25px;
 }
 .hot-Item a{
     margin-left: 10px;
+    font-size: 17px;
+    
 }
   /*默认选中第一个,用ID选择器提高优先级*/
   #active {

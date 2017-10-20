@@ -1,5 +1,6 @@
 const router = require("koa-router")();
-const api = require("config-lite")(__dirname).api.admin.user;
+// const api = require("config-lite")(__dirname).api.admin.user;
+const api = require("../config/default").api.admin.user;
 const getUser = require("../db/operateDB").getUser;
 const updateUser = require("../db/operateDB").updateUser;
 

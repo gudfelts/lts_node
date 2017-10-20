@@ -135,114 +135,37 @@
     
         </section>
         <!--咨询培训、智库建设-->
-        <section class='container-types train'>
+        <section class='container-types bottom-block'>
+        <div class='train'>
             <p class='part-title train-title'>
                 咨询培训
                 <a href="/showArticle/catalog?sort=train&type=1" class='toMore'>more</a>
     
             </p>
     
-            <div class='card-box'>
-                <div class='index-card'>
-                    <a href="info/info-1.html">
-                        <div class='card-time'>
-                            <p>9月</p>
-                            <p>30号</p>
-                        </div>
-                        <div class='card-content'>
-                            <div class='card-content-inner'>
-                                <p>
-                                    王先庆给2016年顺德商会协会秘书长培训班授课
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class='index-card'>
-                    <a href="info/info-1.html">
-    
-                        <div class='card-time'>
-                            <p>8月</p>
-                            <p>11号</p>
-                        </div>
-                        <div class='card-content'>
-                            <div class='card-content-inner'>
-                                <p>
-                                    王先庆给广东省国土资源厅干部培训班授课
-    
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class='index-card'>
-                    <a href="info/info-1.html">
-    
-                        <div class='card-time'>
-                            <p>6月</p>
-                            <p>2号</p>
-                        </div>
-    
-                        <div class='card-content'>
-                            <div class='card-content-inner'>
-                                <p>
-                                    王先庆在阳江进行“新常态下创新驱动”专题培训班主讲
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class='index-card'>
-                    <a href="info/info-1.html">
-    
-                        <div class='card-time'>
-                            <p>6月</p>
-                            <p>2号</p>
-                        </div>
-    
-                        <div class='card-content'>
-                            <div class='card-content-inner'>
-                                <p>
-                                    王先庆贵州荔波县2016党政干部培训班授课
-    
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class='index-card'>
-                    <a href="info/info-1.html">
-    
-                        <div class='card-time'>
-                            <p>5月</p>
-                            <p>16号</p>
-                        </div>
-                        <div class='card-content'>
-                            <div class='card-content-inner'>
-                                <p>
-                                    王先庆给商务部第四期互联网+传统专业市场培训班授课
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class='index-card'>
-                    <a href="info/info-1.html">
-    
-                        <div class='card-time'>
-                            <p>11月</p>
-                            <p>9号</p>
-                        </div>
-                        <div class='card-content'>
-                            <div class='card-content-inner'>
-                                <p>
-                                    王先庆给商务部第十四期商贸物流与"互联网+物流"研修班授课
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+            <div class='train-box'>
+            <%for(var i = 0,len = train.length;i < len;i++){%>
+                <a href='/showArticle/content?id=<%=train[i].id%>&type=<%=train[i].type%>&sort=train' class='train-item'>
+                               <%-train[i].title%>                           
+                </a>
+            <%}%>
             </div>
+        </div>
+         <div class='contruction'>
+            <p class='part-title contruction-title'>
+                智库建设
+                <a href="/showArticle/catalog?sort=contruction&type=1" class='toMore'>more</a>
+    
+            </p>
+    
+            <div class='contruction-box'>
+            <%for(var i = 0,len = train.length;i < len;i++){%>
+                <a href='/showArticle/content?id=<%=train[i].id%>&type=<%=train[i].type%>&sort=train' class='contruction-item'>
+                               <%-train[i].title%>                           
+                </a>
+            <%}%>
+            </div>
+        </div>
         </section>
         <!-- </div> -->
     
