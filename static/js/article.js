@@ -27,7 +27,6 @@ $().ready(function(e) {
     var $oBtn = $('.parise-box');
     
     $oBtn.click(function(){
-        console.log("d")
         praise(this);
     })
 })    

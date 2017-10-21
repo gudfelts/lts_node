@@ -8,7 +8,6 @@ const trimHtml = require("trim-html");
  */
 const pickSummary = content => {
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
-  console.log(summary);
   return summary;
 };
 
@@ -19,7 +18,6 @@ const pickBanner = aNew => {
   let flag = false;
   for (let i = 0; i < aNew.length; i++) {
     let content = aNew[i].content;
-    // console.log(content);
     if (patt1.test(content)) {
       banner = aNew[i];
       //去掉引号
@@ -66,7 +64,6 @@ const getInfo = async () => {
 
     while (NUM >= info_n) {
       aNew = await getIndex("information", [info_m, info_n]);
-      console.log(aNew);
       let data = pickBanner(aNew);
 
       if (!!data) {
@@ -141,7 +138,6 @@ const getData = async () => {
   let train    = await getTrain();
   let construction    = await getConstruction();
 
-  console.log(construction);
   
   return {info,research,exchange,train,construction};
 };

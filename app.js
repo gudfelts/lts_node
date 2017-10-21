@@ -14,17 +14,16 @@ const session     = require('koa-session');
 const staticCache = require('koa-static-cache');
 const favicon     = require('koa-favicon');
 const onerror     = require('koa-onerror');
-// const catchError  = require('./middleware/catchError').catchError;
+const catchError  = require('./middleware/catchError').catchError;
 const logUtil     = require('./utils/log');
 const routers     = router();
 const app         = new koa();
 
-// const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV;
+
 onerror(app);
 app.use(bodyParser({formLimit: '1mb'}));
-app.use(koaLogger());
-// app.use(catchError());
-
+app.use(catchError);
 
 app.keys = ['lts_node'];
 
@@ -65,21 +64,23 @@ app.use(async (ctx, next)=> {
 })
 
 
-// app.use(env !== 'production' ? koaLogger() : async (ctx, next) => {
-// 	// 响应开始时间
-// 	const start = new Date();
-// 	// 响应间隔时间
-// 	let ms;
-// 	try {
-// 		// 开始进入到下一个中间件
-// 		await next();
-// 		ms = new Date() - start;
-// 		logUtil.logResponse(ctx, ms);		// 记录响应日志
-// 	} catch (error) {
-// 		ms = new Date() - start;
-// 		logUtil.logError(ctx, error, ms);	// 记录异常日志
-// 	}
-// });
+// 测试 配置控制台日志中间件
+// 正式 运行日志中间件
+app.use(env !== 'production' ? koaLogger() : async (ctx, next) => {
+	// 响应开始时间
+	const start = new Date();
+	// 响应间隔时间
+	let ms;
+	try {
+		// 开始进入到下一个中间件
+		await next();
+		ms = new Date() - start;
+		logUtil.logResponse(ctx, ms);		// 记录响应日志
+	} catch (error) {
+		ms = new Date() - start;
+		logUtil.logError(ctx, error, ms);	// 记录异常日志
+	}
+});
 
 //设置静态资源
 const staticPath = "/static";

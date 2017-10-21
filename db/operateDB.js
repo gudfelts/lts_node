@@ -35,7 +35,6 @@ module.exports = {
   getCatalog : val =>{
     return new Promise((resolve, reject) => {
       query(SQL.getCatalog, val, (err, result) => {
-        console.log()
         if (err) throw err;
         resolve(result);
       });
@@ -45,7 +44,6 @@ module.exports = {
   getArticleOne : val =>{
     return new Promise((resolve, reject) => {
       query(SQL.getArticleOne, val, (err, result) => {
-        console.log()
         if (err) throw err;
         resolve(result);
       });

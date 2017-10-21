@@ -56,7 +56,6 @@ router.get(api.getCatalog, async ctx => {
   const sort = ctx.query.sort;
   const type = ctx.query.type;
   let start = parseInt(ctx.query.start) || 0;
-  console.log(sort, type, start);
   let result = await getCatalog(sort, type, start);
 
   if (start === 0) {
