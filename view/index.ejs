@@ -151,17 +151,17 @@
             <%}%>
             </div>
         </div>
-         <div class='contruction'>
-            <p class='part-title contruction-title'>
+         <div class='construction'>
+            <p class='part-title construction-title'>
                 智库建设
-                <a href="/showArticle/catalog?sort=contruction&type=1" class='toMore'>more</a>
+                <a href="/showArticle/catalog?sort=construction&type=1" class='toMore'>more</a>
     
             </p>
     
-            <div class='contruction-box'>
-            <%for(var i = 0,len = train.length;i < len;i++){%>
-                <a href='/showArticle/content?id=<%=train[i].id%>&type=<%=train[i].type%>&sort=train' class='contruction-item'>
-                               <%-train[i].title%>                           
+            <div class='construction-box'>
+            <%for(var i = 0,len = construction.length;i < len;i++){%>
+                <a href='/showArticle/content?id=<%=construction[i].id%>&type=<%=construction[i].type%>&sort=construction' class='construction-item'>
+                               <%-construction[i].title%>                           
                 </a>
             <%}%>
             </div>

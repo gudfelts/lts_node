@@ -130,15 +130,20 @@ const getTrain = async ()=>{
   let aNew = await getIndex("train", [0, 5]);
   return aNew;
 }
+const getConstruction = async ()=>{
+  let aNew = await getIndex("construction", [0, 5]);
+  return aNew;
+}
 const getData = async () => {
   let info     = await getInfo();
   let research = await getResearch();
   let exchange = await getExchange();
   let train    = await getTrain();
+  let construction    = await getConstruction();
 
-  console.log(exchange);
+  console.log(construction);
   
-  return {info,research,exchange,train};
+  return {info,research,exchange,train,construction};
 };
 
 module.exports = async () => {

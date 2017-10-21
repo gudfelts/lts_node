@@ -114,9 +114,12 @@ module.exports.getIndex = async (sort, val) => {
       break;
     case "exchange":
       result = await operateDB.getIndex(SQL.getIndexExchange, val);
-      break;
+      break;construction
     case "train":
       result = await operateDB.getIndex(SQL.getIndexTrain, val);  
+      break;
+    case "construction":
+      result = await operateDB.getIndex(SQL.getIndexConstruction, val);  
       break;
   }
   return result;

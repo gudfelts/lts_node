@@ -52,7 +52,10 @@ module.exports = {
     getIndexExchange: "select title,id,type from exchange order by id desc limit ?,?",
     //首页咨询培训 
     getIndexTrain: "select title,id,type from train order by id desc limit ?,?",
-    //首页咨询培训 
+    //首页智库建设 
+    getIndexConstruction: "select title,id,type from construction order by id desc limit ?,?",
+    //热门文章
+ 
     getHotArticle: "select title,id,type from(select title,id,type,browse from ?? order by id desc limit 20) as total order by browse",
 
     //获取管理员信息

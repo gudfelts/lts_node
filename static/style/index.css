@@ -352,22 +352,22 @@ body {
   content: 'Consultation Training';
 }
 
-.contruction-title::after {
-  content: 'Contruction';
+.construction-title::after {
+  content: 'construction';
 }
 
-.train, .contruction {
+.train, .construction {
   float: left;
   width: 42%;
   margin: 48px;
 }
 
-.train-box, .contruction-box {
+.train-box, .construction-box {
   width: 90%;
   margin: 0 auto;
 }
 
-.train-item, .contruction-item {
+.train-item, .construction-item {
   display: inline-block;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -378,7 +378,7 @@ body {
   position: relative;
 }
 
-.train-item::before, .contruction-item::before {
+.train-item::before, .construction-item::before {
   content: '';
   display: block;
   width: 10px;

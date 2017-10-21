@@ -25,17 +25,16 @@
             <div class="boxLeft">
                 <!--左侧导航栏上面的装饰-->
                 <div class="navTitle">
-                        <a href="#">智库建设</a>
+                       <a href="#"><%=title%></a>
                 </div>
 
                 <!--左侧导航栏-->
                 <ul class="itemUl">
+                    <% for(var i = 0;i < sorts.length;i++){%>
                     <li class="itemLi">
-                        <a href="construct1.html" id="active">名家百人讲座</a>
+                        <a href="/showArticle/catalog?type=<%=i+1%>&sort=<%=sort%>" <%if(i==type-1){%> id='active'<%}%> ><%=sorts[i]%></a>
                     </li>
-                    <li class="itemLi">
-                        <a href="construct2.html">智库动态</a>
-                    </li>
+                    <%}%>
                 </ul>
 
 
@@ -44,12 +43,13 @@
                         近期热门文章
                     </div>
                     <ul class="hotBox">
-                     <% for(var i =  0;i < HotArticle.length ;i++){%>
+                    <%if(!!HotArticle){
+                     for(var i =  0;i < HotArticle.length ;i++){%>
                      
                         <li class="hot-Item">
                             <a href='/showArticle/content?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'><%=HotArticle[i].title %></a>
                         </li>
-                        <%}%>
+                        <%}}%>
                     
                      
                     </ul>
@@ -63,18 +63,26 @@
                     <%=title%>
                 </div>
                 <div class="detail">
+                    <%if(data.length > 0){%>
+                
                     <ul class='detail-box'>
-                <% for(var i =  0;i < data.length ;i++){%>
+                    
+                        <%for(var i =  0;i < data.length ;i++){%>
                     
                         <li>
                             <a href='/showArticle/content?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><%=data[i].title %></a>
                         </li>
-                    <%}%>
-                        
+                       <%}%> 
                     </ul>
+                    <%}%>
+                    <%if(data.length === 0){%>
+                        <p class='datail-warm'>暂无内容</p>
+                    <%}%>                    
                 </div>
+                <%if(data.length > 0){%>
                 <!--分页组件-->
-                <div class="M-box" data-page=<%=data.pageCount%> data-sort=<%=sort%> data-type=<%=data[0].type%>></div>
+                <div class="M-box" data-page=<%=data.pageCount%> data-sort=<%=sort%> data-type=<%=type%>></div>
+                <%}%>
             </div>
         </div>
     </div>

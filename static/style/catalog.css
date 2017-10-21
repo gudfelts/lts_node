@@ -25,7 +25,10 @@
     background-color: gray;
 }
 
-
+.detail{
+    position: relative;
+    min-height: 400px;
+}
 .detail ul{
    
     width: 100%;
@@ -49,7 +52,17 @@
     font-size: 19.2px;
     color: rgb(51, 51, 51);
 }
-
+.datail-warm{
+    position: absolute;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: 50% 50%;
+    font-size: 45px;
+    letter-spacing: 10px;
+    color: gray;
+}
 /*分页组件*/
 .M-box{
     /* float: left;

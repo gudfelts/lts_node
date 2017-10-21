@@ -30,7 +30,7 @@ router.get("/showArticle/catalog", async ctx => {
   const type = ctx.query.type;
   let start = ctx.query.start || 0;
   let result = await getCatalog(sort, type, start);
-
+  
   //获取近期热门文章
   let HotArticle = await getHotArticle(sort);
   let pageCount = await getNum(sort);
@@ -40,7 +40,10 @@ router.get("/showArticle/catalog", async ctx => {
   } else {
     pageCount = pageCount / 15;
   }
+  console.log(pageCount);
+  
   result.data.pageCount = pageCount;
+  result.type = parseInt(type);
   result.HotArticle = HotArticle;
   console.log(HotArticle);
   await ctx.render("catalog", result);
