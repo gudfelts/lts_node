@@ -13,14 +13,17 @@ const renderRoute = require('./router/renderRouter');
 const session     = require('koa-session');
 const staticCache = require('koa-static-cache');
 const favicon     = require('koa-favicon');
+const onerror     = require('koa-onerror');
+// const catchError  = require('./middleware/catchError').catchError;
 const logUtil     = require('./utils/log');
 const routers     = router();
 const app         = new koa();
 
 // const env = process.env.NODE_ENV;
-
+onerror(app);
 app.use(bodyParser({formLimit: '1mb'}));
 app.use(koaLogger());
+// app.use(catchError());
 
 
 app.keys = ['lts_node'];
@@ -97,7 +100,11 @@ app.use(apiRoute.routes())
 // 渲染 路由
 app.use(renderRoute.routes())
 .use(renderRoute.allowedMethods());
+app.on('error', (err, ctx) =>{
+    console.log(err)
+    ctx.status = 404;
 
+});
 
 app.listen(config.serverPort, () => console.log(`Server is running at ${config.serverPort}`));
 
