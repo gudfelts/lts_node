@@ -19,7 +19,7 @@ const logUtil     = require('./utils/log');
 const routers     = router();
 const app         = new koa();
 
-const env = process.env.NODE_ENV || 'production';;
+const env = process.env.NODE_ENV;
 
 onerror(app);
 app.use(bodyParser({formLimit: '1mb'}));
