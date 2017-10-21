@@ -5,7 +5,7 @@ function render(data,sort){
     var aLi = [];
     for(var i = 0;i < data.length;i++){
         var olink = $('<a></a>');
-        var href = '/showArticle/content?id='+data[i].id+'&type='+data[i].type+'&sort='+sort;
+        var href = '/showArticle/article?id='+data[i].id+'&type='+data[i].type+'&sort='+sort;
         olink.attr('href',href).text(data[i].title);
         var oLi = $('<li></li>').html(olink);
         aLi.push(oLi);

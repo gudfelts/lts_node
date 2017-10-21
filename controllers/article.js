@@ -8,7 +8,17 @@ const getTeam = require("../model/OperationData").getTeam;
 const getTeamOne = require("../model/OperationData").getTeamOne;
 const getNum = require("../model/OperationData").getNum;
 
-router.post(api.postArticle, async ctx => {
+
+/* HTTP动词
+    GET     //查询
+    POST    //新建
+    PUT     //替换
+    PATCH   //更新部分属性
+    DELETE  //删除指定ID的文档
+*/
+
+//存储文章
+router.post('/article', async ctx => {
   let article = ctx.request.body;
   const type = article.selectedOptions;
   delete article.selectedOptions;
@@ -25,16 +35,10 @@ router.post(api.postArticle, async ctx => {
   };
   return;
 });
-router.get(api.deleteArticle, async ctx => {
-  const id = ctx.query.id,
-    sort = ctx.query.sort,
-    type = ctx.query.type;
 
-  await deleteArticle(sort, id, type);
-});
 
-//批量删除
-router.post(api.batchDeleteArticle, async ctx => {
+//删除
+router.delete('/article', async ctx => {
   let data = ctx.request.body.params;
   let sort = ctx.request.body.sort;
   let queue = [];
@@ -51,8 +55,37 @@ router.post(api.batchDeleteArticle, async ctx => {
   });
 });
 
+
+
+//获取单个文章
+router.get('/article', async ctx => {
+  const id = ctx.query.id,
+    sort = ctx.query.sort,
+    type = ctx.query.type;
+
+  const data = await getArticleOne(sort, id, type);
+
+  ctx.response.body = data;
+});
+//修改文章
+router.patch('/article', async ctx => {
+  let data = ctx.request.body.params;
+
+  const id = data.id,
+    sort = data.sort,
+    type = data.type;
+    content = data.content;
+    time = data.time;
+    source = data.source;
+    author = data.author;
+
+  const result = await getArticleOne(sort, id, type, content, time, source, author);
+
+  ctx.response.body = result;
+});
+
 //获取目录
-router.get(api.getCatalog, async ctx => {
+router.get('/catalog', async ctx => {
   const sort = ctx.query.sort;
   const type = ctx.query.type;
   let start = parseInt(ctx.query.start) || 0;
@@ -69,32 +102,6 @@ router.get(api.getCatalog, async ctx => {
 
     result.pageCount = pageCount;
   }
-  ctx.response.body = result;
-});
-
-router.get(api.getArticle, async ctx => {
-  const id = ctx.query.id,
-    sort = ctx.query.sort,
-    type = ctx.query.type;
-
-  const data = await getArticleOne(sort, id, type);
-
-  ctx.response.body = data;
-});
-//修改文章
-router.post(api.editArticle, async ctx => {
-  let data = ctx.request.body.params;
-
-  const id = data.id,
-    sort = data.sort,
-    type = data.type;
-    content = data.content;
-    time = data.time;
-    source = data.source;
-    author = data.author;
-
-  const result = await getArticleOne(sort, id, type, content, time, source, author);
-
   ctx.response.body = result;
 });
 //获取团队列表
@@ -124,8 +131,18 @@ router.get('/TeamOne',async ctx=>{
   ctx.response.body = result;
     
 })
-//修改专家信息
+//增加专家信息
 router.post('/TeamOne',async ctx=>{
+  let data = ctx.request.body.params;
+  const {id,name,content,position,sex}= data;
+  
+  const result = await updateTeamOne(id,name,content,position,sex);
+
+  ctx.response.body = result;
+    
+})
+//修改专家信息
+router.patch('/TeamOne',async ctx=>{
   let data = ctx.request.body.params;
   const {id,name,content,position,sex}= data;
   

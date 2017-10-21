@@ -8,7 +8,8 @@ const addBrowse = require("../model/OperationData").addBrowse;
 const getTeamOne = require("../model/OperationData").getTeamOne;
 const getHotArticle = require("../model/OperationData").getHotArticle;
 
-router.get("/showArticle/content", async ctx => {
+//获取文章
+router.get("/showArticle/article", async ctx => {
   const id = ctx.query.id,
     sort = ctx.query.sort,
     type = ctx.query.type;
@@ -47,7 +48,7 @@ router.get("/showArticle/catalog", async ctx => {
   await ctx.render("catalog", result);
 });
 
-
+//获取专家
 router.get('/showTeam/person',async ctx=>{
     const name = ctx.query.id;
   
@@ -55,7 +56,8 @@ router.get('/showTeam/person',async ctx=>{
   
     await ctx.render("person", result);
 })
-router.get('/showTeam',async ctx=>{
+//获取专家目录
+router.get('/showTeam/catalog',async ctx=>{
   let start = parseInt(ctx.query.start) || 0;
   let result = await getTeam(start);
 

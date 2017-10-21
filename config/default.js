@@ -24,10 +24,9 @@ module.exports = {
       },
       article: {
         self: "/admin/article",
-        postArticle: "/postArticle",
-        getCatalog: "/getCatalog",
+        article: "/article",
+        catalog: "/catalog",
         getArticle: "/getArticle",
-        deleteArticle: "/deleteArticle",
         batchDeleteArticle: "/batchDeleteArticle",
         editArticle: "/editArticle"
       },
@@ -64,7 +63,7 @@ module.exports = {
     updatePassword: "update admin set password = ?",
 
     //点赞
-    praise: "update ?? set prasise = praise + 1 where id = ?",
+    praise: "update ?? set praise = praise + 1 where id = ?",
     //获取团队列表
     getTeam: "select name,position,sex from team limit ?,20",
     //获取专家信息

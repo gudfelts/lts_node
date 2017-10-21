@@ -10,9 +10,10 @@ router.post(api.login, async ctx => {
   if (requestData.password && requestData.account) {
     const account = [];
     account.push(requestData.account);
-    let user = await getUser(account);
-   
-    
+    let user = await getUser(account).catch(err => {
+      ctx.throw(500, "服务器内部错误-查找admin错误！");
+    });
+
     if (user && user.password === requestData.password) {
       ctx.session.isLogin = true;
       ctx.session.loginUser = user;

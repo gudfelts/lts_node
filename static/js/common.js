@@ -49,13 +49,13 @@ function toTop() {
   //当浏览器卷去的高度超过一屏幕才显示回到顶部，否则隐藏
 }
 $().ready(function(e) {
-  $(".nav_item").mouseenter(function() {
-    $(".item_content").hide(0);
-    showDiv($(this).children(".item_content"));
-  });
-  $(".nav_item").mouseleave(function() {
-    hideDiv($(this).children(".item_content"), true);
-  });
+  // $(".nav_item").mouseenter(function() {
+  //   $(".item_content").hide(0);
+  //   showDiv($(this).children(".item_content"));
+  // });
+  // $(".nav_item").mouseleave(function() {
+  //   hideDiv($(this).children(".item_content"), true);
+  // });
 
-  toTop();
+  // toTop();
 });
