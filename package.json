@@ -4,13 +4,16 @@
   "description": "流通所node服务端",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+		"lint": "eslint *.js server/**",
+		"dev": "export NODE_ENV=development && nodemon --harmony app.js",
+		"deploy_setup": "pm2 deploy ecosystem.config.js production setup",
+		"deploy": "pm2 deploy ecosystem.config.js production"
+	},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gudfelts/lts_node.git"
   },
-  "author": "hao",
+  "author": "XHIZHIHAO",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gudfelts/lts_node/issues"
