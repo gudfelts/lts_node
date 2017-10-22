@@ -1,16 +1,13 @@
 const getIndex = require("../model/OperationData").getIndex;
 const getNum = require("../model/OperationData").getNum;
 const SQL = require("config-lite")(__dirname).sql;
-const trimHtml = require("trim-html");
+const trimHtml = require("../utils/trim-html");
 /**
  * 截取摘要
  * @param {*} content 
  */
-const pickSummary = content => {
-  const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
-  return summary;
-};
-
+const pickSummary = content => trimHtml(content, { preserveTags: false, limit: 70 }).html;
+   
 const pickBanner = aNew => {
   let banner = {};
   const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
@@ -42,7 +39,10 @@ const getInfo = async () => {
   //获取表格行数
   const NUM = await getNum("information");
   //获取从info_m到info_n的数据
-  let aNew = await getIndex("information", [info_m, info_n]);
+  let aNew;
+ 
+  aNew = await getIndex("information", [info_m, info_n]);
+ 
   //获取带图的文章
   let data = pickBanner(aNew);
   //从info_m到info_n的文章有一个带图的文章
@@ -119,27 +119,30 @@ const getResearch = async () => {
   return research;
 };
 
-const getExchange = async ()=>{
+const getExchange = async () => {
   let aNew = await getIndex("exchange", [0, 8]);
   return aNew;
-}
-const getTrain = async ()=>{
+};
+const getTrain = async () => {
   let aNew = await getIndex("train", [0, 5]);
   return aNew;
-}
-const getConstruction = async ()=>{
+};
+const getConstruction = async () => {
   let aNew = await getIndex("construction", [0, 5]);
   return aNew;
-}
+};
 const getData = async () => {
-  let info     = await getInfo();
-  let research = await getResearch();
-  let exchange = await getExchange();
-  let train    = await getTrain();
-  let construction    = await getConstruction();
-
+  try {
+    let info = await getInfo();
+    let research = await getResearch();
+    let exchange = await getExchange();
+    let train = await getTrain();
+    let construction = await getConstruction();
+    return { info, research, exchange, train, construction };
   
-  return {info,research,exchange,train,construction};
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = async () => {

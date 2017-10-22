@@ -8,7 +8,8 @@ module.exports = {
     return new Promise((resolve, reject) => {
      
       query(SQL.getUser, val,(err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
+        
         resolve(result[0]);
 
       });
@@ -18,7 +19,7 @@ module.exports = {
   updateUser : val =>{
     return new Promise((resolve, reject) => {
       query(SQL.changePassword, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
         resolve(result);
       });
     });
@@ -27,7 +28,7 @@ module.exports = {
   getIndex : (sql,val)=>{
     return new Promise((resolve, reject) => {
       query(sql, val, (err, result) => {
-        if (err) throw err;
+        if (err) reject({message:'数据库出错',status:404});
         resolve(result);
       });
     });
@@ -35,7 +36,7 @@ module.exports = {
   getCatalog : val =>{
     return new Promise((resolve, reject) => {
       query(SQL.getCatalog, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
         resolve(result);
       });
     })
@@ -44,8 +45,8 @@ module.exports = {
   getArticleOne : val =>{
     return new Promise((resolve, reject) => {
       query(SQL.getArticleOne, val, (err, result) => {
-        if (err) throw err;
-        resolve(result);
+        if(err) reject({message:'数据库出错',status:404});
+        resolve(result[0]);
       });
     })
   },
@@ -57,7 +58,8 @@ module.exports = {
         SQL.saveArticle,
         Article,
         function(err, result) {
-          if (err) throw err;
+          if(err) reject({message:'数据库出错',status:404});
+          
           resolve();
         }
       );
@@ -71,7 +73,7 @@ module.exports = {
         SQL.deleteArticle,
         val,
         function(err, result) {
-          if (err) throw err;
+          if(err) reject({message:'数据库出错',status:404});
           resolve();
         }
       );
@@ -80,7 +82,7 @@ module.exports = {
   getNum : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.getNum, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
         resolve(result);
       });
     })
@@ -89,7 +91,8 @@ module.exports = {
   addBrowse : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.addBrowse, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
+        
         resolve(result);
       });
     })
@@ -98,7 +101,7 @@ module.exports = {
   addPraise : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.praise, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
         resolve(result);
       });
     })
@@ -107,7 +110,7 @@ module.exports = {
   getTeam : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.getTeam, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
         resolve(result);
       });
     })
@@ -116,7 +119,7 @@ module.exports = {
   getTeamOne : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.getTeamOne, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
         resolve(result);
       });
     })
@@ -125,7 +128,8 @@ module.exports = {
   updateTeamOne : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.updateTeamOne, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
+        
         resolve(result);
       });
     })
@@ -134,7 +138,8 @@ module.exports = {
   getHotArticle : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.getHotArticle, val, (err, result) => {
-        if (err) throw err;
+        if(err) reject({message:'数据库出错',status:404});
+        
         resolve(result);
       });
     })

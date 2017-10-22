@@ -20,9 +20,13 @@ router.get("/showArticle/article", async ctx => {
   addBrowse(sort, id, type);
   await ctx.render("article", data);
 });
+
+//首页
 router.get("/", async ctx => {
-  let data = await getIndex();
-  await ctx.render("index", data);
+  
+    let data = await getIndex();
+    await ctx.render("index", data);
+  
 });
 
 //获取目录

@@ -57,6 +57,9 @@ app.use(
     allowHeaders: ["Content-Type", "Authorization", "Accept"]
   })
 );
+
+
+
 app.use(async (ctx, next)=> {
   ctx.set("Access-Control-Allow-Origin", ctx.request.header.origin)
   ctx.set("Access-Control-Allow-Credentials", true);
@@ -106,6 +109,6 @@ app.on('error', (err, ctx) =>{
     ctx.status = 404;
 
 });
-
+app.on('error', err => log.error('server error', err) )
 app.listen(config.serverPort, () => console.log(`Server is running at ${config.serverPort}`));
 

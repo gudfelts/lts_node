@@ -4,6 +4,7 @@ const deleteArticle = require("../model/OperationData").deleteArticle;
 const api = require("config-lite")(__dirname).api.admin.article;
 const downImg = require("../model/transCode");
 const getCatalog = require("../model/OperationData").getCatalog;
+const getArticleOne = require("../model/OperationData").getArticleOne;
 const getTeam = require("../model/OperationData").getTeam;
 const getTeamOne = require("../model/OperationData").getTeamOne;
 const getNum = require("../model/OperationData").getNum;
@@ -21,12 +22,25 @@ const getNum = require("../model/OperationData").getNum;
 router.post('/article', async ctx => {
   let article = ctx.request.body;
   const type = article.selectedOptions;
+
   delete article.selectedOptions;
   article.type = type[1];
-  article.time = article.time.replace(/T.*$/, "");
-  article.content = await downImg(article.content);
   article.praise = 0;
   article.browse = 0;
+  article.time = article.time.replace(/T.*$/, "");
+
+  try {
+    article.content = await downImg(article.content);
+  
+  } catch (error) {
+    
+    ctx.response.body = {
+      code: 500,
+      msg: "上传图片失败!"
+    };
+    return;
+  }
+
   await saveArticle(type[0], article);
 
   ctx.response.body = {
@@ -51,7 +65,16 @@ router.delete('/article', async ctx => {
     queue.push(q);
   }
   Promise.all(queue).then(result => {
-    ctx.response.body = result;
+    ctx.response.body = {
+      code: 200,
+      msg: "删除成功"
+    };;
+  }).catch(e=>{
+    throw('删除失败');
+    ctx.response.body = {
+      code: 500,
+      msg: "删除失败"
+    };
   });
 });
 
@@ -63,10 +86,16 @@ router.get('/article', async ctx => {
     sort = ctx.query.sort,
     type = ctx.query.type;
 
-  const data = await getArticleOne(sort, id, type);
+  const data = await getArticleOne(sort, id, type).catch(err=>{
+    ctx.response.body = {
+      code: 500,
+      msg: "获取失败"
+    };
+  });
 
   ctx.response.body = data;
 });
+
 //修改文章
 router.patch('/article', async ctx => {
   let data = ctx.request.body.params;
@@ -104,8 +133,9 @@ router.get('/catalog', async ctx => {
   }
   ctx.response.body = result;
 });
+
 //获取团队列表
-router.get('/Team',async ctx=>{
+router.get('/team',async ctx=>{
   let start = parseInt(ctx.query.start) || 0;
   let result = await getTeam(start);
 
@@ -121,18 +151,20 @@ router.get('/Team',async ctx=>{
     result.pageCount = pageCount;
   }
   ctx.response.body = result;
-})
+});
+
 //获取专家信息  
-router.get('/TeamOne',async ctx=>{
+router.get('/team/:id',async ctx=>{
   const name = ctx.query.id;
 
   const result = await getTeamOne(id);
 
   ctx.response.body = result;
     
-})
+});
+
 //增加专家信息
-router.post('/TeamOne',async ctx=>{
+router.post('/team',async ctx=>{
   let data = ctx.request.body.params;
   const {id,name,content,position,sex}= data;
   
@@ -140,9 +172,10 @@ router.post('/TeamOne',async ctx=>{
 
   ctx.response.body = result;
     
-})
+});
+
 //修改专家信息
-router.patch('/TeamOne',async ctx=>{
+router.patch('/team',async ctx=>{
   let data = ctx.request.body.params;
   const {id,name,content,position,sex}= data;
   
