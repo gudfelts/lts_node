@@ -109,6 +109,6 @@ app.on('error', (err, ctx) =>{
     ctx.status = 404;
 
 });
-app.on('error', err => log.error('server error', err) )
+
 app.listen(config.serverPort, () => console.log(`Server is running at ${config.serverPort}`));
 

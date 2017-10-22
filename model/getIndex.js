@@ -1,5 +1,4 @@
-const getIndex = require("../model/OperationData").getIndex;
-const getNum = require("../model/OperationData").getNum;
+const { getBanner, getNum, getIndex } = require("../model/OperationData");
 const SQL = require("config-lite")(__dirname).sql;
 const trimHtml = require("../utils/trim-html");
 /**
@@ -7,7 +6,7 @@ const trimHtml = require("../utils/trim-html");
  * @param {*} content 
  */
 const pickSummary = content => trimHtml(content, { preserveTags: false, limit: 70 }).html;
-   
+
 const pickBanner = aNew => {
   let banner = {};
   const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
@@ -40,9 +39,9 @@ const getInfo = async () => {
   const NUM = await getNum("information");
   //获取从info_m到info_n的数据
   let aNew;
- 
+
   aNew = await getIndex("information", [info_m, info_n]);
- 
+
   //获取带图的文章
   let data = pickBanner(aNew);
   //从info_m到info_n的文章有一个带图的文章
@@ -138,8 +137,8 @@ const getData = async () => {
     let exchange = await getExchange();
     let train = await getTrain();
     let construction = await getConstruction();
+    // let banner = await getBanner();
     return { info, research, exchange, train, construction };
-  
   } catch (error) {
     throw error;
   }

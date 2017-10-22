@@ -77,7 +77,13 @@ module.exports.getHotArticle = async sort => {
   return result.splice(15);
 };
 //专家团队
-module.exports.getTeam = async start => operateDB.getTeam(start);
-module.exports.getTeamOne = async id => operateDB.getTeamOne(id);
-module.exports.updateTeamOne = async (id, name, content, position, sex) =>
-  operateDB.getTeamOne([name, position, content, sex, id]);
+module.exports.getTeam =  start => operateDB.getTeam(start);
+module.exports.getTeamOne =  id => operateDB.getTeamOne(id);
+module.exports.updateTeamOne = (id, name, content, position, sex) =>operateDB.getTeamOne([name, position, content, sex, id]);
+
+//存放banner
+module.exports.saveBanner = async (sort,type,id,path) =>{
+
+  await operateDB.deleteBanner();
+  operateDB.saveBanner({sort,type,id,path});
+}

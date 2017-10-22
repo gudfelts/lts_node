@@ -144,4 +144,32 @@ module.exports = {
       });
     })
   },
+  getBanner : ()=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getBanner,  (err, result) => {
+        if(err) reject({message:'数据库出错',status:404});
+        
+        resolve(result);
+      });
+    })
+  },
+  
+  saveBanner : (val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.saveBanner, val, (err, result) => {
+        if(err) reject({message:'数据库出错',status:404});
+        
+        resolve(result);
+      });
+    })
+  },
+  deleteBanner : ()=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.deleteBanner, (err, result) => {
+        if(err) reject({message:'数据库出错',status:404});
+        
+        resolve(result);
+      });
+    })
+  },
 };

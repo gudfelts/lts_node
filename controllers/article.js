@@ -1,14 +1,8 @@
 const router = require("koa-router")();
-const saveArticle = require("../model/OperationData").saveArticle;
-const deleteArticle = require("../model/OperationData").deleteArticle;
-const api = require("config-lite")(__dirname).api.admin.article;
-const downImg = require("../model/transCode");
-const getCatalog = require("../model/OperationData").getCatalog;
-const getArticleOne = require("../model/OperationData").getArticleOne;
-const getTeam = require("../model/OperationData").getTeam;
-const getTeamOne = require("../model/OperationData").getTeamOne;
-const getNum = require("../model/OperationData").getNum;
 
+const downImg = require("../model/transCode");
+
+const {saveArticle,deleteArticle,getCataloggetArticleOne,getTeam,getTeamOne,getNum,saveBanner} = require("../model/OperationData")
 
 /* HTTP动词
     GET     //查询
@@ -21,17 +15,20 @@ const getNum = require("../model/OperationData").getNum;
 //存储文章
 router.post('/article', async ctx => {
   let article = ctx.request.body;
+  
   const type = article.selectedOptions;
+  const isBanner = article.isBanner;
 
   delete article.selectedOptions;
+  delete article.isBanner;
   article.type = type[1];
   article.praise = 0;
   article.browse = 0;
   article.time = article.time.replace(/T.*$/, "");
 
   try {
-    article.content = await downImg(article.content);
-  
+    var {data,path} = await downImg(article.content);
+    article.content = data;
   } catch (error) {
     
     ctx.response.body = {
@@ -39,7 +36,10 @@ router.post('/article', async ctx => {
       msg: "上传图片失败!"
     };
     return;
-  }
+  };
+
+  //储存banner
+  saveBanner(type[0],article.type,article.id,path);
 
   await saveArticle(type[0], article);
 

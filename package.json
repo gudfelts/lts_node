@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "lint": "eslint *.js server/**",
-		"dev": "set NODE_ENV=development && nodemon --harmony app.js",
 		"deploy_setup": "pm2 deploy ecosystem.config.js production setup",
-		"deploy": "pm2 deploy ecosystem.config.js production"
+    "deploy": "pm2 deploy ecosystem.config.js production",
+    "start": " set NODE_ENV=development&& node app.js"
 	},
   "repository": {
     "type": "git",
