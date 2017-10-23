@@ -53,7 +53,7 @@ router.get("/showArticle/catalog", async ctx => {
 });
 
 //获取专家
-router.get('/showTeam/person',async ctx=>{
+router.get('/introduction/team/person',async ctx=>{
     const name = ctx.query.id;
   
     const result = await getTeamOne(id);
@@ -61,7 +61,7 @@ router.get('/showTeam/person',async ctx=>{
     await ctx.render("person", result);
 })
 //获取专家目录
-router.get('/showTeam/catalog',async ctx=>{
+router.get('/introduction/team/catalog',async ctx=>{
   let start = parseInt(ctx.query.start) || 0;
   let result = await getTeam(start);
 
@@ -76,6 +76,7 @@ router.get('/showTeam/catalog',async ctx=>{
 
     result.pageCount = pageCount;
   }
-  await ctx.render("team", result);
+  console.log(result);
+  await ctx.render("./introduction/team", result);
 })
 module.exports = router;

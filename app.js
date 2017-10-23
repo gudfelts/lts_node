@@ -26,7 +26,6 @@ app.use(bodyParser({formLimit: '1mb'}));
 app.use(catchError);
 
 app.keys = ['lts_node'];
-console.log(env)
 const CONFIG = {
   key: 'lts_node', /** (string) cookie key (default is koa:sess) */
   /** (number || 'session') maxAge in ms (default is 1 days) */

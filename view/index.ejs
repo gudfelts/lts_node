@@ -29,21 +29,12 @@
          <!--轮播图部分-->
         <section class='container-types'>
         <div class='banner'>
-            <a>
-                <img src="images/1.png" alt="1">
+        <%for(var i =0,len = banner.length;i < len;i++){%>
+            <a href='/showArticle/article?id=<%=banner[i].id%>&type=<%=banner[i].type%>&sort=<%=banner[i].sort%>'>
+                <img src=<%=banner[i].path%> alt="1">
             </a>
-            <a>
-                <img src="images/2.png" alt="2">
-            </a>
-            <a>
-                <img src="images/3.png" alt="3">
-            </a>
-            <a>
-                <img src="images/4.png" alt="4">
-            </a>
-            <a>
-                <img src="images/5.png" alt="5">
-            </a>
+            <%}%>
+           
         </div>
        
     </section>

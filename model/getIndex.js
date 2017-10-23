@@ -137,8 +137,9 @@ const getData = async () => {
     let exchange = await getExchange();
     let train = await getTrain();
     let construction = await getConstruction();
-    // let banner = await getBanner();
-    return { info, research, exchange, train, construction };
+    let banner = await getBanner();
+    console.log(banner);
+    return { info, research, exchange, train, construction ,banner};
   } catch (error) {
     throw error;
   }

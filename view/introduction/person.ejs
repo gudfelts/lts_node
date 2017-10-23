@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style/common.min.css">
+    <link rel="stylesheet" href="/style/person.css">
+    <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
+    <title><%=person.name%></title>
+</head>
+<body>
+    <%- include('../component/header')%>
+    <div class="container">
+
+    <div class="detail">
+        <div class="top">
+            <div class="top-img">
+                <img src="../images/Ins_img_1.jpg" alt="">
+            </div>
+            <div class="cont">
+                <span class="name"><%=person.name%></span>
+                <span class="title"><%=person.position%></span>
+                <span class="job">
+                            广州市现代物流与电子商务发展研究基地兼职研究员<br>
+                            广东财经大学工商管理学院副教授<br>
+                            中山大学中国第三产业研究中心特约研究员<br>
+                    </span>
+            </div>
+
+
+        </div>
+
+        <div class="main">
+            <%-person.content%>
+           
+        </div>
+    </div>
+</div>
+    <%- include('../component/footer') -%>
+</body>

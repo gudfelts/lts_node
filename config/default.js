@@ -66,14 +66,18 @@ module.exports = {
     //点赞
     praise: "update ?? set prasise = praise + 1 where id = ?",
     //获取团队列表
-    getTeam: "select name,position,sex from team limit ?,20",
+    getTeam: "select name,position,avatar from team limit ?,20",
     //获取专家信息
     getTeamOne: "select content from team where id = ? limit 1",
     //更新专家信息
-    updateTeamOne: "update team set name = ?,position = ?,content = ?,sex = ? where id = ? limit 1",
+    updateTeamOne: "update team set name = ?,position = ?,content = ?,avatar = ? where id = ? limit 1",
+    //更新专家信息
+    saveTeam: "insert into team set ?",
+   
+   
     saveBanner: "insert into banner set ?",
     deleteBanner: "delete from banner limit 1",
-    getBanner: "select * from banner",
+    getBanner: "select * from banner limit 5",
     /*
     科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
     科研资讯，其中type数据：1为流通所新闻，2为基地资讯，3为媒体报道
@@ -103,7 +107,8 @@ module.exports = {
     research: ["课题研究", "课题招标", "成果影响"],
     exchange: ["来访交流", "调研考察", "媒体报道", "流通论坛"],
     train: ["资讯顾问", "企业策划", "专家培训"],
-    construction: ["名家百人讲座", "智库动态"]
+    construction: ["名家百人讲座", "智库动态"],
+    introduction :['简介','机构设置','研究方向','专家团队']
   },
    logConfig : {
     appenders:[

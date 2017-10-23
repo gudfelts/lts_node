@@ -1,8 +1,8 @@
 const router = require("koa-router")();
 
-const downImg = require("../model/transCode");
+const downImg = require("../utils/transCode");
 
-const {saveArticle,deleteArticle,getCataloggetArticleOne,getTeam,getTeamOne,getNum,saveBanner} = require("../model/OperationData")
+const {saveArticle,deleteArticle,getCatalog,getArticleOne,getTeam,getTeamOne,getNum,saveBanner} = require("../model/OperationData")
 
 /* HTTP动词
     GET     //查询
@@ -25,7 +25,6 @@ router.post('/article', async ctx => {
   article.praise = 0;
   article.browse = 0;
   article.time = article.time.replace(/T.*$/, "");
-
   try {
     var {data,path} = await downImg(article.content);
     article.content = data;
@@ -37,11 +36,12 @@ router.post('/article', async ctx => {
     };
     return;
   };
-
+  const id = await saveArticle(type[0], article);
+  
   //储存banner
-  saveBanner(type[0],article.type,article.id,path);
+  
+  isBanner && saveBanner(type[0], article.type, id, path);
 
-  await saveArticle(type[0], article);
 
   ctx.response.body = {
     code: 200,
@@ -52,30 +52,30 @@ router.post('/article', async ctx => {
 
 
 //删除
-router.delete('/article', async ctx => {
-  let data = ctx.request.body.params;
+router.post('/deletearticle', async ctx => {
+  let data = ctx.request.body.article;
   let sort = ctx.request.body.sort;
   let queue = [];
-
+  console.log(data.length)
+  console.log(data)
+  
   for (let i = 0, len = data.length; i < len; i++) {
     const id = data[i].id,
       type = data[i].type;
-
-    const q = deleteArticle(sort, id, type);
-    queue.push(q);
+    await deleteArticle(sort, id, type);
   }
-  Promise.all(queue).then(result => {
+  // Promise.all(queue).then(result => {
     ctx.response.body = {
       code: 200,
       msg: "删除成功"
     };;
-  }).catch(e=>{
-    throw('删除失败');
-    ctx.response.body = {
-      code: 500,
-      msg: "删除失败"
-    };
-  });
+  // }).catch(e=>{
+  //   throw('删除失败');
+  //   ctx.response.body = {
+  //     code: 500,
+  //     msg: "删除失败"
+  //   };
+  // });
 });
 
 
@@ -92,7 +92,6 @@ router.get('/article', async ctx => {
       msg: "获取失败"
     };
   });
-
   ctx.response.body = data;
 });
 
@@ -135,7 +134,7 @@ router.get('/catalog', async ctx => {
 });
 
 //获取团队列表
-router.get('/team',async ctx=>{
+router.get('/teamall',async ctx=>{
   let start = parseInt(ctx.query.start) || 0;
   let result = await getTeam(start);
 
@@ -154,7 +153,7 @@ router.get('/team',async ctx=>{
 });
 
 //获取专家信息  
-router.get('/team/:id',async ctx=>{
+router.get('/tea',async ctx=>{
   const name = ctx.query.id;
 
   const result = await getTeamOne(id);
