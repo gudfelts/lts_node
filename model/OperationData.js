@@ -13,7 +13,7 @@ module.exports.deleteArticle =  (sort, id, type) =>  operateDB.deleteArticle([so
 //获取单个文章
 module.exports.getArticleOne =  async(sort, id, type) => {
   let data = await operateDB.getArticleOne([sort, id, type]);
-  return{data ,sort}
+  return data
 
 };
 
@@ -80,6 +80,7 @@ module.exports.getHotArticle = async sort => {
 module.exports.getTeam =  start => operateDB.getTeam(start);
 module.exports.saveTeam =  value => operateDB.saveTeam(value);
 module.exports.getTeamOne =  id => operateDB.getTeamOne(id);
+module.exports.getTeamoOther =  id => operateDB.getTeamoOther(id);
 module.exports.updateTeamOne = (id, name, content, position, avatar) =>operateDB.updateTeamOne([name, position, content, avatar, id]);
 
 //存放banner

@@ -1,0 +1,85 @@
+$green : #06A3B1;   
+$bc: #e4e4e4;
+$fc:#fff;
+
+//背景图片地址和大小
+@mixin bis($url){
+    background-image: $url;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;    
+}
+
+@mixin borderRadius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+//固定顶部
+%alltop{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+//定位全屏
+%allcover{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+//定位上下左右居中
+%center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+//定位上下居中
+%ct{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: 50% 50%;    
+}
+
+//flex居中
+%flexCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+//阴影
+%shadow{
+    box-shadow: 0.5px 0.866px 4rem rgba(170, 170, 170, 0.45);
+    
+}
+@mixin font($size, $line-height, $family: 'Microsoft YaHei') {  
+	font: #{$size}/#{$line-height} $family;
+}
+
+//宽高
+@mixin wh($width,$height){
+    width: $width;
+    height: $height;
+}
+
+//字体大小，颜色
+@mixin sc($size, $color){
+	font-size: $size;
+	color: $color;
+}
+
+@mixin mc($leftright : 0){
+    margin: $leftright auto;
+    
+}
+
+%boxshadow{
+    -webkit-box-shadow: 0px 10px 40px 0px #888888;
+    box-shadow: 0px 10px 40px 0px #888888;
+    
+}

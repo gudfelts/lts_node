@@ -66,9 +66,10 @@ module.exports = {
     //点赞
     praise: "update ?? set prasise = praise + 1 where id = ?",
     //获取团队列表
-    getTeam: "select name,position,avatar from team limit ?,20",
+    getTeam: "select id,name,position,avatar from team limit ?,20",
     //获取专家信息
-    getTeamOne: "select content from team where id = ? limit 1",
+    getTeamOne: "select * from team where id = ? limit 1",
+    getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
     updateTeamOne: "update team set name = ?,position = ?,content = ?,avatar = ? where id = ? limit 1",
     //更新专家信息

@@ -123,7 +123,7 @@ module.exports = {
       });
     })
   },
-
+  
   getTeamOne : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.getTeamOne, val, (err, result) => {
@@ -132,7 +132,14 @@ module.exports = {
       });
     })
   },
-
+  getTeamoOther : (val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getTeamoOther, val, (err, result) => {
+        if(err) reject({message:'数据库出错',status:404});
+        else resolve(result);
+      });
+    })
+  },
   updateTeamOne : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.updateTeamOne, val, (err, result) => {

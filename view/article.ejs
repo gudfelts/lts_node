@@ -1,53 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/style/common.min.css">
-    <link rel="stylesheet" href="/style/info.css">
+    <link rel="stylesheet" href="/style/article.css">
     <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
     <script type="text/javascript" src="/js/article.js"></script>
     <script src='/js/common.js'></script>
 
-    <title><%=data.title%></title>
+    <title>
+        <%=data.title%>
+    </title>
 </head>
+
 <body>
-      <%- include('./component/header')%>
+    <%- include('./component/header')%>
 
-    <div class="container">
-        <div class="content container-types">
-            <article>
-                <div class="content-title">
-                    <h1><%=data.title%></h1>
-                    <div class="tit-info">
-                        <span class="date"><%=data.time%></span>
-                        <span class="post">作者：<%-data.author%></span>
-                        <span class="number"><%=data.browse%></span>
+        <div class="container-types">
+            <div class="content ">
+                <article>
+                    <div class="content-title">
+                        <h1>
+                            <%=data.title%>
+                        </h1>
+                        <div class="tit-info">
+                            <span class="date">
+                                <%=data.time%>
+                            </span>
+                            <span class="post">作者：
+                                <%-data.author%>
+                            </span>
+                            <span class="number">
+                                <%=data.browse%>
+                            </span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="content-main">
-                   <%-data.content%>
+                    <div class="content-main">
+                        <%-data.content%>
+                    </div>
+                </article>
+                <div class="parise-box" data-id=<%=data.id%> data-sort=
+                    <%=sort%> data-type=
+                        <%=data.type%>>
+                            <input type='radio' class='parise-btn' id='parise-btn'>
+                            <label class='icon-praise' for="parise-btn">
+                            </label>
+                            <p class='parise-show'>
+                                <i class='praise-num'>
+                                    <%=data.praise%>
+                                </i>人推荐</p>
                 </div>
-            </article>
-            <div class="parise-box" data-id=<%=data.id%> data-sort=<%=sort%> data-type=<%=data.type%>>
-                <input type='radio' class='parise-btn' id='parise-btn'>
-                    <label class='icon-praise' for="parise-btn">
-                    </label>
-                 <p class='parise-show' ><i class='praise-num'><%=data.praise%></i>人推荐</p>   
-            </div>    
+            </div>
+            <div class="side-section">
+                <!--最近更新-->
+                <div class='side-article column1'>
+                    <div class="navTitle ">
+                        最近更新
+                    </div>
+                    <ul class='hotBox'>
+                        <li class="hot-Item">
+                            <a href="#">北京大学李伯谦先生来上海大学调研考古与先秦史学科发展情况</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--热门文章-->
+                <div class='side-article column2'>
+                    <div class="navTitle ">
+                        近期热门文章
+                    </div>
+                    <ul class='hotBox'>
+                        <%if(!!HotArticle){
+                        for(var i =  0;i < HotArticle.length ;i++){%>
+
+                            <li class="hot-Item">
+                                <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
+                                    <%=HotArticle[i].title %>
+                                </a>
+                            </li>
+                        <%}}%>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-    <%- include('./component/footer') -%>
-
-    
-    <!--回到顶部-->
-    <div id="goTop"></div>
-
-    <script>
-      
-    </script>
-
+        </div>
+        <%- include('./component/footer') -%>
+            <!--回到顶部-->
+        <div id="goTop"></div>
 </body>
+
 </html>

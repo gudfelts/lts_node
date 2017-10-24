@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +8,47 @@
     <link rel="stylesheet" href="/style/common.min.css">
     <link rel="stylesheet" href="/style/person.css">
     <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
-    <title><%=person.name%></title>
+    <script src='/js/common.js'></script>
+
+    <title>
+        <%=person.name%>
+    </title>
 </head>
+
 <body>
     <%- include('../component/header')%>
-    <div class="container">
+        <div class="container-types">
+            <div class="side-section nav">
+                    <div class="navTitle ">
+                        热门人物
+                    </div>
+                <ul class='hot-person'>
+                <%for(var i =0,len=other.length;i<len;i++){%>
 
-    <div class="detail">
-        <div class="top">
-            <div class="top-img">
-                <img src="../images/Ins_img_1.jpg" alt="">
+                    <li class='person-item'>
+                        <a href="/introduction/team/person?id=<%=other[i].id%>">
+                            <img src="<%=other[i].avatar%>" alt="">
+                        
+                           <span>
+                             <%=other[i].name%>
+                           </span>
+                                                      
+                        </a>
+                    </li>
+                    
+                <%}%>
+                </ul>
             </div>
-            <div class="cont">
-                <span class="name"><%=person.name%></span>
-                <span class="title"><%=person.position%></span>
-                <span class="job">
-                            广州市现代物流与电子商务发展研究基地兼职研究员<br>
-                            广东财经大学工商管理学院副教授<br>
-                            中山大学中国第三产业研究中心特约研究员<br>
-                    </span>
+
+            <div class="detail">
+                <div class="top">
+                    <h3><%=person.name%></h3>          
+                <img src="<%=person.avatar%>" alt="">     
+                </div>
+                <div class="main">
+                    <%-person.content%>
+                </div>
             </div>
-
-
         </div>
-
-        <div class="main">
-            <%-person.content%>
-           
-        </div>
-    </div>
-</div>
-    <%- include('../component/footer') -%>
+        <%- include('../component/footer') -%>
 </body>

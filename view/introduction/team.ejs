@@ -50,8 +50,8 @@
                 <div class="colu_news">
                     <div class="personList">
                        <%for(var i =0,len=person.length;i<len;i++){%>
-                        <a class="list_item" href="/introduction/team/?id=<%=person[i].id%>">
-                            <img  class="list_img" src="../images/Ins_img_1.jpg" alt="图片加载失败" title="7七月"><br>
+                        <a class="list_item" href="/introduction/team/person?id=<%=person[i].id%>">
+                            <img  class="list_img" src="<%=person[i].avatar%>" alt="图片加载失败" title="7七月"><br>
                             <span class="list_name"><%=person[i].name%></span>
                             <span class="list_title"><%=person[i].position%></span>
                             <span class="list_content">test</span>

@@ -1,12 +1,8 @@
 const router = require("koa-router")();
 const getIndex = require("../model/getIndex");
-const getArticleOne = require("../model/OperationData").getArticleOne;
-const getCatalog = require("../model/OperationData").getCatalog;
-const getNum = require("../model/OperationData").getNum;
-const getTeam = require("../model/OperationData").getTeam;
-const addBrowse = require("../model/OperationData").addBrowse;
-const getTeamOne = require("../model/OperationData").getTeamOne;
-const getHotArticle = require("../model/OperationData").getHotArticle;
+
+
+const {getHotArticle,getTeamoOther,addBrowse,getTeam,getTeamOne,getNum,getArticleOne,getCatalog} = require("../model/OperationData")
 
 //获取文章
 router.get("/showArticle/article", async ctx => {
@@ -15,10 +11,10 @@ router.get("/showArticle/article", async ctx => {
     type = ctx.query.type;
 
   const data = await getArticleOne(sort, id, type);
-
+  const HotArticle = await getHotArticle(sort);
   //增加浏览数
   addBrowse(sort, id, type);
-  await ctx.render("article", data);
+  await ctx.render("article", {data,HotArticle,sort});
 });
 
 //首页
@@ -54,17 +50,17 @@ router.get("/showArticle/catalog", async ctx => {
 
 //获取专家
 router.get('/introduction/team/person',async ctx=>{
-    const name = ctx.query.id;
+    const id = ctx.query.id;
   
-    const result = await getTeamOne(id);
-  
-    await ctx.render("person", result);
+    const person = await getTeamOne(id);
+    const other = await getTeamoOther(id);
+    console.log(other)
+    await ctx.render("./introduction/person", {person :person[0],other});
 })
 //获取专家目录
 router.get('/introduction/team/catalog',async ctx=>{
   let start = parseInt(ctx.query.start) || 0;
   let result = await getTeam(start);
-
   if (start === 0) {
     let pageCount = await getNum('team');
     //一页20条
