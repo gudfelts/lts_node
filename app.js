@@ -85,11 +85,11 @@ app.use(env !== 'production' ? koaLogger() : async (ctx, next) => {
 });
 // app.use( koaLogger());
 //设置静态资源
-const staticPath = "/static";
-app.use(static(path.join(__dirname, staticPath)));
-app.use(staticCache(path.join(__dirname, staticPath), {
-  maxAge: 365 * 24 * 60 * 60
-}));
+// const staticPath = "/static";
+// app.use(static(path.join(__dirname, staticPath)));
+// app.use(staticCache(path.join(__dirname, staticPath), {
+//   maxAge: 365 * 24 * 60 * 60
+// }));
 
 // 加载模板引擎
 app.use(views(path.join(__dirname, './view'), {
