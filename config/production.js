@@ -4,8 +4,8 @@ const env = process.env.NODE_ENV;
 const PORT =  3000;
 const HOST = env === 'production' ? '' : 'localhost';
 // // log配置
-const errorLogPath =    path.join(__dirname, '../../logs/error/error');				// 错误日志输出完整路径
-const responseLogPath = path.join(__dirname, '../../logs/response/response');	// 响应日志输出完整路径
+const errorLogPath =    path.join(__dirname, '../logs/error/error');				// 错误日志输出完整路径
+const responseLogPath = path.join(__dirname, '../logs/response/response');	// 响应日志输出完整路径
 module.exports = {
   serverPort: 3000,
   db: {
