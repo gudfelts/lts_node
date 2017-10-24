@@ -216,8 +216,9 @@ a:hover {
 footer {
   width: 100%;
   min-width: 1600px;
+  height: 190px;
   padding: 36px 0;
-  margin-top: 50px;
+  margin-top: 90px;
   background-color: #f8fafc;
   -webkit-box-shadow: 0 -2px 8px 0 rgba(7, 17, 27, 0.06);
   box-shadow: 0 -2px 8px 0 rgba(7, 17, 27, 0.06);
@@ -229,6 +230,7 @@ footer {
 }
 
 .footer-link {
+  text-align: center;
   margin-bottom: 10px;
 }
 
@@ -239,6 +241,11 @@ footer {
 
 .footer-link a:hover {
   color: black;
+}
+
+.footer-copyright {
+  padding-top: 10px;
+  text-align: center;
 }
 
 .footer-copyright p {

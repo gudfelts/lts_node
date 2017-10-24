@@ -56,6 +56,12 @@ router.get('/introduction/team/person',async ctx=>{
     const other = await getTeamoOther(id);
     console.log(other)
     await ctx.render("./introduction/person", {person :person[0],other});
+});
+
+//获取简介
+router.get('/introduction/index',async ctx=>{
+ 
+  await ctx.render("./introduction/index");
 })
 //获取专家目录
 router.get('/introduction/team/catalog',async ctx=>{

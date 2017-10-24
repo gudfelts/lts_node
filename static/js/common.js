@@ -56,6 +56,6 @@ $().ready(function(e) {
   $(".nav_item").mouseleave(function() {
     hideDiv($(this).children(".item_content"), true);
   });
-
+  $('body').css('min-height',$(window).height()-10);
   // toTop();
 });

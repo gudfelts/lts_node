@@ -2,37 +2,34 @@
  * @Author: 肖志豪 
  * @Date: 2017-10-06 11:08:26 
  * @Last Modified by: 肖志豪
- * @Last Modified time: 2017-10-24 11:07:11
+ * @Last Modified time: 2017-10-24 21:24:01
  */
 
-@import 'mixin.scss';
+@import "mixin.scss";
 
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
-
-
 
 /*前往子页面*/
 
 .toMore {
-    font-size: 35px;
-    font-family: 楷体;
+  font-size: 35px;
+  font-family: 楷体;
 
-    &::after {
-        content: '';
-        display: inline-block;
-        width: 15px;
-        height: 15px;
-        margin-left: 10px;
-        margin-bottom: 2px;
-        @include bis(url("../images/icons/toMore.png"));
-       
-    }
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    @include bis(url("../images/icons/toMore.png"));
+  }
 }
-.part-title .toMore{
-    float: right;
+.part-title .toMore {
+  float: right;
 }
 
 /*轮播图banner*/
@@ -40,372 +37,380 @@ body {
 /*轮播图banner*/
 
 .banner {
-    a{
-        display: inline-block;
-        height: 660px;
-        
-    }
-        a img {
-        width:100%;
-        height:100%;
-    }
+  height: 690px;
+}
+.banner-link {
+  display: inline-block;
+  height: 660px;
+  overflow: hidden;
 }
 
+.banner-link:hover > .banner-title{
+    margin-top: 0px;
 
-.banner .slick-arrow{
-    width: 50px;
-    height: 50px;
-    
-    z-index: 100;
+}    
+.banner-link img {
+  width: 100%;
+  height: 100%;
 }
-.slick-prev{
-    margin-left: 40px;
+.banner-title {
+  width: 100%;
+  height: 15%;
+  margin-top: -90px;
+  height: 90px;
+  padding: 25px 0;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  transition: margin .6s;
+  p {
+    text-align: center;
+    font-size: 25px;
+    color: black;
+  }
 }
-.slick-next{
-    margin-right: 50px;
+
+.banner .slick-arrow {
+  width: 50px;
+  height: 50px;
+
+  z-index: 100;
 }
-.slick-dots{
-    margin-top: -50px;
+.slick-prev {
+  margin-left: 40px;
+  margin-top: -20px;
+}
+.slick-next {
+  margin-right: 50px;
+  margin-top: -20px;
+}
+.slick-dots {
+  margin-top: 20px;
 }
 
 /*科研资讯*/
 
 .info {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .info-title::after {
-    content: "Research Information";
+  content: "Research Information";
 }
-
 
 /*利用flex进行两列布局，但是考虑到兼容性（ie11才支持），
 在那newRight中使用float，让某些不支持flex的浏览器也可以表现正常*/
 
 .flexbox {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
-
 
 /*科研资讯-左 大图资讯*/
 
 .newsLeft {
-    display: inline-block;
+  display: inline-block;
+  width: 360px;
+  margin-left: 10px;
+
+  /*左边图*/
+  a img {
     width: 360px;
-    margin-left: 10px;
-
-    /*左边图*/
-    a img {
-    width: 360px;
-    max-height: 210px;    
-        &:hover{
-            @extend %boxshadow;
-            -webkit-transition: -webkit-box-shadow .4s;
-            transition: -webkit-box-shadow .4s;
-            transition: box-shadow .4s;
-            transition: box-shadow .4s, -webkit-box-shadow .4s;            
-        }
+    max-height: 210px;
+    &:hover {
+      @extend %boxshadow;
+      -webkit-transition: -webkit-box-shadow 0.4s;
+      transition: -webkit-box-shadow 0.4s;
+      transition: box-shadow 0.4s;
+      transition: box-shadow 0.4s, -webkit-box-shadow 0.4s;
     }
+  }
 
-    /*左边新闻标题*/
-    a h4{
-        margin-top: 10px;
-        &:hover {
-            color: #8c0000;            
-        }
+  /*左边新闻标题*/
+  a h4 {
+    margin-top: 10px;
+    &:hover {
+      color: #8c0000;
     }
+  }
 
-    /*左边新闻内容摘要*/
-    p {
-        color: gray;
-        max-height: 100px;
-        font-size: 15px;
-        margin-top: 10px;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 5;
-        overflow: hidden;
-        line-height: 25px;
-    }
-}
-
-
-/*科研资讯-右*/
-
-.newsRight {
-    float: right;
-}
-
-.news-box {
-    width: 750px;
-}
-
-
-/*新闻链接*/
-
-.new-item {
-    width: 340px;
-    height: 48px;
-    margin: 0 30px 50px 0;
-    position: relative;
-    -webkit-transition: all .4s;
-    transition: all .4s;
-    font-size: 18px;
-    float:right;
-   
-    /*新闻链接下面的横线*/
-    
-    a{  
-        display: block;
-        height: 100%;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-    }
-    a::before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        margin-bottom: -20px;
-        width: 100%;
-        height: 2px;
-        background-color: #B4B3B3;
-        -webkit-transition: width .4s;
-        transition: width .4s;
-    }
-   
-    /*过渡效果*/
-    &:hover>a::before {
-        width: 0;
-    }
-    
-}
-
-.newsRight .toMore {
-    margin: 0 60px 0 0;
-    float: right;
-}
-
-
-/*科学研究、科研成果、学术交流*/
-
-
-
-.mixLeft {
-    display: inline-block;
-    width: 760px;
-    margin-left: 10px;
-}
-
-.mix-box {
-    margin-bottom: 50px;
-}
-
-.minx-box1-title::after {
-    content: 'Scientific Research'
-}
-
-.minx-box2-title::after {
-    content: 'Academic Exchange'
-}
-/*科学研究栏目内容*/
-
-.box1-content,.box2-content{
-    padding: 0 20px;
-}
-
-.box1-content>a {
-    display: inline-block;
-    width: 260px;
-}
-.box1-content a img {
-    width: inherit;
-    &:hover{
-        @extend %boxshadow;
-        -webkit-transition: -webkit-box-shadow .4s;
-        transition: -webkit-box-shadow .4s;
-        transition: box-shadow .4s;
-        transition: box-shadow .4s, -webkit-box-shadow .4s;            
-    }
-}
-
-.secient-content {
-    float: right;
-    width: 400px;
-}
-
-.secient-content p {
+  /*左边新闻内容摘要*/
+  p {
     color: gray;
-    margin-top: 20px;
-    font-size: 17px;
-    max-height: 110px;
+    max-height: 100px;
+    font-size: 15px;
+    margin-top: 10px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
     overflow: hidden;
+    line-height: 25px;
+  }
 }
 
-.box2-box{
-    display: inline-block;
-    margin: 0 auto;    
-    height: 250px;
-    
+/*科研资讯-右*/
+
+.newsRight {
+  float: right;
 }
-.box2-item{
-    width:340px;
-    height: 20%;
-    float: left;
-    font-size: 18px;
-    border: 1px solid white;
-    border-bottom: 0;
-    border-left: 0;
-    margin: 7px;
-    position: relative;
+
+.news-box {
+  width: 750px;
+}
+
+/*新闻链接*/
+
+.new-item {
+  width: 340px;
+  height: 48px;
+  margin: 0 30px 50px 0;
+  position: relative;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  font-size: 18px;
+  float: right;
+
+  /*新闻链接下面的横线*/
+
+  a {
+    display: block;
+    height: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    padding-left: 20px;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    box-sizing: border-box;
-   
-   &::before{
-       content: '';
-       display: block;
-       width: 10px;
-       height: 10px;
-       border-radius: 50%;
-       background-color:   #006771;   
-       position: absolute;
-       top: 5px; 
-       left: 0px; 
-   }
-   
-}
-.box2-item:nth-child(3),.box2-item:nth-child(6){
-    border-right: 0;
+  }
+  a::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    margin-bottom: -20px;
+    width: 100%;
+    height: 2px;
+    background-color: #b4b3b3;
+    -webkit-transition: width 0.4s;
+    transition: width 0.4s;
+  }
+
+  /*过渡效果*/
+  &:hover > a::before {
+    width: 0;
+  }
 }
 
+.newsRight .toMore {
+  margin: 0 60px 0 0;
+  float: right;
+}
 
+/*科学研究、科研成果、学术交流*/
+
+.mixLeft {
+  display: inline-block;
+  width: 760px;
+  margin-left: 10px;
+}
+
+.mix-box {
+  margin-bottom: 50px;
+}
+
+.minx-box1-title::after {
+  content: "Scientific Research";
+}
+
+.minx-box2-title::after {
+  content: "Academic Exchange";
+}
+/*科学研究栏目内容*/
+
+.box1-content,
+.box2-content {
+  padding: 0 20px;
+}
+
+.box1-content > a {
+  display: inline-block;
+  width: 260px;
+}
+.box1-content a img {
+  width: inherit;
+  &:hover {
+    @extend %boxshadow;
+    -webkit-transition: -webkit-box-shadow 0.4s;
+    transition: -webkit-box-shadow 0.4s;
+    transition: box-shadow 0.4s;
+    transition: box-shadow 0.4s, -webkit-box-shadow 0.4s;
+  }
+}
+
+.secient-content {
+  float: right;
+  width: 400px;
+}
+
+.secient-content p {
+  color: gray;
+  margin-top: 20px;
+  font-size: 17px;
+  max-height: 110px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+
+.box2-box {
+  display: inline-block;
+  margin: 0 auto;
+  height: 250px;
+}
+.box2-item {
+  width: 340px;
+  height: 20%;
+  float: left;
+  font-size: 18px;
+  border: 1px solid white;
+  border-bottom: 0;
+  border-left: 0;
+  margin: 7px;
+  position: relative;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  padding-left: 20px;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #006771;
+    position: absolute;
+    top: 5px;
+    left: 0px;
+  }
+}
+.box2-item:nth-child(3),
+.box2-item:nth-child(6) {
+  border-right: 0;
+}
 
 /*mix的右边框*/
 
 .mixRight {
-    width: 400px;
-    margin-top: 40px;
-    float: right;
+  width: 400px;
+  margin-top: 40px;
+  float: right;
 }
 
 .pic-box {
-    margin: 40px 40px 60px 0;
-    display: block;
-    height: 250px;
-    -webkit-transition: all .4s;
-    transition: all .4s;
-    border: 1px solid #c9c9c9;
-    &:hover {
-        @extend %boxshadow;
-    }
-    
+  margin: 40px 40px 60px 0;
+  display: block;
+  height: 250px;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  border: 1px solid #c9c9c9;
+  &:hover {
+    @extend %boxshadow;
+  }
 }
-
-
-
-
 
 .pic-box-left {
-    background-color: #f4f4f4;
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    height: 100%;
-    width: 30%;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column;
-    flex-flow: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 60px 0;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
-    float: left;
-    border-right: 0;
+  background-color: #f4f4f4;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  height: 100%;
+  width: 30%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 60px 0;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  float: left;
+  border-right: 0;
 }
-
 
 /*图标大小*/
 
 .pic-icon {
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
 .pic-box-left p {
-    text-align: center;
+  text-align: center;
 }
 
 .pic-box img {
-    width: 70%;
-    height: 100%;
+  width: 70%;
+  height: 100%;
 }
-
 
 /*图标样式*/
 
 .pic-box1 .pic-icon {
-    @include bis(url("../images/icons/team.png"));    
+  @include bis(url("../images/icons/team.png"));
 }
 
 .pic-box2 .pic-icon {
-    @include bis(url("../images/icons/achievement.png"))
+  @include bis(url("../images/icons/achievement.png"));
 }
-
 
 /*咨询培训 Consultation training*/
-.bottom-block{
-    height: 500px;
+.bottom-block {
+  height: 500px;
 }
-.train-title::after{
-    content: 'Consultation Training';
+.train-title::after {
+  content: "Consultation Training";
 }
-.construction-title::after{
-    content: 'construction';
+.construction-title::after {
+  content: "Construction";
 }
-.train,.construction{
-    float: left;
-    width: 42%;
-    margin: 48px;
+.train,
+.construction {
+  float: left;
+  width: 42%;
+  margin: 48px;
 }
-.train-box,.construction-box{
-    width: 90%;
-    margin: 0 auto;
+.train-box,
+.construction-box {
+  width: 90%;
+  margin: 0 auto;
 }
-.train-item,.construction-item{
-    display: inline-block;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    padding: 5px 0 5px 20px ;
-    max-height: 30px;
-    overflow: hidden;
-    margin:10px 25px;
+.train-item,
+.construction-item {
+  display: inline-block;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  padding: 5px 0 5px 20px;
+  max-height: 30px;
+  overflow: hidden;
+  margin: 10px 25px;
 
-    position: relative;
-    &::before{
-        content: '';
-        display: block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color:   #006771;   
-        position: absolute;
-        top: 15px; 
-        left:0px; 
-    }
+  position: relative;
+  &::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #006771;
+    position: absolute;
+    top: 15px;
+    left: 0px;
+  }
 }

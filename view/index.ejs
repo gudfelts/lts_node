@@ -30,8 +30,12 @@
         <section class='container-types'>
         <div class='banner'>
         <%for(var i =0,len = banner.length;i < len;i++){%>
-            <a href='/showArticle/article?id=<%=banner[i].id%>&type=<%=banner[i].type%>&sort=<%=banner[i].sort%>'>
+            <a class='banner-link' href='/showArticle/article?id=<%=banner[i].id%>&type=<%=banner[i].type%>&sort=<%=banner[i].sort%>'>
                 <img src=<%=banner[i].path%> alt="1">
+                <div class='banner-title'>
+                   
+                     <p ><%=banner[i].title%></p>
+                </div>
             </a>
             <%}%>
            

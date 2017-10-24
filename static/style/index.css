@@ -3,7 +3,7 @@
  * @Author: 肖志豪 
  * @Date: 2017-10-06 11:08:26 
  * @Last Modified by: 肖志豪
- * @Last Modified time: 2017-10-24 11:07:11
+ * @Last Modified time: 2017-10-24 21:24:01
  */
 .newsLeft a img:hover, .box1-content a img:hover, .pic-box:hover {
   -webkit-box-shadow: 0px 10px 40px 0px #888888;
@@ -22,7 +22,7 @@ body {
 }
 
 .toMore::after {
-  content: '';
+  content: "";
   display: inline-block;
   width: 15px;
   height: 15px;
@@ -39,14 +39,41 @@ body {
 
 /*轮播图banner*/
 /*轮播图banner*/
-.banner a {
-  display: inline-block;
-  height: 660px;
+.banner {
+  height: 690px;
 }
 
-.banner a img {
+.banner-link {
+  display: inline-block;
+  height: 660px;
+  overflow: hidden;
+}
+
+.banner-link:hover > .banner-title {
+  margin-top: 0px;
+}
+
+.banner-link img {
   width: 100%;
   height: 100%;
+}
+
+.banner-title {
+  width: 100%;
+  height: 15%;
+  margin-top: -90px;
+  height: 90px;
+  padding: 25px 0;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  transition: margin .6s;
+}
+
+.banner-title p {
+  text-align: center;
+  font-size: 25px;
+  color: black;
 }
 
 .banner .slick-arrow {
@@ -57,14 +84,16 @@ body {
 
 .slick-prev {
   margin-left: 40px;
+  margin-top: -20px;
 }
 
 .slick-next {
   margin-right: 50px;
+  margin-top: -20px;
 }
 
 .slick-dots {
-  margin-top: -50px;
+  margin-top: 20px;
 }
 
 /*科研资讯*/
@@ -103,10 +132,10 @@ body {
 }
 
 .newsLeft a img:hover {
-  -webkit-transition: -webkit-box-shadow .4s;
-  transition: -webkit-box-shadow .4s;
-  transition: box-shadow .4s;
-  transition: box-shadow .4s, -webkit-box-shadow .4s;
+  -webkit-transition: -webkit-box-shadow 0.4s;
+  transition: -webkit-box-shadow 0.4s;
+  transition: box-shadow 0.4s;
+  transition: box-shadow 0.4s, -webkit-box-shadow 0.4s;
 }
 
 .newsLeft a h4 {
@@ -144,8 +173,8 @@ body {
   height: 48px;
   margin: 0 30px 50px 0;
   position: relative;
-  -webkit-transition: all .4s;
-  transition: all .4s;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
   font-size: 18px;
   float: right;
   /*新闻链接下面的横线*/
@@ -162,15 +191,15 @@ body {
 }
 
 .new-item a::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   margin-bottom: -20px;
   width: 100%;
   height: 2px;
-  background-color: #B4B3B3;
-  -webkit-transition: width .4s;
-  transition: width .4s;
+  background-color: #b4b3b3;
+  -webkit-transition: width 0.4s;
+  transition: width 0.4s;
 }
 
 .new-item:hover > a::before {
@@ -194,15 +223,16 @@ body {
 }
 
 .minx-box1-title::after {
-  content: 'Scientific Research';
+  content: "Scientific Research";
 }
 
 .minx-box2-title::after {
-  content: 'Academic Exchange';
+  content: "Academic Exchange";
 }
 
 /*科学研究栏目内容*/
-.box1-content, .box2-content {
+.box1-content,
+.box2-content {
   padding: 0 20px;
 }
 
@@ -216,10 +246,10 @@ body {
 }
 
 .box1-content a img:hover {
-  -webkit-transition: -webkit-box-shadow .4s;
-  transition: -webkit-box-shadow .4s;
-  transition: box-shadow .4s;
-  transition: box-shadow .4s, -webkit-box-shadow .4s;
+  -webkit-transition: -webkit-box-shadow 0.4s;
+  transition: -webkit-box-shadow 0.4s;
+  transition: box-shadow 0.4s;
+  transition: box-shadow 0.4s, -webkit-box-shadow 0.4s;
 }
 
 .secient-content {
@@ -263,7 +293,7 @@ body {
 }
 
 .box2-item::before {
-  content: '';
+  content: "";
   display: block;
   width: 10px;
   height: 10px;
@@ -274,7 +304,8 @@ body {
   left: 0px;
 }
 
-.box2-item:nth-child(3), .box2-item:nth-child(6) {
+.box2-item:nth-child(3),
+.box2-item:nth-child(6) {
   border-right: 0;
 }
 
@@ -289,8 +320,8 @@ body {
   margin: 40px 40px 60px 0;
   display: block;
   height: 250px;
-  -webkit-transition: all .4s;
-  transition: all .4s;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
   border: 1px solid #c9c9c9;
 }
 
@@ -349,25 +380,28 @@ body {
 }
 
 .train-title::after {
-  content: 'Consultation Training';
+  content: "Consultation Training";
 }
 
 .construction-title::after {
-  content: 'construction';
+  content: "Construction";
 }
 
-.train, .construction {
+.train,
+.construction {
   float: left;
   width: 42%;
   margin: 48px;
 }
 
-.train-box, .construction-box {
+.train-box,
+.construction-box {
   width: 90%;
   margin: 0 auto;
 }
 
-.train-item, .construction-item {
+.train-item,
+.construction-item {
   display: inline-block;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -378,8 +412,9 @@ body {
   position: relative;
 }
 
-.train-item::before, .construction-item::before {
-  content: '';
+.train-item::before,
+.construction-item::before {
+  content: "";
   display: block;
   width: 10px;
   height: 10px;
