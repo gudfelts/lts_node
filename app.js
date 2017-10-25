@@ -20,7 +20,7 @@ const routers = router();
 const app = new koa();
 
 const env = process.env.NODE_ENV;
-
+console.log(env)
 onerror(app);
 app.use(bodyParser({ formLimit: "1mb" }));
 app.use(catchError);
@@ -67,8 +67,8 @@ app.use(async (ctx, next) => {
 //正式 运行日志中间件
 app.use(
   env !== "production"
-    ? koaLogger()
-    : async (ctx, next) => {
+  ? koaLogger()
+  : async (ctx, next) => {
         // 响应开始时间
         const start = new Date();
         // 响应间隔时间
@@ -87,7 +87,7 @@ app.use(
 // app.use( koaLogger());
 //设置静态资源
 
-if (env !== "production") {
+// if (env !== "production") {
   const staticPath = "/static";
   app.use(static(path.join(__dirname, staticPath)));
   app.use(
@@ -95,7 +95,7 @@ if (env !== "production") {
       maxAge: 365 * 24 * 60 * 60
     })
   );
-}
+// }
 
 // 加载模板引擎
 app.use(

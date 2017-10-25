@@ -5,10 +5,10 @@
   "main": "app.js",
   "scripts": {
     "lint": "eslint *.js server/**",
-		"deploy_setup": "pm2 deploy ecosystem.config.js production setup",
+    "deploy_setup": "pm2 deploy ecosystem.config.js production setup",
     "deploy": "pm2 deploy ecosystem.config.js production",
     "start": " set NODE_ENV=development&& node app.js"
-	},
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gudfelts/lts_node.git"
@@ -27,7 +27,7 @@
     "koa-logger": "^3.0.1",
     "koa-onerror": "3.1.0",
     "koa-router": "7.2.1",
-    "koa-session": "5.5.0",
+    "koa-session2": "2.2.5",
     "koa-static": "4.0.1",
     "koa-static-cache": "5.1.1",
     "koa-view": "2.1.1",

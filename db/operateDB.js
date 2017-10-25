@@ -73,8 +73,8 @@ module.exports = {
         SQL.deleteArticle,
         val,
         function(err, result) {
-          if(err) reject({message:'数据库出错',status:404});
-          else resolve();
+           reject({message:'数据库出错',status:404});
+          // else resolve();
         }
       );
     });

@@ -3,7 +3,6 @@ const getIndex = require("../model/getIndex");
 
 
 const {getHotArticle,getTeamoOther,addBrowse,getTeam,getTeamOne,getNum,getArticleOne,getCatalog} = require("../model/OperationData")
-
 //获取文章
 router.get("/showArticle/article", async ctx => {
   const id = ctx.query.id,
@@ -19,7 +18,7 @@ router.get("/showArticle/article", async ctx => {
 
 //首页
 router.get("/", async ctx => {
-  
+    ctx.session.user = 'sss';
     let data = await getIndex();
     await ctx.render("index", data);
   
