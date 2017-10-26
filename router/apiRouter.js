@@ -1,6 +1,6 @@
 const router        = require("koa-router")();
 const user          = require('../controllers/user');
-const article       = require('../controllers/article');
+const article       = require('../controllers/data');
 const fontEnd       = require('../controllers/fontEnd');
 const API_fontEnd   = require('config-lite')(__dirname).api.fontEnd;
 const userAuth   = require('../middleware/userAuth');

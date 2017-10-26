@@ -53,7 +53,6 @@ router.get('/introduction/team/person',async ctx=>{
   
     const person = await getTeamOne(id);
     const other = await getTeamoOther(id);
-    console.log(other)
     await ctx.render("./introduction/person", {person :person[0],other});
 });
 
@@ -77,7 +76,25 @@ router.get('/introduction/team/catalog',async ctx=>{
 
     result.pageCount = pageCount;
   }
-  console.log(result);
   await ctx.render("./introduction/team", result);
+})
+
+//获取研究方向
+router.get('/introduction/reacherpath',async ctx=>{
+  let start = ctx.query.start || 0;
+
+  let result = await getCatalog('reacherpath', 0, start);
+  if (start === 0) {
+    let pageCount = await getNum('reacherpath');
+    //一页20条
+    if (pageCount % 20 > 0) {
+      pageCount = parseInt(pageCount / 20) + 1;
+    } else {
+      pageCount = pageCount / 20;
+    }
+
+    result.pageCount = pageCount;
+  }
+  await ctx.render("./introduction/reacherpath", result);
 })
 module.exports = router;

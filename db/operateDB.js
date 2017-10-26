@@ -36,7 +36,7 @@ module.exports = {
   getCatalog : val =>{
     return new Promise((resolve, reject) => {
       query(SQL.getCatalog, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
+        if(err) reject({message:'数据库出错',status:500});
         else resolve(result);
       });
     })
@@ -45,7 +45,7 @@ module.exports = {
   getArticleOne : val =>{
     return new Promise((resolve, reject) => {
       query(SQL.getArticleOne, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
+        if(err) reject({message:'数据库出错',status:500});
         else resolve(result[0]);
       });
     })
@@ -56,6 +56,23 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(
         SQL.saveArticle,
+        Article,
+        function(err, result) {
+          if(err) {
+            console.log(Article)
+            reject({message:'数据库出错',status:404});
+          }
+          
+          else resolve(result.insertId);
+        }
+      );
+    });
+  },
+   //修改文章
+   editArticle: (Article) => {
+    return new Promise((resolve, reject) => {
+      query(
+        SQL.editArticle,
         Article,
         function(err, result) {
           if(err) reject({message:'数据库出错',status:404});
@@ -73,8 +90,8 @@ module.exports = {
         SQL.deleteArticle,
         val,
         function(err, result) {
-           reject({message:'数据库出错',status:404});
-          // else resolve();
+          if(err) reject({message:'数据库出错',status:404});
+          else resolve();
         }
       );
     });

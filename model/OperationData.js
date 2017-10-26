@@ -4,6 +4,7 @@ const operateDB = require("../db/operateDB");
 
 //储存文章
 module.exports.saveArticle = (sort, val) =>operateDB.saveArticle([sort, val]);
+module.exports.editArticle = (sort, title, author, source, time, content, id, type) =>operateDB.editArticle([sort, title, author, source, time, content, id, type]);
 
 
 //删除文章
@@ -11,12 +12,8 @@ module.exports.deleteArticle =  (sort, id, type) =>  operateDB.deleteArticle([so
 
 
 //获取单个文章
-module.exports.getArticleOne =  async(sort, id, type) => {
-  let data = await operateDB.getArticleOne([sort, id, type]);
-  return data
-
-};
-
+module.exports.getArticleOne =  (sort, id, type) => operateDB.getArticleOne([sort, id, type]);
+  
 //获取目录
 module.exports.getCatalog = async (sort, type, start) => {
   let data = null;

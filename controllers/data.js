@@ -5,12 +5,16 @@ const downImg = require("../utils/transCode");
 const {
   saveArticle,
   deleteArticle,
-  getCatalog,
   getArticleOne,
+  editArticle,  
   getTeam,
   getTeamOne,
+  saveTeam,
+  updateTeamOne,
+  getCatalog,
   getNum,
-  saveBanner
+  saveBanner,
+  
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -22,7 +26,7 @@ const {
 */
 
 //存储文章
-router.post("/article", async ctx => {
+router.post("/article", async (ctx,next) => {
   let article = ctx.request.body;
 
   const type = article.selectedOptions;
@@ -44,7 +48,13 @@ router.post("/article", async ctx => {
     };
     return;
   }
-  const id = await saveArticle(type[0], article);
+  const id = await saveArticle(type[0], article).catch(()=>{
+    ctx.response.body = {
+      code: 500,
+      msg: "上传文章失败"
+    };
+    next();
+  });
 
   //储存banner
 
@@ -79,20 +89,13 @@ router.post("/deletearticle", async ctx => {
 
    
   }
-  // Promise.all(queue).then(result => {
   if(flag){
     ctx.response.body = {
       code: 200,
       msg: "删除成功"
     };
   }
-  // }).catch(e=>{
-  //   throw('删除失败');
-  //   ctx.response.body = {
-  //     code: 500,
-  //     msg: "删除失败"
-  //   };
-  // });
+
 });
 
 //获取单个文章
@@ -100,39 +103,61 @@ router.get("/article", async ctx => {
   const id = ctx.query.id,
     sort = ctx.query.sort,
     type = ctx.query.type;
-
-  const data = await getArticleOne(sort, id, type).catch(err => {
+  await getArticleOne(sort, id, type).then(data=>{
+  ctx.response.body = {
+    code :200,
+    data,
+    msg : '获取成功'
+    
+  }
+  
+ }).catch(err => {
+   console.log("err")
     ctx.response.body = {
       code: 500,
       msg: "获取失败"
     };
   });
-  ctx.response.body = data;
+
+  
 });
 
 //修改文章
-router.patch("/article", async ctx => {
-  let data = ctx.request.body.params;
+router.post("/editarticle", async ctx => {
+  let data = ctx.request.body;
+  
 
   const id = data.id,
-    sort = data.sort,
-    type = data.type;
+    sort = data.selectedOptions[0],
+    type = data.selectedOptions[1];
   content = data.content;
+  title = data.title;
   time = data.time;
   source = data.source;
   author = data.author;
 
-  const result = await getArticleOne(
+   await editArticle(
     sort,
+    title,
+    author,
+    source,
+    time,
+    content,
     id,
     type,
-    content,
-    time,
-    source,
-    author
-  );
+    
+  ).then(result => {
+      ctx.response.body = {
+        code: 200,
+        msg:'修改成功'
+      };
+    }).catch(()=>{
+    ctx.response.body = {
+      code: 500,
+      msg: "修改失败"
+    };
+  });
 
-  ctx.response.body = result;
 });
 
 //获取目录
@@ -179,9 +204,22 @@ router.get("/teamall", async ctx => {
 router.get("/tea", async ctx => {
   const name = ctx.query.id;
 
-  const result = await getTeamOne(id);
 
-  ctx.response.body = result;
+  await getTeamOne(id).then(data=>{
+    ctx.response.body = {
+      code :200,
+      data,
+      msg : '获取成功'
+      
+    }
+    
+   }).catch(err => {
+     console.log("err")
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
 });
 
 //增加专家信息
@@ -189,9 +227,21 @@ router.post("/team", async ctx => {
   let data = ctx.request.body.params;
   const { id, name, content, position, sex } = data;
 
-  const result = await updateTeamOne(id, name, content, position, sex);
-
-  ctx.response.body = result;
+  await saveTeam(id, name, content, position, sex).then(data=>{
+    ctx.response.body = {
+      code :200,
+      data,
+      msg : '增加成功'
+      
+    }
+    
+   }).catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "增加失败"
+      };
+    });
+ 
 });
 
 //修改专家信息
@@ -199,8 +249,21 @@ router.patch("/team", async ctx => {
   let data = ctx.request.body.params;
   const { id, name, content, position, sex } = data;
 
-  const result = await updateTeamOne(id, name, content, position, sex);
+  await updateTeamOne(id, name, content, position, sex).then(data=>{
+    ctx.response.body = {
+      code :200,
+      data,
+      msg : '修改成功'
+      
+    }
+    
+   }).catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "修改失败"
+      };
+    });;
 
-  ctx.response.body = result;
+
 });
 module.exports = router;
