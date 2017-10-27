@@ -82,7 +82,19 @@ module.exports = {
       );
     });
   },
-  
+  reacherArticle: (val) => {
+    return new Promise((resolve, reject) => {
+      query(
+        SQL.reacherArticle,
+        val,
+        function(err, result) {
+          if(err) reject({message:'数据库出错',status:404});
+          
+          else resolve(result.insertId);
+        }
+      );
+    });
+  },
    //删除文章
    deleteArticle: (val) => {
     return new Promise((resolve, reject) => {
@@ -96,6 +108,20 @@ module.exports = {
       );
     });
   },
+
+  //删除人物
+  deletePerson: (val) => {
+   return new Promise((resolve, reject) => {
+     query(
+       SQL.deletePerson,
+       val,
+       function(err, result) {
+         if(err) reject({message:'数据库出错',status:404});
+         else resolve();
+       }
+     );
+   });
+ },
   getNum : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.getNum, val, (err, result) => {
@@ -141,9 +167,9 @@ module.exports = {
     })
   },
   
-  getTeamOne : (val)=>{
+  getPerson : (val)=>{
     return new Promise((resolve, reject) => {
-      query(SQL.getTeamOne, val, (err, result) => {
+      query(SQL.getPerson, val, (err, result) => {
         if(err) reject({message:'数据库出错',status:404});
         else resolve(result);
       });
@@ -157,9 +183,9 @@ module.exports = {
       });
     })
   },
-  updateTeamOne : (val)=>{
+  updatePerson : (val)=>{
     return new Promise((resolve, reject) => {
-      query(SQL.updateTeamOne, val, (err, result) => {
+      query(SQL.updatePerson, val, (err, result) => {
         if(err) reject({message:'数据库出错',status:404});
         
         else resolve(result);

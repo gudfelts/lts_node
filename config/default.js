@@ -54,8 +54,8 @@ module.exports = {
     getIndexTrain: "select title,id,type from train order by id desc limit ?,?",
     //首页智库建设 
     getIndexConstruction: "select title,id,type from construction order by id desc limit ?,?",
+    
     //热门文章
- 
     getHotArticle: "select title,id,type from(select title,id,type,browse from ?? order by id desc limit 20) as total order by browse",
 
     //获取管理员信息
@@ -68,14 +68,17 @@ module.exports = {
     //获取团队列表
     getTeam: "select id,name,position,avatar from team limit ?,20",
     //获取专家信息
-    getTeamOne: "select * from team where id = ? limit 1",
+    getPerson: "select * from team where id = ? limit 1",
     getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
-    updateTeamOne: "update team set name = ?,position = ?,content = ?,avatar = ? where id = ? limit 1",
-    //更新专家信息
+    updatePerson: "update team set name = ?,position = ?,content = ?,avatar = ? where id = ? limit 1",
+
+    //删除专家信息
+    deletePerson: "delete from team where id = ?",
+    //存储专家信息
     saveTeam: "insert into team set ?",
    
-   
+    //轮播图
     saveBanner: "insert into banner set ?",
     deleteBanner: "delete from banner limit 1",
     getBanner: "select * from banner limit 5",
@@ -100,7 +103,8 @@ module.exports = {
     getNum: "select count(1) from ??",
     //更新内容
     editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
-  
+    //查找文章
+    reacherArticle : 'select * from ?? where title like ?'
   },
   type: {
     information: ["流通所新闻", "基地资讯", "媒体报道"],

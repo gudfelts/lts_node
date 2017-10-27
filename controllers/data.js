@@ -1,19 +1,21 @@
 const router = require("koa-router")();
-
+const koaBody = require('koa-body');
 const downImg = require("../utils/transCode");
-
+const formidable = require("formidable");
 const {
   saveArticle,
   deleteArticle,
   getArticleOne,
   editArticle,  
   getTeam,
-  getTeamOne,
+  getPerson,
   saveTeam,
-  updateTeamOne,
+  updatePerson,
+  deletePerson,
   getCatalog,
   getNum,
   saveBanner,
+  reacherArticle
   
 } = require("../model/OperationData");
 
@@ -39,7 +41,7 @@ router.post("/article", async (ctx,next) => {
   article.browse = 0;
   article.time = article.time.replace(/T.*$/, "");
   try {
-    var { data, path } = await downImg(article.content);
+    var { data, path } = await downImg.tranforIndex(article.content);
     article.content = data;
   } catch (error) {
     ctx.response.body = {
@@ -182,10 +184,11 @@ router.get("/catalog", async ctx => {
 });
 
 //获取团队列表
-router.get("/teamall", async ctx => {
-  let start = parseInt(ctx.query.start) || 0;
+router.get("/team", async ctx => {
+ 
+  let start = parseInt(ctx.query.page) - 1 || 0;
   let result = await getTeam(start);
-
+  
   if (start === 0) {
     let pageCount = await getNum("team");
     //一页20条
@@ -201,11 +204,12 @@ router.get("/teamall", async ctx => {
 });
 
 //获取专家信息
-router.get("/tea", async ctx => {
-  const name = ctx.query.id;
+router.get("/team/person", async ctx => {
+  const id = ctx.query.id;
 
 
-  await getTeamOne(id).then(data=>{
+  await getPerson(id).then(data=>{
+    console.log(data);
     ctx.response.body = {
       code :200,
       data,
@@ -222,15 +226,21 @@ router.get("/tea", async ctx => {
     });
 });
 
+router.post('/team/person/avatar',async ctx =>{
+  ctx.response.body = {
+    code: 500,
+    msg: "获取失败"
+  };
+})
 //增加专家信息
-router.post("/team", async ctx => {
-  let data = ctx.request.body.params;
-  const { id, name, content, position, sex } = data;
-
-  await saveTeam(id, name, content, position, sex).then(data=>{
+router.post("/team/person", async ctx => {
+  let data = ctx.request.body;
+  let { name, content, position, avatar } = data;
+  avatar = await downImg.tranforPerson(avatar);
+  console.log(avatar)
+  await saveTeam({name, content, position, avatar}).then((result)=>{
     ctx.response.body = {
       code :200,
-      data,
       msg : '增加成功'
       
     }
@@ -241,15 +251,18 @@ router.post("/team", async ctx => {
         msg: "增加失败"
       };
     });
- 
+    ctx.response.body = {
+      code :200,
+      msg : '增加成功'
+      
+    }
 });
-
 //修改专家信息
-router.patch("/team", async ctx => {
+router.patch("/team/person", async ctx => {
   let data = ctx.request.body.params;
   const { id, name, content, position, sex } = data;
 
-  await updateTeamOne(id, name, content, position, sex).then(data=>{
+  await updatePerson(id, name, content, position, sex).then(data=>{
     ctx.response.body = {
       code :200,
       data,
@@ -263,7 +276,50 @@ router.patch("/team", async ctx => {
         msg: "修改失败"
       };
     });;
+});
 
+
+//删除专家
+router.post("/team/delete", async ctx => {
+  let data = ctx.request.body.person;
+  let flag = true;
+  for (let i = 0, len = data.length; i < len && flag; i++) {
+    const id = parseInt(data[i].id);
+    await deletePerson(id).catch(e => {
+      console.log("error");
+      ctx.response.body = {
+        code: 500,
+        msg: "删除失败"
+      };
+
+      flag = false;
+    });
+
+   
+  }
+  if(flag){
+    ctx.response.body = {
+      code: 200,
+      msg: "删除成功"
+    };
+  }
 
 });
+router.get('/reacherArticle',async ctx =>{
+  const title = "%" + ctx.query.title + "%";
+  const sort = ctx.query.sort;
+
+  await reacherArticle(sort,title).then(result =>{
+    ctx.response.body = {
+      data : result,
+      code : 200
+    }
+  
+  }).catch(()=>{
+    ctx.response.body = {
+      code : 500,
+      msg : '搜索出现错误'
+    }
+  })
+})
 module.exports = router;

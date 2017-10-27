@@ -13,14 +13,15 @@ module.exports.deleteArticle =  (sort, id, type) =>  operateDB.deleteArticle([so
 
 //获取单个文章
 module.exports.getArticleOne =  (sort, id, type) => operateDB.getArticleOne([sort, id, type]);
+//搜索文章
+module.exports.reacherArticle =  (sort, title) => operateDB.reacherArticle([sort, title]);
   
 //获取目录
 module.exports.getCatalog = async (sort, type, start) => {
-  let data = null;
 
   let title = TYPE[sort][type - 1];
 
-  data = await operateDB.getCatalog([sort, type, start]);
+  let data =  await operateDB.getCatalog([sort, type, start]);
   
   return { data, title, sorts: TYPE[sort], sort };
 };
@@ -38,7 +39,6 @@ module.exports.getIndex =  (sort, val) => {
       case "exchange":
       return operateDB.getIndex(SQL.getIndexExchange, val);
         break;
-        construction;
       case "train":
       return operateDB.getIndex(SQL.getIndexTrain, val);
         break;
@@ -76,9 +76,10 @@ module.exports.getHotArticle = async sort => {
 //专家团队
 module.exports.getTeam =  start => operateDB.getTeam(start);
 module.exports.saveTeam =  value => operateDB.saveTeam(value);
-module.exports.getTeamOne =  id => operateDB.getTeamOne(id);
+module.exports.getPerson =  id => operateDB.getPerson(id);
 module.exports.getTeamoOther =  id => operateDB.getTeamoOther(id);
-module.exports.updateTeamOne = (id, name, content, position, avatar) =>operateDB.updateTeamOne([name, position, content, avatar, id]);
+module.exports.deletePerson =  id => operateDB.deletePerson(id);
+module.exports.updatePerson = (id, name, content, position, avatar) =>operateDB.updatePerson([name, position, content, avatar, id]);
 
 //存放banner
 module.exports.saveBanner = async (sort,type,id,path) =>{

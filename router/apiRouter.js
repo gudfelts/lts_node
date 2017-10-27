@@ -6,7 +6,7 @@ const API_fontEnd   = require('config-lite')(__dirname).api.fontEnd;
 const userAuth   = require('../middleware/userAuth');
 
 //后台网站数据接口
-router.use('/admin',userAuth);
+// router.use('/admin',userAuth);
 router.use('/admin/user', user.routes(), user.allowedMethods())
 router.use('/admin/data', article.routes(), article.allowedMethods());
 

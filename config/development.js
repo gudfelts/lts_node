@@ -68,10 +68,10 @@ module.exports = {
     //获取团队列表
     getTeam: "select id,name,position,avatar from team limit ?,20",
     //获取专家信息
-    getTeamOne: "select * from team where id = ? limit 1",
+    getPerson: "select * from team where id = ? limit 1",
     getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
-    updateTeamOne: "update team set name = ?,position = ?,content = ?,avatar = ? where id = ? limit 1",
+    updatePerson: "update team set name = ?,position = ?,content = ?,avatar = ? where id = ? limit 1",
     //更新专家信息
     saveTeam: "insert into team set ?",
    

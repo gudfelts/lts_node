@@ -2,7 +2,7 @@ const router = require("koa-router")();
 const getIndex = require("../model/getIndex");
 
 
-const {getHotArticle,getTeamoOther,addBrowse,getTeam,getTeamOne,getNum,getArticleOne,getCatalog} = require("../model/OperationData")
+const {getHotArticle,getTeamoOther,addBrowse,getTeam,getPerson,getNum,getArticleOne,getCatalog} = require("../model/OperationData")
 //获取文章
 router.get("/showArticle/article", async ctx => {
   const id = ctx.query.id,
@@ -51,7 +51,7 @@ router.get("/showArticle/catalog", async ctx => {
 router.get('/introduction/team/person',async ctx=>{
     const id = ctx.query.id;
   
-    const person = await getTeamOne(id);
+    const person = await getPerson(id);
     const other = await getTeamoOther(id);
     await ctx.render("./introduction/person", {person :person[0],other});
 });

@@ -1,6 +1,6 @@
 const router = require("koa-router")();
-const getCatalog = require("../model/OperationData").getCatalog;
-const addPraise = require("../model/OperationData").addPraise;
+
+const {reacherArticle, getCatalog, addPraise} = require("../model/OperationData");
 
 //下一页
 router.get('/next', async ctx => {
@@ -23,5 +23,20 @@ router.patch('/praise', ctx => {
     code: 200
   };
 });
+router.get('/reacherArticle',async ctx =>{
+  const title = "%" + ctx.query.title + "%";
+  const sort = ctx.query.sort;
 
+  await reacherArticle(sort,title).then(result =>{
+    ctx.response.body = {
+      data : result,
+      code : 200
+    }
+  
+  }).catch(()=>{
+    ctx.response.body = {
+      code : 500
+    }
+  })
+})
 module.exports = router;
