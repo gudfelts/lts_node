@@ -1,11 +1,9 @@
 const router = require("koa-router")();
-// const api = require("config-lite")(__dirname).api.admin.user;
-const api = require("../config/default").api.admin.user;
 const getUser = require("../db/operateDB").getUser;
 const updateUser = require("../db/operateDB").updateUser;
 
 //登录
-router.post(api.login, async ctx => {
+router.post('/login', async ctx => {
   const requestData = ctx.request.body;
   if (requestData.password && requestData.account) {
     const account = [];
@@ -33,7 +31,7 @@ router.post(api.login, async ctx => {
 });
 
 //退出账户
-router.get(api.logout, ctx => {
+router.get('/logout', ctx => {
   ctx.session.isLogin = flase;
   ctx.response.body = {
     code: 200,
@@ -42,7 +40,7 @@ router.get(api.logout, ctx => {
 });
 
 //修改密码
-router.post(api.changePassword, async ctx => {
+router.post('/changePassword', async ctx => {
   const newPass = ctx.request.body.password;
   const result = await updateUser(newPass);
   ctx.response.body = {

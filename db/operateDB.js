@@ -186,7 +186,10 @@ module.exports = {
   updatePerson : (val)=>{
     return new Promise((resolve, reject) => {
       query(SQL.updatePerson, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
+        if(err) {
+          throw err;
+          reject({message:'数据库出错',status:404});
+        }
         
         else resolve(result);
       });

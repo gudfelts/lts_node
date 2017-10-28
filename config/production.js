@@ -2,11 +2,12 @@
 const path = require('path');
 const env = process.env.NODE_ENV;
 const PORT =  3000;
-const HOST = env === 'production' ? '' : 'localhost';
+const HOST = 'http://lococo.site';
 // // log配置
 const errorLogPath =    path.join(__dirname, '../logs/error/error');				// 错误日志输出完整路径
 const responseLogPath = path.join(__dirname, '../logs/response/response');	// 响应日志输出完整路径
 module.exports = {
+  HOST,
   serverPort: 3000,
   db: {
     host: "localhost",
@@ -14,35 +15,7 @@ module.exports = {
     password: "root",
     database: "lts"
   },
-  api: {
-    admin : {
-      user: {
-        self: "/admin/user",
-        login: "/login",
-        logout: "/logout",
-        changePassword: "/changePassword"
-      },
-      article: {
-        self: "/admin/article",
-        postArticle: "/postArticle",
-        getCatalog: "/getCatalog",
-        getArticle: "/getArticle",
-        deleteArticle: "/deleteArticle",
-        batchDeleteArticle: "/batchDeleteArticle",
-        editArticle: "/editArticle"
-      },
-      addTeamMember: "/admin/addTeamMember",
-      deleteTeamMember: "/admin/addTeamMember"
-    },
 
-    fontEnd:{
-      self:'/OperationData',
-      getCatalog:'/getCatalog',
-      addPraise:'/addPraise'
-    }
-
-   
-  },
   sql: {
     //首页科研资讯
     getIndexInfo: "select title,id,type,content from information order by id desc limit ?,?",
@@ -54,8 +27,8 @@ module.exports = {
     getIndexTrain: "select title,id,type from train order by id desc limit ?,?",
     //首页智库建设 
     getIndexConstruction: "select title,id,type from construction order by id desc limit ?,?",
+    
     //热门文章
- 
     getHotArticle: "select title,id,type from(select title,id,type,browse from ?? order by id desc limit 20) as total order by browse",
 
     //获取管理员信息
@@ -71,11 +44,14 @@ module.exports = {
     getPerson: "select * from team where id = ? limit 1",
     getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
-    updatePerson: "update team set name = ?,position = ?,content = ?,avatar = ? where id = ? limit 1",
-    //更新专家信息
+    updatePerson: "update team set name = ?,position = ?,content = ?, avatar = ? where id = ? limit 1",
+
+    //删除专家信息
+    deletePerson: "delete from team where id = ?",
+    //存储专家信息
     saveTeam: "insert into team set ?",
    
-   
+    //轮播图
     saveBanner: "insert into banner set ?",
     deleteBanner: "delete from banner limit 1",
     getBanner: "select * from banner limit 5",
@@ -100,7 +76,8 @@ module.exports = {
     getNum: "select count(1) from ??",
     //更新内容
     editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
-  
+    //查找文章
+    reacherArticle : 'select * from ?? where title like ?'
   },
   type: {
     information: ["流通所新闻", "基地资讯", "媒体报道"],
@@ -135,6 +112,6 @@ module.exports = {
       errorLogger: 'ERROR',
       resLogger: 'ALL'
     }
-  }
+  },
   
 };

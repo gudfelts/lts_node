@@ -5,8 +5,6 @@
   "main": "app.js",
   "scripts": {
     "lint": "eslint *.js server/**",
-    "deploy_setup": "pm2 deploy ecosystem.config.js production setup",
-    "deploy": "pm2 deploy ecosystem.config.js production",
     "start": " set NODE_ENV=development&& node app.js"
   },
   "repository": {
@@ -20,6 +18,7 @@
   },
   "homepage": "https://github.com/gudfelts/lts_node#readme",
   "dependencies": {
+    "async-busboy": "0.6.2",
     "bluebird": "3.5.1",
     "config-lite": "2.1.0",
     "ejs": "2.5.7",

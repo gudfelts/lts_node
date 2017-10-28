@@ -79,7 +79,9 @@ module.exports.saveTeam =  value => operateDB.saveTeam(value);
 module.exports.getPerson =  id => operateDB.getPerson(id);
 module.exports.getTeamoOther =  id => operateDB.getTeamoOther(id);
 module.exports.deletePerson =  id => operateDB.deletePerson(id);
-module.exports.updatePerson = (id, name, content, position, avatar) =>operateDB.updatePerson([name, position, content, avatar, id]);
+module.exports.updatePerson = (id, name, content, position, avatar) => operateDB.updatePerson([name, position, content , avatar, id]);
+
+
 
 //存放banner
 module.exports.saveBanner = async (sort,type,id,path) =>{

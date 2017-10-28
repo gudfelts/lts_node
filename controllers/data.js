@@ -1,7 +1,9 @@
 const router = require("koa-router")();
-const koaBody = require('koa-body');
-const downImg = require("../utils/transCode");
-const formidable = require("formidable");
+const transCode = require("../utils/transCode");
+const downImg = require("../utils/downImg");
+const asyncBusboy = require('async-busboy');
+
+
 const {
   saveArticle,
   deleteArticle,
@@ -18,6 +20,8 @@ const {
   reacherArticle
   
 } = require("../model/OperationData");
+
+
 
 /* HTTP动词
     GET     //查询
@@ -41,7 +45,7 @@ router.post("/article", async (ctx,next) => {
   article.browse = 0;
   article.time = article.time.replace(/T.*$/, "");
   try {
-    var { data, path } = await downImg.tranforIndex(article.content);
+    var { data, path } = await transCode.tranforIndex(article.content);
     article.content = data;
   } catch (error) {
     ctx.response.body = {
@@ -184,7 +188,7 @@ router.get("/catalog", async ctx => {
 });
 
 //获取团队列表
-router.get("/team", async ctx => {
+router.get("/team/catalog", async ctx => {
  
   let start = parseInt(ctx.query.page) - 1 || 0;
   let result = await getTeam(start);
@@ -209,7 +213,8 @@ router.get("/team/person", async ctx => {
 
 
   await getPerson(id).then(data=>{
-    console.log(data);
+    console.log("sss")
+    console.log(data[0].avatar)
     ctx.response.body = {
       code :200,
       data,
@@ -227,17 +232,34 @@ router.get("/team/person", async ctx => {
 });
 
 router.post('/team/person/avatar',async ctx =>{
-  ctx.response.body = {
-    code: 500,
-    msg: "获取失败"
-  };
+  const {files, fields} = await asyncBusboy(ctx.req);
+  
+  
+  await downImg(files[0]).then(path=>{
+    console.log(path)
+    ctx.response.body = {
+      code :200,
+      path,
+      msg : '获取成功'
+      
+    }
+    
+   }).catch(err => {
+     console.log("err")
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });;
+  
+ 
 })
 //增加专家信息
 router.post("/team/person", async ctx => {
   let data = ctx.request.body;
   let { name, content, position, avatar } = data;
-  avatar = await downImg.tranforPerson(avatar);
-  console.log(avatar)
+  
+
   await saveTeam({name, content, position, avatar}).then((result)=>{
     ctx.response.body = {
       code :200,
@@ -258,14 +280,15 @@ router.post("/team/person", async ctx => {
     }
 });
 //修改专家信息
-router.patch("/team/person", async ctx => {
-  let data = ctx.request.body.params;
-  const { id, name, content, position, sex } = data;
-
-  await updatePerson(id, name, content, position, sex).then(data=>{
+router.post("/team/edit", async ctx => {
+  let data = ctx.request.body;
+  let { id,name, content, position, avatar } = data;
+  
+  console.log(id,name, content, position, avatar)
+  id = parseInt(id);
+  await updatePerson(id,name, content, position, avatar).then((result)=>{
     ctx.response.body = {
       code :200,
-      data,
       msg : '修改成功'
       
     }
@@ -273,9 +296,10 @@ router.patch("/team/person", async ctx => {
    }).catch(err => {
       ctx.response.body = {
         code: 500,
-        msg: "修改失败"
+        msg: "增加失败"
       };
-    });;
+    });
+   
 });
 
 

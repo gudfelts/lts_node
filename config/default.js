@@ -2,11 +2,12 @@
 const path = require('path');
 const env = process.env.NODE_ENV;
 const PORT =  3000;
-const HOST = env === 'production' ? '' : 'localhost';
+const HOST = 'http://localhost:3000';
 // // log配置
 const errorLogPath =    path.join(__dirname, '../logs/error/error');				// 错误日志输出完整路径
 const responseLogPath = path.join(__dirname, '../logs/response/response');	// 响应日志输出完整路径
 module.exports = {
+  HOST,
   serverPort: 3000,
   db: {
     host: "localhost",
@@ -14,35 +15,7 @@ module.exports = {
     password: "root",
     database: "lts"
   },
-  api: {
-    admin : {
-      user: {
-        self: "/admin/user",
-        login: "/login",
-        logout: "/logout",
-        changePassword: "/changePassword"
-      },
-      article: {
-        self: "/admin/article",
-        postArticle: "/postArticle",
-        getCatalog: "/getCatalog",
-        getArticle: "/getArticle",
-        deleteArticle: "/deleteArticle",
-        batchDeleteArticle: "/batchDeleteArticle",
-        editArticle: "/editArticle"
-      },
-      addTeamMember: "/admin/addTeamMember",
-      deleteTeamMember: "/admin/addTeamMember"
-    },
 
-    fontEnd:{
-      self:'/OperationData',
-      getCatalog:'/getCatalog',
-      addPraise:'/addPraise'
-    }
-
-   
-  },
   sql: {
     //首页科研资讯
     getIndexInfo: "select title,id,type,content from information order by id desc limit ?,?",
@@ -71,7 +44,7 @@ module.exports = {
     getPerson: "select * from team where id = ? limit 1",
     getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
-    updatePerson: "update team set name = ?,position = ?,content = ?,avatar = ? where id = ? limit 1",
+    updatePerson: "update team set name = ?,position = ?,content = ? ,avatar = ? where id = ? limit 1",
 
     //删除专家信息
     deletePerson: "delete from team where id = ?",
@@ -139,6 +112,6 @@ module.exports = {
       errorLogger: 'ERROR',
       resLogger: 'ALL'
     }
-  }
+  },
   
 };

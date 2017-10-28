@@ -1,5 +1,5 @@
 const log4js = require('log4js');
-const logConfig =  require("config-lite")(__dirname).logConfig;
+const logConfig =  require('../utils/config').logConfig;
 
 // 加载log配置文件
 log4js.configure(logConfig);

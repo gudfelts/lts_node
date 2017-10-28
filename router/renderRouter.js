@@ -18,7 +18,6 @@ router.get("/showArticle/article", async ctx => {
 
 //首页
 router.get("/", async ctx => {
-    ctx.session.user = 'sss';
     let data = await getIndex();
     await ctx.render("index", data);
   
