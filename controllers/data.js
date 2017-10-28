@@ -192,6 +192,7 @@ router.get("/team/catalog", async ctx => {
  
   let start = parseInt(ctx.query.page) - 1 || 0;
   let result = await getTeam(start);
+  console.log(result)
   
   if (start === 0) {
     let pageCount = await getNum("team");
@@ -284,7 +285,6 @@ router.post("/team/edit", async ctx => {
   let data = ctx.request.body;
   let { id,name, content, position, avatar } = data;
   
-  console.log(id,name, content, position, avatar)
   id = parseInt(id);
   await updatePerson(id,name, content, position, avatar).then((result)=>{
     ctx.response.body = {
