@@ -44,7 +44,7 @@ module.exports = {
     getPerson: "select * from team where id = ? limit 1",
     getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
-    updatePerson: "update team set name = ?,position = ?,content = ?, avatar = ? where id = ? limit 1",
+    updatePerson: "update team set name = ?,position = ?,content = ? ,avatar = ? where id = ? limit 1",
 
     //删除专家信息
     deletePerson: "delete from team where id = ?",

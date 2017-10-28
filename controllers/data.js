@@ -84,7 +84,7 @@ router.post("/deletearticle", async ctx => {
     const id = data[i].id,
       type = data[i].type;
     await deleteArticle(sort, id, type).catch(e => {
-      console.log("error");
+  
       ctx.response.body = {
         code: 500,
         msg: "删除失败"
@@ -118,7 +118,7 @@ router.get("/article", async ctx => {
   }
   
  }).catch(err => {
-   console.log("err")
+
     ctx.response.body = {
       code: 500,
       msg: "获取失败"
@@ -192,7 +192,7 @@ router.get("/team/catalog", async ctx => {
  
   let start = parseInt(ctx.query.page) - 1 || 0;
   let result = await getTeam(start);
-  console.log(result)
+
   
   if (start === 0) {
     let pageCount = await getNum("team");
@@ -214,8 +214,8 @@ router.get("/team/person", async ctx => {
 
 
   await getPerson(id).then(data=>{
-    console.log("sss")
-    console.log(data[0].avatar)
+
+
     ctx.response.body = {
       code :200,
       data,
@@ -224,7 +224,7 @@ router.get("/team/person", async ctx => {
     }
     
    }).catch(err => {
-     console.log("err")
+  
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -237,7 +237,7 @@ router.post('/team/person/avatar',async ctx =>{
   
   
   await downImg(files[0]).then(path=>{
-    console.log(path)
+
     ctx.response.body = {
       code :200,
       path,
@@ -246,7 +246,7 @@ router.post('/team/person/avatar',async ctx =>{
     }
     
    }).catch(err => {
-     console.log("err")
+
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -310,7 +310,7 @@ router.post("/team/delete", async ctx => {
   for (let i = 0, len = data.length; i < len && flag; i++) {
     const id = parseInt(data[i].id);
     await deletePerson(id).catch(e => {
-      console.log("error");
+  
       ctx.response.body = {
         code: 500,
         msg: "删除失败"
