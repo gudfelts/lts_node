@@ -83,14 +83,51 @@ module.exports = {
     });
   },
   reacherArticle: (val) => {
+    console.log(val)
     return new Promise((resolve, reject) => {
       query(
         SQL.reacherArticle,
         val,
         function(err, result) {
-          if(err) reject({message:'数据库出错',status:404});
+          if(err) {
+            console.log(err)
+            reject({message:'数据库出错',status:404});
+          }
           
-          else resolve(result.insertId);
+          else resolve(result);
+        }
+      );
+    });
+  },
+  reacherPerson: (val) => {
+    
+    return new Promise((resolve, reject) => {
+      query(
+        SQL.reacherPerson,
+        val,
+        function(err, result) {
+          if(err) {
+            console.log(err)
+            reject({message:'数据库出错',status:404});
+          }
+          
+          else resolve(result);
+        }
+      );
+    });
+  },
+  getReacherNum: (sql,val) => {
+    return new Promise((resolve, reject) => {
+      query(
+        sql,
+        val,
+        function(err, result) {
+          if(err) {
+            console.log(err)
+            reject({message:'数据库出错',status:404});
+          }
+          
+          else resolve(result);
         }
       );
     });

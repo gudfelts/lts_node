@@ -1,14 +1,13 @@
 const router = require("koa-router")();
 const transCode = require("../utils/transCode");
 const downImg = require("../utils/downImg");
-const asyncBusboy = require('async-busboy');
-
+const asyncBusboy = require("async-busboy");
 
 const {
   saveArticle,
   deleteArticle,
   getArticleOne,
-  editArticle,  
+  editArticle,
   getTeam,
   getPerson,
   saveTeam,
@@ -17,11 +16,9 @@ const {
   getCatalog,
   getNum,
   saveBanner,
-  reacherArticle
-  
+  reacherArticle,
+  getReacherNum
 } = require("../model/OperationData");
-
-
 
 /* HTTP动词
     GET     //查询
@@ -32,7 +29,7 @@ const {
 */
 
 //存储文章
-router.post("/article", async (ctx,next) => {
+router.post("/article", async ctx => {
   let article = ctx.request.body;
 
   const type = article.selectedOptions;
@@ -47,61 +44,50 @@ router.post("/article", async (ctx,next) => {
   try {
     var { data, path } = await transCode.tranforIndex(article.content);
     article.content = data;
+
+    const id = await saveArticle(type[0], article);
+
+    //储存banner
+
+    isBanner && saveBanner(type[0], article.type, id, path);
+
+    ctx.response.body = {
+      code: 200,
+      msg: "成功"
+    };
   } catch (error) {
     ctx.response.body = {
       code: 500,
-      msg: "上传图片失败!"
+      msg: "上传文章失败!"
     };
     return;
   }
-  const id = await saveArticle(type[0], article).catch(()=>{
-    ctx.response.body = {
-      code: 500,
-      msg: "上传文章失败"
-    };
-    next();
-  });
-
-  //储存banner
-
-  isBanner && saveBanner(type[0], article.type, id, path);
-
-  ctx.response.body = {
-    code: 200,
-    msg: "成功"
-  };
-  return;
 });
 
 //删除
-router.post("/deletearticle", async ctx => {
+router.post("/deletearticle", async (ctx, next) => {
   let data = ctx.request.body.article;
   let sort = ctx.request.body.sort;
-  let flag = true;
 
-
-  for (let i = 0, len = data.length; i < len && flag; i++) {
+  for (let i = 0, len = data.length; i < len; i++) {
     const id = data[i].id,
       type = data[i].type;
-    await deleteArticle(sort, id, type).catch(e => {
-  
-      ctx.response.body = {
-        code: 500,
-        msg: "删除失败"
-      };
-
-      flag = false;
-    });
-
-   
+    await deleteArticle(sort, id, type)
+      .then(() => {
+        if (i === len - 1) {
+          ctx.response.body = {
+            code: 200,
+            msg: "删除成功"
+          };
+        }
+      })
+      .catch(e => {
+        ctx.response.body = {
+          code: 500,
+          msg: "删除失败"
+        };
+      });
   }
-  if(flag){
-    ctx.response.body = {
-      code: 200,
-      msg: "删除成功"
-    };
-  }
-
 });
 
 //获取单个文章
@@ -109,29 +95,50 @@ router.get("/article", async ctx => {
   const id = ctx.query.id,
     sort = ctx.query.sort,
     type = ctx.query.type;
-  await getArticleOne(sort, id, type).then(data=>{
-  ctx.response.body = {
-    code :200,
-    data,
-    msg : '获取成功'
-    
-  }
-  
- }).catch(err => {
-
-    ctx.response.body = {
-      code: 500,
-      msg: "获取失败"
-    };
-  });
-
-  
+  await getArticleOne(sort, id, type)
+    .then(data => {
+      ctx.response.body = {
+        code: 200,
+        data,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
 });
+//搜索文章
+router.get("/reacherArticle", async (ctx, next) => {
+  const title = "%" + ctx.query.title + "%";
+  const sort = ctx.query.sort;
+  const type = parseInt(ctx.query.type);
+  let start = parseInt(ctx.query.start) || 0;
 
+  await reacherArticle(sort, title, type, start)
+    .then(async result => {
+      if (start === 0) {
+        var pageCount = await getReacherNum("article", sort, title, type);
+        //一页15条
+      }
+      ctx.response.body = {
+        data: result,
+        pageCount,
+        code: 200
+      };
+    })
+    .catch(() => {
+      ctx.response.body = {
+        code: 500,
+        msg: "搜索出现错误"
+      };
+    });
+});
 //修改文章
 router.post("/editarticle", async ctx => {
   let data = ctx.request.body;
-  
 
   const id = data.id,
     sort = data.selectedOptions[0],
@@ -142,89 +149,81 @@ router.post("/editarticle", async ctx => {
   source = data.source;
   author = data.author;
 
-   await editArticle(
-    sort,
-    title,
-    author,
-    source,
-    time,
-    content,
-    id,
-    type,
-    
-  ).then(result => {
+  await editArticle(sort, title, author, source, time, content, id, type)
+    .then(result => {
       ctx.response.body = {
         code: 200,
-        msg:'修改成功'
+        msg: "修改成功"
       };
-    }).catch(()=>{
-    ctx.response.body = {
-      code: 500,
-      msg: "修改失败"
-    };
-  });
-
+    })
+    .catch(() => {
+      ctx.response.body = {
+        code: 500,
+        msg: "修改失败"
+      };
+    });
 });
 
-//获取目录
-router.get("/catalog", async ctx => {
+//获取文章目录
+router.get("/catalog", async (ctx, next) => {
   const sort = ctx.query.sort;
   const type = ctx.query.type;
   let start = parseInt(ctx.query.start) || 0;
-  let result = await getCatalog(sort, type, start);
 
-  if (start === 0) {
-    let pageCount = await getNum(sort);
-    //一页15条
-    if (pageCount % 15 > 0) {
-      pageCount = parseInt(pageCount / 15) + 1;
-    } else {
-      pageCount = pageCount / 15;
-    }
-
-    result.pageCount = pageCount;
+  try {
+    await getCatalog(sort, type, start).then(async result => {
+      let pageCount = 0;
+      if (start === 0) {
+        pageCount = await getNum(sort);
+        //一页15条
+      }
+      result.pageCount = pageCount;
+      result.code = 200;
+      ctx.response.body = result;
+    });
+  } catch (error) {
+    console.log("err");
+    ctx.response.body = {
+      code: 201,
+      msg: "搜索出现错误"
+    };
   }
-  ctx.response.body = result;
 });
 
 //获取团队列表
 router.get("/team/catalog", async ctx => {
- 
-  let start = parseInt(ctx.query.page) - 1 || 0;
-  let result = await getTeam(start);
+  let start = parseInt(ctx.query.start) || 0;
 
-  
-  if (start === 0) {
-    let pageCount = await getNum("team");
+  try {
+    let result = await getTeam(start);
     //一页20条
-    if (pageCount % 20 > 0) {
-      pageCount = parseInt(pageCount / 20) + 1;
-    } else {
-      pageCount = pageCount / 20;
+    if (start === 0) {
+      var pageCount = await getNum("team");
     }
-
+    result.code = 200;
     result.pageCount = pageCount;
+    ctx.response.body = result;
+  } catch (error) {
+    ctx.response.body = {
+      msg: "搜索失败",
+      code: 500
+    };
   }
-  ctx.response.body = result;
 });
 
 //获取专家信息
 router.get("/team/person", async ctx => {
   const id = ctx.query.id;
 
-
-  await getPerson(id).then(data=>{
-
-
-    ctx.response.body = {
-      code :200,
-      data,
-      msg : '获取成功'
-      
-    }
-    
-   }).catch(err => {
-  
+  await getPerson(id)
+    .then(data => {
+      ctx.response.body = {
+        code: 200,
+        data,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -232,118 +231,113 @@ router.get("/team/person", async ctx => {
     });
 });
 
-router.post('/team/person/avatar',async ctx =>{
-  const {files, fields} = await asyncBusboy(ctx.req);
-  
-  
-  await downImg(files[0]).then(path=>{
+//上传头像
+router.post("/team/person/avatar", async ctx => {
+  const { files, fields } = await asyncBusboy(ctx.req);
 
-    ctx.response.body = {
-      code :200,
-      path,
-      msg : '获取成功'
-      
-    }
-    
-   }).catch(err => {
-
+  await downImg(files[0])
+    .then(path => {
+      ctx.response.body = {
+        code: 200,
+        path,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
       };
-    });;
-  
- 
-})
+    });
+});
 //增加专家信息
 router.post("/team/person", async ctx => {
   let data = ctx.request.body;
   let { name, content, position, avatar } = data;
-  
 
-  await saveTeam({name, content, position, avatar}).then((result)=>{
-    ctx.response.body = {
-      code :200,
-      msg : '增加成功'
-      
-    }
-    
-   }).catch(err => {
+  await saveTeam({ name, content, position, avatar })
+    .then(result => {
+      ctx.response.body = {
+        code: 200,
+        msg: "增加成功"
+      };
+    })
+    .catch(err => {
       ctx.response.body = {
         code: 500,
         msg: "增加失败"
       };
     });
-    ctx.response.body = {
-      code :200,
-      msg : '增加成功'
-      
-    }
+  ctx.response.body = {
+    code: 200,
+    msg: "增加成功"
+  };
 });
 //修改专家信息
 router.post("/team/edit", async ctx => {
   let data = ctx.request.body;
-  let { id,name, content, position, avatar } = data;
-  
+  let { id, name, content, position, avatar } = data;
+
   id = parseInt(id);
-  await updatePerson(id,name, content, position, avatar).then((result)=>{
-    ctx.response.body = {
-      code :200,
-      msg : '修改成功'
-      
-    }
-    
-   }).catch(err => {
+  await updatePerson(id, name, content, position, avatar)
+    .then(result => {
+      ctx.response.body = {
+        code: 200,
+        msg: "修改成功"
+      };
+    })
+    .catch(err => {
       ctx.response.body = {
         code: 500,
         msg: "增加失败"
       };
     });
-   
 });
 
+//搜索专家
+router.get("/team/reacher", async ctx => {
+  const name = "%" + ctx.query.title + "%";
 
+  let start = parseInt(ctx.query.start) || 0;
+
+  await reacherPerson(name, start)
+    .then(async result => {
+      if (start === 0) {
+        var pageCount = await getReacherNum("person", name);
+        //一页15条
+      }
+
+      result.pageCount = pageCount;
+      result.code = 200;
+      ctx.response.body = result;
+    })
+    .catch(() => {
+      ctx.response.body = {
+        code: 500,
+        msg: "搜索出现错误"
+      };
+      next();
+      return;
+    });
+});
 //删除专家
 router.post("/team/delete", async ctx => {
   let data = ctx.request.body.person;
-  let flag = true;
   for (let i = 0, len = data.length; i < len && flag; i++) {
     const id = parseInt(data[i].id);
     await deletePerson(id).catch(e => {
-  
-      ctx.response.body = {
-        code: 500,
-        msg: "删除失败"
-      };
-
-      flag = false;
+      if (i === len - 1) {
+        ctx.response.body = {
+          code: 500,
+          msg: "删除失败"
+        };
+      }
     });
-
-   
   }
-  if(flag){
-    ctx.response.body = {
-      code: 200,
-      msg: "删除成功"
-    };
-  }
-
+  ctx.response.body = {
+    code: 200,
+    msg: "删除成功"
+  };
 });
-router.get('/reacherArticle',async ctx =>{
-  const title = "%" + ctx.query.title + "%";
-  const sort = ctx.query.sort;
 
-  await reacherArticle(sort,title).then(result =>{
-    ctx.response.body = {
-      data : result,
-      code : 200
-    }
-  
-  }).catch(()=>{
-    ctx.response.body = {
-      code : 500,
-      msg : '搜索出现错误'
-    }
-  })
-})
 module.exports = router;

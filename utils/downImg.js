@@ -8,12 +8,11 @@ module.exports = (file)=>{
         const target_path = "/images/persons/" + Date.now() + ".png";
         
         fs.rename(tmp_path, './static'+ target_path, function(err) {
-          if (err) throw err;
+          if (err) reject(err);;
           // 删除临时文件夹文件, 
           fs.unlink(tmp_path, function() {
              if (err) {
-                throw err;
-                reject();
+                reject(err);
             }
              else {
                 resolve( config.HOST+""+target_path)
