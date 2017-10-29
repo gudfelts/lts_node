@@ -85,10 +85,10 @@ app.use(
         }
       }
 );
-// app.use( koaLogger());
-//设置静态资源
 
-// if (env !== "production") {
+//设置静态资源
+//生产环境中使用nginx转发静态资源
+if (env !== "production") {
   const staticPath = "/static";
   app.use(static(path.join(__dirname, staticPath)));
   app.use(
@@ -96,7 +96,7 @@ app.use(
       maxAge: 365 * 24 * 60 * 60
     })
   );
-// }
+}
 
 // 加载模板引擎
 app.use(

@@ -45,7 +45,10 @@ module.exports = {
     getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
     updatePerson: "update team set name = ?,position = ?,content = ? ,avatar = ? where id = ? limit 1",
-
+    //查找专家
+    reacherPerson : 'select * from team where name like ? order by id desc limit ?,15',
+    //
+    getReacherNumPerson : 'select count(1) from team where name like ? ',
     //删除专家信息
     deletePerson: "delete from team where id = ?",
     //存储专家信息
@@ -77,7 +80,9 @@ module.exports = {
     //更新内容
     editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
     //查找文章
-    reacherArticle : 'select * from ?? where title like ?'
+    reacherArticle : 'select * from ?? where title like ? and type = ? order by id desc limit ?,15',
+    //查找文章
+    getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? '
   },
   type: {
     information: ["流通所新闻", "基地资讯", "媒体报道"],
