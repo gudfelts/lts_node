@@ -50,14 +50,25 @@ module.exports.getReacherNum = async (kind, sort, title, type) => {
 };
 //获取目录
 module.exports.getCatalog = async (sort, type, start) => {
-  let title = TYPE[sort][type - 1];
-
-  let data = await operateDB.getCatalog([sort, type, start]).catch(e => {
-    throw e;
-  });
-
-  return { data, title, sorts: TYPE[sort], sort, code: 200 };
+  
+  if(sort == 'researchdir'){
+    let data = await operateDB.getCatalog([sort, type, start]).catch(e => {
+      throw e;
+    });
+    return { data, code: 200,sort :'researchdir',type : 0};
+  }
+  else{
+    let title = TYPE[sort][type - 1];
+    
+      let data = await operateDB.getCatalog([sort, type, start]).catch(e => {
+        throw e;
+      });
+    
+      return { data, title, sorts: TYPE[sort], sort, code: 200 };
+  }
+ 
 };
+
 
 //首页获取数据
 module.exports.getIndex = (sort, val) => {
@@ -81,8 +92,15 @@ module.exports.getIndex = (sort, val) => {
 };
 
 //获取表格条数
-module.exports.getNum = async sort => {
-  const result = await operateDB.getNum(sort);
+module.exports.getNum = async (sort,type) => {
+  let result = null;
+  if(sort === 'team'){
+      result = await operateDB.getNum(SQL.getNumNoTYPE,sort);
+  }
+  else{
+      result = await operateDB.getNum(SQL.getNum,[sort,type]);
+  }
+
 
   return result[0]["count(1)"];
 };

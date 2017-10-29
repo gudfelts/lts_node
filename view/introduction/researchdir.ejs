@@ -7,15 +7,14 @@
     <link rel="stylesheet" href="/style/common.min.css">
     <link rel="stylesheet" href="/style/catalog.css">
     <link rel="stylesheet" href="/style/pagination.css">
-        <link rel="stylesheet" href="/style/Ins.css">
-
+    
     <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
     <script type="text/javascript" src="/js/jquery.pagination.js"></script>
     <script src='/js/common.js'></script>
     <script src='/js/catalog.js'></script>
 
 
-    <title>机构设置</title>
+    <title>研究方向</title>
 </head>
 <body>
       <%- include('../component/header')%>
@@ -26,33 +25,47 @@
             <div class="boxLeft">
                 <!--左侧导航栏上面的装饰-->
                 <div class="navTitle">
-                       <a href="#">机构设置</a>
+                       <a href="#">研究方向</a>
                 </div>
 
                 <!--左侧导航栏-->
                 <ul class="itemUl">
                     <li class="itemLi">
-                        <a href="/introduction/index">简介</a>
+                        <a href="/introduction/index" >简介</a>
                         <a href="/introduction/acgency">机构设置</a>
+                        <a href="/introduction/researchdir" id='active'>研究方向</a>
                         <a href="/introduction/team/catalog">专家团队</a>
                     </li>
                 </ul>
 
             </div>
+             
 
             <div class="boxRight">
                 <div class="part-title">
-                    专家团队
+                    研究方向
                 </div>
-                <div class="detail_colu">
-             
-                <div class="colu_news">
-                        <img src="/images/agency.jpg" alt="">
-                    </div>
-
+                <div class="detail">
+                    <%if(data.length > 0){%>
+                
+                    <ul class='detail-box'>
+                    
+                        <%for(var i =  0;i < data.length ;i++){%>
+                    
+                        <li>
+                            <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><%=data[i].title %></a>
+                        </li>
+                       <%}%> 
+                    </ul>
+                    <%}%>
+                    <%if(data.length === 0){%>
+                        <p class='datail-warm'>暂无内容</p>
+                    <%}%>                    
                 </div>
-            </div>
-               
+                <%if(data.length > 0){%>
+                <!--分页组件-->
+                <div class="M-box" data-page=<%=data.pageCount%> data-sort=<%=sort%> data-type=<%=type%>></div>
+                <%}%>
             </div>
         </div>
     </div>

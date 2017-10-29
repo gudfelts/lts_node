@@ -32,7 +32,7 @@ router.get("/showArticle/catalog", async ctx => {
   
   //获取近期热门文章
   let HotArticle = await getHotArticle(sort);
-  let pageCount = await getNum(sort);
+  let pageCount = await getNum(sort,type);
   
   if (pageCount % 15 > 0) {
     pageCount = parseInt(pageCount / 15) + 1;
@@ -54,18 +54,40 @@ router.get('/introduction/team/person',async ctx=>{
     const other = await getTeamoOther(id);
     await ctx.render("./introduction/person", {person :person[0],other});
 });
+//获取研究方向目录
 
+router.get("/introduction/researchdir", async ctx => {
+  const sort = 'researchdir';
+  let start = ctx.query.start || 0;
+  let result = await getCatalog(sort,0,start);
+  
+  let pageCount = await getNum(sort,0);
+  
+  if (pageCount % 15 > 0) {
+    pageCount = parseInt(pageCount / 15) + 1;
+  } else {
+    pageCount = pageCount / 15;
+  }
+  
+  result.data.pageCount = pageCount;
+  await ctx.render("./introduction/researchdir", result);
+});
 //获取简介
 router.get('/introduction/index',async ctx=>{
  
   await ctx.render("./introduction/index");
+})
+//获取简介
+router.get('/introduction/acgency',async ctx=>{
+ 
+  await ctx.render("./introduction/acgency");
 })
 //获取专家目录
 router.get('/introduction/team/catalog',async ctx=>{
   let start = parseInt(ctx.query.start) || 0;
   let result = await getTeam(start);
   if (start === 0) {
-    let pageCount = await getNum('team');
+    let pageCount = await getNum('team',null);
     //一页20条
     if (pageCount % 20 > 0) {
       pageCount = parseInt(pageCount / 20) + 1;
@@ -78,22 +100,5 @@ router.get('/introduction/team/catalog',async ctx=>{
   await ctx.render("./introduction/team", result);
 })
 
-//获取研究方向
-router.get('/introduction/reacherpath',async ctx=>{
-  let start = ctx.query.start || 0;
 
-  let result = await getCatalog('reacherpath', 0, start);
-  if (start === 0) {
-    let pageCount = await getNum('reacherpath');
-    //一页20条
-    if (pageCount % 20 > 0) {
-      pageCount = parseInt(pageCount / 20) + 1;
-    } else {
-      pageCount = pageCount / 20;
-    }
-
-    result.pageCount = pageCount;
-  }
-  await ctx.render("./introduction/reacherpath", result);
-})
 module.exports = router;

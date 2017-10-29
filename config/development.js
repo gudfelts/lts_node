@@ -57,6 +57,8 @@ module.exports = {
     saveBanner: "insert into banner set ?",
     deleteBanner: "delete from banner limit 1",
     getBanner: "select * from banner limit 5",
+
+    
     /*
     科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
     科研资讯，其中type数据：1为流通所新闻，2为基地资讯，3为媒体报道
@@ -74,8 +76,11 @@ module.exports = {
     getArticleOne: "select * from ?? where id = ? and type = ? limit 1",
     //获取目录
     getCatalog: "select  title,id,type,author,source,time from ?? where type = ? order by id desc  limit ?,15",
+    
     //获取总条数
-    getNum: "select count(1) from ??",
+    getNum: "select count(1) from ?? where type = ?",
+    //获取总条数
+    getNumNoTYPE: "select count(1) from ??",
     //更新内容
     editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
     //查找文章

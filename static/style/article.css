@@ -126,11 +126,12 @@ article{
 }
 
 .content-main p {
-    display: block;
+    /* display: block;
     color: #555;
     font-size: 16px;
     line-height: 36px;
-    text-indent: 2em;
+    text-indent: 2em; */
+    overflow: auto;    
 }
 
 .content-main img {

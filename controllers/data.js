@@ -174,7 +174,7 @@ router.get("/catalog", async (ctx, next) => {
     await getCatalog(sort, type, start).then(async result => {
       let pageCount = 0;
       if (start === 0) {
-        pageCount = await getNum(sort);
+        pageCount = await getNum(sort, type);
         //一页15条
       }
       result.pageCount = pageCount;
@@ -198,7 +198,7 @@ router.get("/team/catalog", async ctx => {
     let result = await getTeam(start);
     //一页20条
     if (start === 0) {
-      var pageCount = await getNum("team");
+      var pageCount = await getNum("team",null);
     }
     result.code = 200;
     result.pageCount = pageCount;

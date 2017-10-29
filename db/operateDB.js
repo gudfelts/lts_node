@@ -41,6 +41,7 @@ module.exports = {
       });
     })
   },
+ 
   //获取文章
   getArticleOne : val =>{
     return new Promise((resolve, reject) => {
@@ -159,10 +160,13 @@ module.exports = {
      );
    });
  },
-  getNum : (val)=>{
+  getNum : (sql,val)=>{
     return new Promise((resolve, reject) => {
-      query(SQL.getNum, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
+      query(sql, val, (err, result) => {
+        if(err) {
+          console.log(err)
+          reject({message:'数据库出错',status:404});
+        }
         else resolve(result);
       });
     })

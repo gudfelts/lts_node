@@ -1,14 +1,13 @@
 
-const path = require('path');
-const env = process.env.NODE_ENV;
+
+
 const PORT =  3000;
 const HOST = 'http://localhost:3000';
-// // log配置
-const errorLogPath =    path.join(__dirname, '../logs/error/error');				// 错误日志输出完整路径
-const responseLogPath = path.join(__dirname, '../logs/response/response');	// 响应日志输出完整路径
+
+
 module.exports = {
   HOST,
-  serverPort: 3000,
+  serverPort: PORT,
   db: {
     host: "localhost",
     user: "root",
@@ -45,7 +44,10 @@ module.exports = {
     getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
     updatePerson: "update team set name = ?,position = ?,content = ? ,avatar = ? where id = ? limit 1",
-
+    //查找专家
+    reacherPerson : 'select * from team where name like ? order by id desc limit ?,15',
+    //
+    getReacherNumPerson : 'select count(1) from team where name like ? ',
     //删除专家信息
     deletePerson: "delete from team where id = ?",
     //存储专家信息
@@ -55,6 +57,10 @@ module.exports = {
     saveBanner: "insert into banner set ?",
     deleteBanner: "delete from banner limit 1",
     getBanner: "select * from banner limit 5",
+
+    //获取研究方向目录
+    getCatalogReacherdir: "select  title,id,type,author,source,time from reacherdir order by id desc  limit ?,15",
+    
     /*
     科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
     科研资讯，其中type数据：1为流通所新闻，2为基地资讯，3为媒体报道
@@ -72,14 +78,17 @@ module.exports = {
     getArticleOne: "select * from ?? where id = ? and type = ? limit 1",
     //获取目录
     getCatalog: "select  title,id,type,author,source,time from ?? where type = ? order by id desc  limit ?,15",
+    
     //获取总条数
-    getNum: "select count(1) from ??",
+    getNum: "select count(1) from ?? where type = ?",
+    //获取总条数
+    getNumNoTYPE: "select count(1) from ??",
     //更新内容
     editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
     //查找文章
-    reacherArticle : 'select * from ?? where title like ? ',
-     //查找文章
-    getReacherNum : 'select count(1) from ?? where title like ? and type = ? '
+    reacherArticle : 'select * from ?? where title like ? and type = ? order by id desc limit ?,15',
+    //查找文章
+    getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? '
   },
   type: {
     information: ["流通所新闻", "基地资讯", "媒体报道"],
@@ -90,30 +99,6 @@ module.exports = {
     construction: ["名家百人讲座", "智库动态"],
     introduction :['简介','机构设置','研究方向','专家团队']
   },
-   logConfig : {
-    appenders:[
-      // 错误日志
-      {
-        category: 'errorLogger',				// logger名称
-        type: 'dateFile',						// 日志类型
-        filename: errorLogPath,					// 日志输出位置
-        alwaysIncludePattern: true,				// 是否总是有后缀名
-        pattern: '-yyyy-MM-dd-hh.log'			// 后缀，每小时创建一个新的日志文件
-      },
-      // 响应日志
-      {
-        category: 'resLogger',
-        type: 'dateFile',
-        filename: responseLogPath,
-        alwaysIncludePattern: true,
-        pattern: '-yyyy-MM-dd-hh.log'
-      }
-    ],
-    levels:										// 设置logger名称对应的的日志等级
-    {
-      errorLogger: 'ERROR',
-      resLogger: 'ALL'
-    }
-  },
+   
   
 };
