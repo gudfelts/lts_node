@@ -1,277 +1,276 @@
 const query = require("./db").query;
-const SQL   = require('config-lite')(__dirname).sql;
+const SQL = require("config-lite")(__dirname).sql;
 
 module.exports = {
-
   //获取用户
   getUser: val => {
     return new Promise((resolve, reject) => {
-     
-      query(SQL.getUser, val,(err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        
-        else resolve(result[0]);
-
+      query(SQL.getUser, val, (err, result) => {
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result[0]);
       });
     });
   },
   //更新用户信息
-  updateUser : val =>{
+  updateUser: val => {
     return new Promise((resolve, reject) => {
       query(SQL.changePassword, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        else resolve(result);
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
       });
     });
   },
-  
-  getIndex : (sql,val)=>{
+
+  getIndex: (sql, val) => {
     return new Promise((resolve, reject) => {
       query(sql, val, (err, result) => {
-        if (err) reject({message:'数据库出错',status:404});
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
+      });
+    });
+  },
+  getCatalog: val => {
+    return new Promise((resolve, reject) => {
+      query(SQL.getCatalog, val, (err, result) => {
+        if (err) reject({ message: "数据库出错", status: 500 });
         else resolve(result);
       });
     });
   },
-  getCatalog : val =>{
-    return new Promise((resolve, reject) => {
-      query(SQL.getCatalog, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:500});
-        else resolve(result);
-      });
-    })
-  },
- 
+
   //获取文章
-  getArticleOne : val =>{
+  getArticleOne: val => {
     return new Promise((resolve, reject) => {
       query(SQL.getArticleOne, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:500});
+        if (err) reject({ message: "数据库出错", status: 500 });
         else resolve(result[0]);
       });
-    })
+    });
   },
 
   //存储文章
-  saveArticle: (Article) => {
+  saveArticle: Article => {
     return new Promise((resolve, reject) => {
-      query(
-        SQL.saveArticle,
-        Article,
-        function(err, result) {
-          if(err) {
-            console.log(Article)
-            reject({message:'数据库出错',status:404});
+      query(SQL.saveArticle, Article, function(err, result) {
+        if (err) {
+          {
+            throw e;
+            reject({ message: "数据库出错", status: 404 });
           }
-          
-          else resolve(result.insertId);
-        }
-      );
+        } else resolve(result.insertId);
+      });
     });
   },
-   //修改文章
-   editArticle: (Article) => {
+  //修改文章
+  editArticle: Article => {
     return new Promise((resolve, reject) => {
-      query(
-        SQL.editArticle,
-        Article,
-        function(err, result) {
-          if(err) reject({message:'数据库出错',status:404});
-          
-          else resolve(result.insertId);
-        }
-      );
+      query(SQL.editArticle, Article, function(err, result) {
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result.insertId);
+      });
     });
   },
-  reacherArticle: (val) => {
-    console.log(val)
+  searchArticle: val => {
+    console.log(val);
     return new Promise((resolve, reject) => {
-      query(
-        SQL.reacherArticle,
-        val,
-        function(err, result) {
-          if(err) {
-            console.log(err)
-            reject({message:'数据库出错',status:404});
+      query(SQL.searchArticle, val, function(err, result) {
+        if (err) {
+          console.log(err);
+          {
+            throw e;
+            reject({ message: "数据库出错", status: 404 });
           }
-          
-          else resolve(result);
-        }
-      );
+        } else resolve(result);
+      });
     });
   },
-  reacherPerson: (val) => {
-    
+  reacherPerson: val => {
     return new Promise((resolve, reject) => {
-      query(
-        SQL.reacherPerson,
-        val,
-        function(err, result) {
-          if(err) {
-            console.log(err)
-            reject({message:'数据库出错',status:404});
+      query(SQL.reacherPerson, val, function(err, result) {
+        if (err) {
+          console.log(err);
+          {
+            throw e;
+            reject({ message: "数据库出错", status: 404 });
           }
-          
-          else resolve(result);
-        }
-      );
+        } else resolve(result);
+      });
     });
   },
-  getReacherNum: (sql,val) => {
+  getSearchNum: (sql, val) => {
     return new Promise((resolve, reject) => {
-      query(
-        sql,
-        val,
-        function(err, result) {
-          if(err) {
-            console.log(err)
-            reject({message:'数据库出错',status:404});
+      query(sql, val, function(err, result) {
+        if (err) {
+          console.log(err);
+          {
+            throw e;
+            reject({ message: "数据库出错", status: 404 });
           }
-          
-          else resolve(result);
-        }
-      );
+        } else resolve(result);
+      });
     });
   },
-   //删除文章
-   deleteArticle: (val) => {
+  //删除文章
+  deleteArticle: val => {
     return new Promise((resolve, reject) => {
-      query(
-        SQL.deleteArticle,
-        val,
-        function(err, result) {
-          if(err) reject({message:'数据库出错',status:404});
-          else resolve();
-        }
-      );
+      query(SQL.deleteArticle, val, function(err, result) {
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve();
+      });
     });
   },
 
   //删除人物
-  deletePerson: (val) => {
-   return new Promise((resolve, reject) => {
-     query(
-       SQL.deletePerson,
-       val,
-       function(err, result) {
-         if(err) reject({message:'数据库出错',status:404});
-         else resolve();
-       }
-     );
-   });
- },
-  getNum : (sql,val)=>{
+  deletePerson: val => {
+    return new Promise((resolve, reject) => {
+      query(SQL.deletePerson, val, function(err, result) {
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve();
+      });
+    });
+  },
+  getNum: (sql, val) => {
     return new Promise((resolve, reject) => {
       query(sql, val, (err, result) => {
-        if(err) {
-          console.log(err)
-          reject({message:'数据库出错',status:404});
-        }
-        else resolve(result);
+        if (err) {
+          console.log(err);
+          {
+            throw e;
+            reject({ message: "数据库出错", status: 404 });
+          }
+        } else resolve(result);
       });
-    })
+    });
   },
 
-  addBrowse : (val)=>{
+  addBrowse: val => {
     return new Promise((resolve, reject) => {
       query(SQL.addBrowse, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        
-        else resolve(result);
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
       });
-    })
+    });
   },
 
-  addPraise : (val)=>{
+  addPraise: val => {
     return new Promise((resolve, reject) => {
       query(SQL.praise, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        else resolve(result);
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
       });
-    })
+    });
   },
 
-  saveTeam : (val)=>{
+  saveTeam: val => {
     return new Promise((resolve, reject) => {
       query(SQL.saveTeam, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        else resolve(result);
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
       });
-    })
+    });
   },
-  getTeam : (val)=>{
+  getTeam: val => {
     return new Promise((resolve, reject) => {
       query(SQL.getTeam, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        else resolve({person : result});
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve({ person: result });
       });
-    })
-  },
-  
-  getPerson : (val)=>{
-    return new Promise((resolve, reject) => {
-      query(SQL.getPerson, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        else resolve(result);
-      });
-    })
-  },
-  getTeamoOther : (val)=>{
-    return new Promise((resolve, reject) => {
-      query(SQL.getTeamoOther, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        else resolve(result);
-      });
-    })
-  },
-  updatePerson : (val)=>{
-    return new Promise((resolve, reject) => {
-      query(SQL.updatePerson, val, (err, result) => {
-        if(err) {
-          throw err;
-          reject({message:'数据库出错',status:404});
-        }
-        
-        else resolve(result);
-      });
-    })
+    });
   },
 
-  getHotArticle : (val)=>{
+  getPerson: val => {
+    return new Promise((resolve, reject) => {
+      query(SQL.getPerson, val, (err, result) => {
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
+      });
+    });
+  },
+  getTeamoOther: val => {
+    return new Promise((resolve, reject) => {
+      query(SQL.getTeamoOther, val, (err, result) => {
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
+      });
+    });
+  },
+  updatePerson: val => {
+    return new Promise((resolve, reject) => {
+      query(SQL.updatePerson, val, (err, result) => {
+        if (err) {
+          throw err;
+          {
+            throw e;
+            reject({ message: "数据库出错", status: 404 });
+          }
+        } else resolve(result);
+      });
+    });
+  },
+
+  getHotArticle: val => {
     return new Promise((resolve, reject) => {
       query(SQL.getHotArticle, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        
-        else resolve(result);
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
       });
-    })
+    });
   },
-  getBanner : ()=>{
+  getBanner: () => {
     return new Promise((resolve, reject) => {
-      query(SQL.getBanner,  (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        
-        else resolve(result);
+      query(SQL.getBanner, (err, result) => {
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
       });
-    })
+    });
   },
-  
-  saveBanner : (val)=>{
+
+  saveBanner: val => {
     return new Promise((resolve, reject) => {
       query(SQL.saveBanner, val, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        
-        else resolve(result);
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
       });
-    })
+    });
   },
-  deleteBanner : ()=>{
+  deleteBanner: () => {
     return new Promise((resolve, reject) => {
       query(SQL.deleteBanner, (err, result) => {
-        if(err) reject({message:'数据库出错',status:404});
-        
-        else resolve(result);
+        if (err) {
+          throw e;
+          reject({ message: "数据库出错", status: 404 });
+        } else resolve(result);
       });
-    })
-  },
+    });
+  }
 };

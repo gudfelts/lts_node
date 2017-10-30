@@ -86,7 +86,7 @@ module.exports = {
     //更新内容
     editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
     //查找文章
-    reacherArticle : 'select * from ?? where title like ? and type = ? order by id desc limit ?,15',
+    searchArticle : 'select * from ?? where title like ? and type = ? order by id desc limit ?,15',
     //查找文章
     getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? '
   },

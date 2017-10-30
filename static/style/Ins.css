@@ -129,9 +129,12 @@
 }
 .list_item:hover > .list_content{
     top:-10px;
+    height: 160px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 8;
     transition: top 0.8s;
     transition-timing-function:ease-out;
-    overflow: visible;
   
     
 }

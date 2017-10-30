@@ -2,6 +2,7 @@ const router = require("koa-router")();
 const transCode = require("../utils/transCode");
 const downImg = require("../utils/downImg");
 const asyncBusboy = require("async-busboy");
+const trimHtml = require("../utils/trim-html");
 
 const {
   saveArticle,
@@ -16,8 +17,8 @@ const {
   getCatalog,
   getNum,
   saveBanner,
-  reacherArticle,
-  getReacherNum
+  searchArticle,
+  getSearchNum
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -111,16 +112,16 @@ router.get("/article", async ctx => {
     });
 });
 //搜索文章
-router.get("/reacherArticle", async (ctx, next) => {
+router.get("/searchArticle", async (ctx, next) => {
   const title = "%" + ctx.query.title + "%";
   const sort = ctx.query.sort;
   const type = parseInt(ctx.query.type);
   let start = parseInt(ctx.query.start) || 0;
 
-  await reacherArticle(sort, title, type, start)
+  await searchArticle(sort, title, type, start)
     .then(async result => {
       if (start === 0) {
-        var pageCount = await getReacherNum("article", sort, title, type);
+        var pageCount = await getSearchNum("article", sort, title, type);
         //一页15条
       }
       ctx.response.body = {
@@ -253,9 +254,9 @@ router.post("/team/person/avatar", async ctx => {
 //增加专家信息
 router.post("/team/person", async ctx => {
   let data = ctx.request.body;
-  let { name, content, position, avatar } = data;
-
-  await saveTeam({ name, content, position, avatar })
+  let { name, content, position, avatar} = data;
+  const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
+  await saveTeam({ name, content, position, avatar,summary})
     .then(result => {
       ctx.response.body = {
         code: 200,
@@ -277,9 +278,10 @@ router.post("/team/person", async ctx => {
 router.post("/team/edit", async ctx => {
   let data = ctx.request.body;
   let { id, name, content, position, avatar } = data;
-
+  const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
+  
   id = parseInt(id);
-  await updatePerson(id, name, content, position, avatar)
+  await updatePerson(id, name, content, position, avatar, summary)
     .then(result => {
       ctx.response.body = {
         code: 200,
@@ -303,7 +305,7 @@ router.get("/team/reacher", async ctx => {
   await reacherPerson(name, start)
     .then(async result => {
       if (start === 0) {
-        var pageCount = await getReacherNum("person", name);
+        var pageCount = await getSearchNum("person", name);
         //一页15条
       }
 

@@ -24,28 +24,28 @@ module.exports.deleteArticle = (sort, id, type) =>
 module.exports.getArticleOne = (sort, id, type) =>
   operateDB.getArticleOne([sort, id, type]);
 //搜索文章
-module.exports.reacherArticle = (sort, title, type, start) =>
-  operateDB.reacherArticle([sort, title, type, start]);
+module.exports.searchArticle = (sort, title, type, start) =>
+  operateDB.searchArticle([sort, title, type, start]);
 
 module.exports.reacherPerson = (name, start) =>
   operateDB.reacherPerson([name, start]);
 
 //搜索类，获取全部结果的条数
-module.exports.getReacherNum = async (kind, sort, title, type) => {
+module.exports.getSearchNum = async (kind, sort, title, type) => {
   let result = null;
   switch (kind) {
     case "article":
-      result = await operateDB.getReacherNum(SQL.getReacherNumArticle, [
+      result = await operateDB.getSearchNum(SQL.getReacherNumArticle, [
         sort,
         title,
         type
       ]);
       break;
     case "person":
-      result = await operateDB.getReacherNum(SQL.getReacherNumPerson, [sort]);
+      result = await operateDB.getSearchNum(SQL.getReacherNumPerson, [sort]);
       break;
   }
-  console.log(result);
+ 
   return result[0]["count(1)"];
 };
 //获取目录
@@ -127,7 +127,7 @@ module.exports.saveTeam = value => operateDB.saveTeam(value);
 module.exports.getPerson = id => operateDB.getPerson(id);
 module.exports.getTeamoOther = id => operateDB.getTeamoOther(id);
 module.exports.deletePerson = id => operateDB.deletePerson(id);
-module.exports.updatePerson = (id, name, content, position, avatar) =>operateDB.updatePerson([name, position, content, avatar, id]);
+module.exports.updatePerson = (id, name, content, position, avatar,summary) =>operateDB.updatePerson([name, position, content, avatar,summary, id]);
 
 //存放banner
 module.exports.saveBanner = (sort, type, id, path) => {

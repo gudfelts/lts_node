@@ -39,12 +39,12 @@ module.exports = {
     //点赞
     praise: "update ?? set prasise = praise + 1 where id = ?",
     //获取团队列表
-    getTeam: "select id,name,position,avatar from team limit ?,20",
+    getTeam: "select * from team limit ?,20",
     //获取专家信息
     getPerson: "select * from team where id = ? limit 1",
     getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
     //更新专家信息
-    updatePerson: "update team set name = ?,position = ?,content = ? ,avatar = ? where id = ? limit 1",
+    updatePerson: "update team set name = ?,position = ?,content = ? ,avatar = ? ,summary = ?where id = ? limit 1",
     //查找专家
     reacherPerson : 'select * from team where name like ? order by id desc limit ?,15',
     //
@@ -59,8 +59,6 @@ module.exports = {
     deleteBanner: "delete from banner limit 1",
     getBanner: "select * from banner limit 5",
 
-    //获取研究方向目录
-    getCatalogReacherdir: "select  title,id,type,author,source,time from reacherdir ",
     
     /*
     科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
@@ -87,7 +85,7 @@ module.exports = {
     //更新内容
     editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
     //查找文章
-    reacherArticle : 'select * from ?? where title like ? and type = ? order by id desc limit ?,15',
+    searchArticle : 'select * from ?? where title like ? and type = ? order by id desc limit ?,15',
     //查找文章
     getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? '
   },
