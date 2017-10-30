@@ -16,7 +16,8 @@ let query = function(sql,options,callback){
           conn.query(sql,options,function(err,results){  
               //释放连接 
   
-              conn.release();  
+            //   conn.release();
+              conn.end()  
               //事件驱动回调  
               callback(err,results);  
           });  
