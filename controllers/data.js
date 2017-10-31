@@ -325,21 +325,23 @@ router.get("/team/reacher", async ctx => {
 //删除专家
 router.post("/team/delete", async ctx => {
   let data = ctx.request.body.person;
-  for (let i = 0, len = data.length; i < len && flag; i++) {
+  for (let i = 0, len = data.length; i < len; i++) {
     const id = parseInt(data[i].id);
-    await deletePerson(id).catch(e => {
+    await deletePerson(id).then(() => {
       if (i === len - 1) {
         ctx.response.body = {
-          code: 500,
-          msg: "删除失败"
+          code: 200,
+          msg: "删除成功"
         };
       }
+    })
+    .catch(e => {
+      ctx.response.body = {
+        code: 500,
+        msg: "删除失败"
+      };
     });
   }
-  ctx.response.body = {
-    code: 200,
-    msg: "删除成功"
-  };
 });
 
 module.exports = router;

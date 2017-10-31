@@ -8,21 +8,19 @@ const pool   = mysql.createPool({
   database : 'lts'
 });
 
-let query = function(sql,options,callback){  
+let query = function(sql,options){  
   pool.getConnection(function(err,conn){  
-      if(err){  
-          callback(err,null,null);  
-      }else{  
+     
           conn.query(sql,options,function(err,results){  
-              //释放连接 
-  
-            //   conn.release();
-              conn.end()  
-              //事件驱动回调  
-              callback(err,results);  
+             // And done with the connection.
+            conn.release();
+    
+            // Handle error after the release.
+            if (error) throw error;
+             
           });  
-      }  
-  }); 
+      }) 
+
 };  
 
 module.exports ={ query }; 
