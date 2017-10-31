@@ -7,7 +7,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.getUser, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result[0]);
       });
@@ -18,7 +18,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.changePassword, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -29,7 +29,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(sql, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -48,7 +48,10 @@ module.exports = {
   getArticleOne: val => {
     return new Promise((resolve, reject) => {
       query(SQL.getArticleOne, val, (err, result) => {
-        if (err) reject({ message: "数据库出错", status: 500 });
+        if (err) {
+          throw err;
+          reject({ message: "数据库出错", status: 500 });
+        }
         else resolve(result[0]);
       });
     });
@@ -60,7 +63,7 @@ module.exports = {
       query(SQL.saveArticle, Article, function(err, result) {
         if (err) {
           {
-            throw e;
+            throw err;
             reject({ message: "数据库出错", status: 404 });
           }
         } else resolve(result.insertId);
@@ -72,7 +75,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.editArticle, Article, function(err, result) {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result.insertId);
       });
@@ -85,7 +88,7 @@ module.exports = {
         if (err) {
           console.log(err);
           {
-            throw e;
+            throw err;
             reject({ message: "数据库出错", status: 404 });
           }
         } else resolve(result);
@@ -98,7 +101,7 @@ module.exports = {
         if (err) {
           console.log(err);
           {
-            throw e;
+            throw err;
             reject({ message: "数据库出错", status: 404 });
           }
         } else resolve(result);
@@ -110,10 +113,10 @@ module.exports = {
       query(sql, val, function(err, result) {
         if (err) {
           console.log(err);
-          {
-            throw e;
+          
+            throw err;
             reject({ message: "数据库出错", status: 404 });
-          }
+          
         } else resolve(result);
       });
     });
@@ -123,7 +126,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.deleteArticle, val, function(err, result) {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve();
       });
@@ -135,7 +138,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.deletePerson, val, function(err, result) {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve();
       });
@@ -146,10 +149,10 @@ module.exports = {
       query(sql, val, (err, result) => {
         if (err) {
           console.log(err);
-          {
-            throw e;
+          
+            throw err;
             reject({ message: "数据库出错", status: 404 });
-          }
+          
         } else resolve(result);
       });
     });
@@ -159,7 +162,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.addBrowse, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -170,7 +173,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.praise, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -181,7 +184,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.saveTeam, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -191,7 +194,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.getTeam, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve({ person: result });
       });
@@ -202,7 +205,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.getPerson, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -212,7 +215,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.getTeamoOther, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -223,10 +226,9 @@ module.exports = {
       query(SQL.updatePerson, val, (err, result) => {
         if (err) {
           throw err;
-          {
-            throw e;
+          
             reject({ message: "数据库出错", status: 404 });
-          }
+          
         } else resolve(result);
       });
     });
@@ -236,7 +238,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.getHotArticle, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -246,7 +248,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.getBanner, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -257,7 +259,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.saveBanner, val, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });
@@ -267,7 +269,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       query(SQL.deleteBanner, (err, result) => {
         if (err) {
-          throw e;
+          throw err;
           reject({ message: "数据库出错", status: 404 });
         } else resolve(result);
       });

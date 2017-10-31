@@ -1,7 +1,7 @@
 const mysql  = require('mysql');
 const config = require('config-lite')(__dirname);
 const pool   = mysql.createPool({
-  connectionLimit : 10,
+  connectionLimit : 100,
   host     : 'localhost',
   user     : 'root',
   password : 'root',
@@ -16,9 +16,10 @@ let query = function(sql,options,callback){
           conn.query(sql,options,function(err,results){  
               //释放连接 
   
-              conn.release();  
-              //事件驱动回调
+              // conn.release();
+              conn.end();
               if(err) throw err;  
+              //事件驱动回调  
               callback(err,results);  
           });  
       }  
