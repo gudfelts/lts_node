@@ -81,11 +81,13 @@ module.exports = {
     //获取总条数
     getNum: "select count(1) from ?? where type = ?",
     //获取总条数
+    getAllNum: "select count(1) from ??",
+    //获取总条数
     getNumNoTYPE: "select count(1) from ??",
     //更新内容
     editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
     //查找文章
-    searchArticle : 'select * from ?? where title like ? and type = ? order by id desc limit ?,15',
+    searchArticle : 'select title,author,id,type from ?? where title like ? and type = ? order by id desc limit ?,15',
     //查找文章
     getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? '
   },
