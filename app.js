@@ -24,7 +24,6 @@ console.log(env)
 onerror(app);
 app.use(bodyParser({ formLimit: "1mb"}));
 
-app.use(catchError);
 
 app.keys = ["lts_node"];
 const CONFIG = {
@@ -85,6 +84,7 @@ app.use(
         }
       }
 );
+app.use(catchError);
 
 //设置静态资源
 //生产环境中使用nginx转发静态资源
