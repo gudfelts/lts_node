@@ -6,7 +6,7 @@ function praise(obj){
     $.ajax({   
         type: 'patch',  
         dataType: "json",
-        url: 'http://localhost:3000/OperationData/praise?id='+id+'&sort='+sort+'&type='+type,      //提交到一般处理程序请求数据   
+        url: 'http://lococo.site/OperationData/praise?id='+id+'&sort='+sort+'&type='+type,      //提交到一般处理程序请求数据   
         
         success: function() {
             

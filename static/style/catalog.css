@@ -72,5 +72,30 @@
     margin: 100px auto;
 }
 
-
+.s-bar{
+    display: inline-block;
+    float: right;
+  }
+  
+  .s-icon{
+    float: left;
+    position: relative;
+    left: 30px;
+    top: -7px;
+  }
+  
+  .s-icon img{
+    width:20px;
+    height: 20px;
+    text-indent: 10em;
+  }
+  
+  #search-input{
+    width: 205px;
+    height: 31px;
+    text-indent: 3em;
+    color: #b3b3b3;
+    border: 1px solid #e6e6e6;
+  }
+  
 

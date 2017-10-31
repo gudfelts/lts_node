@@ -46,37 +46,44 @@ function pagination(){
     });
 }
 function search(){
-    var oSearchBtn = $('#search-btn');
+
+    $("#search-input").keydown ( function (event) {
+        var e = event || window.event;
+        if (e && e.keyCode == 13) { //回车键的键值为13
+            var value = $('#search-input').val();
+            if(value === '') {
+                alert('请输入搜索内容')
+                return;
+            }
+    
+            $.ajax({   
+                type: 'get',  
+                dataType: "json",
+                url: 'http://lococo.site/OperationData/searchArticle?value='+value+'&type='+type+'&sort='+sort+'&start='+0,      //提交到一般处理程序请求数据   
+                
+                success: function(result) {
+                  
+                    //后台服务返回数据，重新加载数据
+                    if(result.code === 200){
+                        render(result.data,result.sort)
+                    
+                    }else{
+                        alert(result.msg);
+                    }
+                }  
+           }); 
+        }
+    });
+    
     var sort = $('.M-box').attr('data-sort');
     var type = $('.M-box').attr('data-type');
-    oSearchBtn.click(function(){
-        var value = $('#search-input').val();
-        alert(value)
-        if(value === '') {
-            alert('请输入搜索内容')
-            return;
-        }
-
-        $.ajax({   
-            type: 'get',  
-            dataType: "json",
-            url: 'http://localhost:3000/OperationData/searchArticle?value='+value+'&type='+type+'&sort='+sort+'&start='+0,      //提交到一般处理程序请求数据   
-            
-            success: function(result) {
-              
-                //后台服务返回数据，重新加载数据
-                if(result.code === 200){
-                    render(result.data,result.sort)
-                
-                }else{
-                    alert(result.msg);
-                }
-            }  
-       }); 
-    })
+   
     
 }
 $().ready(function(e) {
     pagination();
     search();
+
+    
+
 });

@@ -60,7 +60,14 @@
             <div class="boxRight">
                 <div class="part-title">
                     <%=title%>
-                    <div><input type='text' id='search-input'><button id='search-btn'>搜索</button></div>
+
+                    <div class="s-bar">
+            <div class="s-icon">
+                <img src="/images/search.png" alt="">
+            </div>
+                <input id='search-input' type="text" value="在此搜索" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '在此搜索';}">
+            </div>
+
                 </div>
                 <div class="detail">
                     <%if(data.length > 0){%>

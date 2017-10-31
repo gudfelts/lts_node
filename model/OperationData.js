@@ -91,6 +91,14 @@ module.exports.getIndex = (sort, val) => {
   }
 };
 
+module.exports.getAllNum = async (sort) => {
+ 
+    result = await operateDB.getNum(SQL.getAllNum,sort);
+  
+
+
+  return result[0]["count(1)"];
+};
 //获取表格条数
 module.exports.getNum = async (sort,type) => {
   let result = null;

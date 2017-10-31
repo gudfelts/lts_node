@@ -1,4 +1,4 @@
-const { getBanner, getNum, getIndex } = require("../model/OperationData");
+const { getBanner, getAllNum, getIndex } = require("../model/OperationData");
 const SQL = require("config-lite")(__dirname).sql;
 const trimHtml = require("../utils/trim-html");
 /**
@@ -36,7 +36,7 @@ const getInfo = async () => {
     info_n = 8;
   let info = {};
   //获取表格行数
-  const NUM = await getNum("information");
+  const NUM = await getAllNum("information");
   //获取从info_m到info_n的数据
   let aNew;
 
@@ -91,7 +91,7 @@ const getResearch = async () => {
     info_n = 4;
   let research = {};
   //获取表格行数
-  const NUM = await getNum("research");
+  const NUM = await getAllNum("research");
 
   while (NUM >= info_n) {
     //获取从info_m到info_n的数据
@@ -138,7 +138,7 @@ const getData = async () => {
     let train = await getTrain();
     let construction = await getConstruction();
     let banner = await getBanner();
-    console.log(banner);
+    console.log(research);
     return { info, research, exchange, train, construction ,banner};
   } catch (error) {
     throw error;
