@@ -1,4 +1,4 @@
-const koa = require("koa2");
+const koa = require("koa");
 const static = require("koa-static");
 const path = require("path");
 const fs = require("fs");
@@ -10,7 +10,7 @@ const views = require("koa-views");
 const config = require("config-lite")(__dirname);
 const apiRoute = require("./router/apiRouter");
 const renderRoute = require("./router/renderRouter");
-// const session = require("koa-session");
+const session = require("koa-session");
 const staticCache = require("koa-static-cache");
 const favicon = require("koa-favicon");
 const onerror = require("koa-onerror");
@@ -37,7 +37,7 @@ const CONFIG = {
   signed: true /** (boolean) signed or not (default true) */,
   rolling: false /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. default is false **/
 };
-// app.use(session(CONFIG, app));
+app.use(session(CONFIG, app));
 app.use(favicon(__dirname + "/static/favicon.ico"));
 
 //跨域

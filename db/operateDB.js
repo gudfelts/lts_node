@@ -8,7 +8,7 @@ module.exports = {
       query(SQL.getUser, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result[0]);
       });
     });
@@ -19,7 +19,7 @@ module.exports = {
       query(SQL.changePassword, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -30,7 +30,7 @@ module.exports = {
       query(sql, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -38,7 +38,7 @@ module.exports = {
   getCatalog: val => {
     return new Promise((resolve, reject) => {
       query(SQL.getCatalog, val, (err, result) => {
-        if (err) reject({ message: "数据库出错", status: 500 });
+        if (err) reject({ message: err, status: 500 });
         else resolve(result);
       });
     });
@@ -50,7 +50,7 @@ module.exports = {
       query(SQL.getArticleOne, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 500 });
+          reject({ message: err, status: 500 });
         }
         else resolve(result[0]);
       });
@@ -64,7 +64,7 @@ module.exports = {
         if (err) {
           {
             throw err;
-            reject({ message: "数据库出错", status: 404 });
+            reject({ message: err, status: 404 });
           }
         } else resolve(result.insertId);
       });
@@ -76,7 +76,7 @@ module.exports = {
       query(SQL.editArticle, Article, function(err, result) {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result.insertId);
       });
     });
@@ -89,7 +89,7 @@ module.exports = {
           console.log(err);
           {
             throw err;
-            reject({ message: "数据库出错", status: 404 });
+            reject({ message: err, status: 404 });
           }
         } else resolve(result);
       });
@@ -102,7 +102,7 @@ module.exports = {
           console.log(err);
           {
             throw err;
-            reject({ message: "数据库出错", status: 404 });
+            reject({ message: err, status: 404 });
           }
         } else resolve(result);
       });
@@ -115,7 +115,7 @@ module.exports = {
           console.log(err);
           
             throw err;
-            reject({ message: "数据库出错", status: 404 });
+            reject({ message: err, status: 404 });
           
         } else resolve(result);
       });
@@ -127,7 +127,7 @@ module.exports = {
       query(SQL.deleteArticle, val, function(err, result) {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve();
       });
     });
@@ -139,7 +139,7 @@ module.exports = {
       query(SQL.deletePerson, val, function(err, result) {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve();
       });
     });
@@ -151,7 +151,7 @@ module.exports = {
           console.log(err);
           
             throw err;
-            reject({ message: "数据库出错", status: 404 });
+            reject({ message: err, status: 404 });
           
         } else resolve(result);
       });
@@ -163,7 +163,7 @@ module.exports = {
       query(SQL.addBrowse, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -174,7 +174,7 @@ module.exports = {
       query(SQL.praise, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -185,7 +185,7 @@ module.exports = {
       query(SQL.saveTeam, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -195,7 +195,7 @@ module.exports = {
       query(SQL.getTeam, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve({ person: result });
       });
     });
@@ -206,7 +206,7 @@ module.exports = {
       query(SQL.getPerson, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -216,7 +216,7 @@ module.exports = {
       query(SQL.getTeamoOther, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -227,7 +227,7 @@ module.exports = {
         if (err) {
           throw err;
           
-            reject({ message: "数据库出错", status: 404 });
+            reject({ message: err, status: 404 });
           
         } else resolve(result);
       });
@@ -239,7 +239,7 @@ module.exports = {
       query(SQL.getHotArticle, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -249,7 +249,7 @@ module.exports = {
       query(SQL.getBanner, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -260,7 +260,7 @@ module.exports = {
       query(SQL.saveBanner, val, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
@@ -270,9 +270,58 @@ module.exports = {
       query(SQL.deleteBanner, (err, result) => {
         if (err) {
           throw err;
-          reject({ message: "数据库出错", status: 404 });
+          reject({ message: err, status: 404 });
         } else resolve(result);
       });
     });
-  }
+  },
+
+  addLink:(val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.addLink, val,(err, result) => {
+        if (err) {
+          throw err;
+          reject({ message: err, status: 404 });
+        } else resolve(result);
+      });
+    });
+  },
+  deleteLink:(val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.deleteLink, val,(err, result) => {
+        if (err) {
+          throw err;
+          reject({ message: err, status: 404 });
+        } else resolve(result);
+      });
+    });
+  },
+  getLinkCatalog:()=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getLinkCatalog, (err, result) => {
+        if (err) {
+          throw err;
+          reject({ message: err, status: 404 });
+        } else resolve(result);
+      });
+    });
+  },
+  getLink:(id)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.getLink,id, (err, result) => {
+        if (err) {
+          reject({ message: err, status: 404 });
+        } else resolve(result);
+      });
+    });
+  },
+  editLink:(val)=>{
+    return new Promise((resolve, reject) => {
+      query(SQL.editLink, val, (err, result) => {
+        if (err) {
+          reject({ message: err, status: 404 });
+        } else resolve(result);
+      });
+    });
+  },
 };

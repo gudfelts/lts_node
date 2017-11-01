@@ -13,8 +13,8 @@ router.post('/login', async ctx => {
     });
 
     if (user && user.password === requestData.password) {
+      ctx.session.user = user;
       ctx.session.isLogin = true;
-      ctx.session.loginUser = user;
       ctx.response.body = {
         code: 200,
         msg: "登录成功"
@@ -41,12 +41,32 @@ router.get('/logout', ctx => {
 
 //修改密码
 router.post('/changePassword', async ctx => {
-  const newPass = ctx.request.body.password;
-  const result = await updateUser(newPass);
-  ctx.response.body = {
-    code: 200,
-    msg: "密码修改成功"
-  };
+  const {oldPass,pass} = ctx.request.body;
+  const user = ctx.session.user;
+ 
+
+  if (user.password === oldPass) {
+    await updateUser(pass).then(result=>{
+      ctx.response.body = {
+        code: 200,
+        msg: "修改成功"
+      };
+    }).catch(()=>{
+      ctx.response.body = {
+        code: 500,
+        msg: "修改失败"
+      };
+    });
+  
+   
+    
+  }else{
+    ctx.response.body = {
+      code: 500,
+      msg: "密码错误"
+    };
+  }
+ 
 });
 
 module.exports = router;

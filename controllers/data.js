@@ -18,7 +18,12 @@ const {
   getNum,
   saveBanner,
   searchArticle,
-  getSearchNum
+  getSearchNum,
+  getLinkCatalog,
+  deleteLink,
+  addLink,
+  getLink,
+  editLink
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -344,4 +349,111 @@ router.post("/team/delete", async ctx => {
   }
 });
 
+
+//获取友情链接信息目录
+router.get("/friendLinks/catalog", async ctx => {
+
+
+  await getLinkCatalog()
+    .then(links => {
+      ctx.response.body = {
+        code: 200,
+        links,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
+});
+//获取友情链接信息
+router.get("/friendLinks/one", async ctx => {
+
+
+    const id = ctx.query.id;
+    console.log(id)
+    await getLink(id)
+      .then(data => {
+        console.log(data)
+        ctx.response.body = {
+          code: 200,
+          data,
+          msg: "获取成功"
+        };
+      })
+      .catch(err => {
+        ctx.response.body = {
+          code: 500,
+          msg: "获取失败"
+        };
+      });
+});
+
+//删除链接
+router.post("/friendLinks/delete", async ctx => {
+  let data = ctx.request.body.links;
+  console.log(data)
+  for (let i = 0, len = data.length; i < len; i++) {
+    const id = parseInt(data[i].id);
+    await deleteLink(id).then(() => {
+      if (i === len - 1) {
+        ctx.response.body = {
+          code: 200,
+          msg: "删除成功"
+        };
+      }
+    })
+    .catch(e => {
+      ctx.response.body = {
+        code: 500,
+        msg: "删除失败"
+      };
+    });
+  }
+});
+
+//增加链接信息
+router.post("/friendLinks/post", async ctx => {
+  let data = ctx.request.body;
+  let { name, link} = data;
+
+  await addLink({name, link})
+    .then(result => {
+      ctx.response.body = {
+        code: 200,
+        msg: "增加成功"
+      };
+    })
+    .catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "增加失败"
+      };
+    });
+ 
+});
+//修改链接信息
+router.post("/friendLinks/edit", async ctx => {
+  let data = ctx.request.body;
+  let { name, link,id} = data;
+  id = parseInt(id);
+  console.log(name, link,id)
+  await editLink(name, link,id)
+    .then(result => {
+      ctx.response.body = {
+        code: 200,
+        msg: "修改成功"
+      };
+    })
+    .catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "修改失败"
+      };
+    });
+ 
+});
 module.exports = router;

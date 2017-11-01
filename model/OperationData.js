@@ -95,8 +95,6 @@ module.exports.getAllNum = async (sort) => {
  
     result = await operateDB.getNum(SQL.getAllNum,sort);
   
-
-
   return result[0]["count(1)"];
 };
 //获取表格条数
@@ -147,4 +145,12 @@ module.exports.saveBanner = (sort, type, id, path) => {
   }
 };
 //存放banner
-module.exports.getBanner = async () => operateDB.getBanner();
+module.exports.getBanner =  () => operateDB.getBanner();
+//增加链接
+module.exports.addLink =  (val) => operateDB.addLink(val);
+//获取链接
+module.exports.getLinkCatalog = () => operateDB.getLinkCatalog();
+module.exports.getLink =  (id) => operateDB.getLink(id);
+module.exports.editLink =  (name,link,id) => operateDB.editLink([name,link,id]);
+//删除链接
+module.exports.deleteLink = (id) => operateDB.deleteLink(id);

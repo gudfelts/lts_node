@@ -2,7 +2,7 @@ const router = require("koa-router")();
 const getIndex = require("../model/getIndex");
 
 
-const {getHotArticle,getTeamoOther,addBrowse,getTeam,getPerson,getNum,getArticleOne,getCatalog} = require("../model/OperationData")
+const {getHotArticle,getTeamoOther,addBrowse,getTeam,getPerson,getNum,getArticleOne,getCatalog, getLinkCatalog} = require("../model/OperationData")
 //获取文章
 router.get("/showArticle/article", async ctx => {
   const id = ctx.query.id,
@@ -79,8 +79,9 @@ router.get('/introduction/index',async ctx=>{
 })
 //友情链接
 router.get('/Links',async ctx=>{
- 
-  await ctx.render("Links");
+  const links = await getLinkCatalog();
+  console.log(links);
+  await ctx.render("Links",{links});
 })
 //获取简介
 router.get('/introduction/acgency',async ctx=>{
