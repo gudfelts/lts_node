@@ -34,7 +34,7 @@ module.exports = {
     //获取管理员信息
     getUser: "select * from admin where account = ?",
     //更新密码
-    updatePassword: "update admin set password = ?",
+    changePassword: "update admin set password = ?",
 
     //点赞
     praise: "update ?? set praise = praise + 1 where id = ?",
@@ -89,7 +89,14 @@ module.exports = {
     //查找文章
     searchArticle : 'select title,author,id,type from ?? where title like ? and type = ? order by id desc limit ?,15',
     //查找文章
-    getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? '
+    getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? ',
+
+    //友情链接
+    addLink : 'insert into friendLinks set ?',
+    deleteLink : 'delete from friendLinks where id = ?',
+    getLinkCatalog : 'select * from friendLinks',
+    getLink : 'select * from friendLinks where id = ?',
+    editLink : 'update  friendLinks set name = ?,link = ? where id = ?',
   },
   type: {
     information: ["流通所新闻", "基地资讯", "媒体报道"],
