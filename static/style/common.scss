@@ -17,6 +17,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, ol,dl, dt, dd
             box-sizing: border-box;
 
 }
+
 img{
      /*兼容ie*/
      border: 0px;
@@ -254,7 +255,6 @@ footer{
     min-width: 1600px;
     height: 190px;
     padding: 36px 0;
-    
     
     background-color: #f8fafc;
     -webkit-box-shadow: 0 -2px 8px 0 rgba(7,17,27,.06);

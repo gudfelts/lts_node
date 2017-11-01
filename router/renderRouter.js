@@ -77,6 +77,11 @@ router.get('/introduction/index',async ctx=>{
  
   await ctx.render("./introduction/index");
 })
+//友情链接
+router.get('/Links',async ctx=>{
+ 
+  await ctx.render("Links");
+})
 //获取简介
 router.get('/introduction/acgency',async ctx=>{
  

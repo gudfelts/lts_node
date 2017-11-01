@@ -56,6 +56,13 @@ $().ready(function(e) {
   $(".nav_item").mouseleave(function() {
     hideDiv($(this).children(".item_content"), true);
   });
-  $('body').css('min-height',$(window).height()-10);
+  console.log($('body').css('height'))
+  
+  //处理内容高度小于屏幕高度的页面
+  if(parseInt($('body').css('height')) < $(window).height()){
+    $('footer').css({'position':'absolute','bottom':0});
+    $('body').css('min-height',$(window).height()-10);
+  
+  }
   // toTop();
 });

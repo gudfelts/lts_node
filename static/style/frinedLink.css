@@ -1,0 +1,41 @@
+.content{
+    border:1px solid #eaeaea;
+}
+
+h2{
+    padding: 15px;
+}
+
+.line{
+    display: block;
+    width: 95%;
+    height: 1px;
+    background-color: #eaeaea;
+    margin: 0px auto;
+}
+
+p{
+    padding: 15px;
+}
+
+.plink li{
+    height: 38px;
+    width:150px;
+    margin: 13px 22px;
+    display: inline-block;
+}
+
+.plink li a:hover{
+   border: 1px solid rgb(235, 170, 110);
+}
+
+.plink li a{
+    display: block;
+    line-height: 38px;
+    overflow: hidden;
+    border: 1px solid #eaeaea;
+    background-color: #FFFFFF;
+    color:#666;
+    text-align: center;
+}
+
