@@ -20,7 +20,6 @@ const routers = router();
 const app = new koa();
 
 const env = process.env.NODE_ENV;
-console.log(env)
 onerror(app);
 app.use(bodyParser({ formLimit: "1mb"}));
 
