@@ -17,7 +17,7 @@ const pickBanner = aNew => {
     if (patt1.test(content)) {
       banner = aNew[i];
       //去掉引号
-      console.log(aNer)
+      console.log(aNew)
       banner.src = content.match(patt2)[0].replace(/[\'\"]?/g, "");
       flag = true;
       aNew.splice(i, 0);
