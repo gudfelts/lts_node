@@ -75,10 +75,10 @@ module.exports = {
         getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? ',
     
         //友情链接
-        addLink : 'insert into friendLinks set ?',
-        deleteLink : 'delete from friendLinks where id = ?',
-        getLinkCatalog : 'select * from friendLinks',
-        getLink : 'select * from friendLinks where id = ?',
-        editLink : 'update  friendLinks set name = ?,link = ? where id = ?',
+        addLink : 'insert into friendlinks set ?',
+        deleteLink : 'delete from friendlinks where id = ?',
+        getLinkCatalog : 'select * from friendlinks',
+        getLink : 'select * from friendlinks where id = ?',
+        editLink : 'update  friendlinks set name = ?,link = ? where id = ?',
      
 }
