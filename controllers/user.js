@@ -1,9 +1,11 @@
 const router = require("koa-router")();
 const getUser = require("../db/operateDB").getUser;
 const updateUser = require("../db/operateDB").updateUser;
+const updateUserTime = require("../db/operateDB").updateUserTime;
 
 //登录
 router.post('/login', async ctx => {
+  
   const requestData = ctx.request.body;
   if (requestData.password && requestData.account) {
     const account = [];
@@ -17,7 +19,7 @@ router.post('/login', async ctx => {
       ctx.session.isLogin = true;
       ctx.response.body = {
         code: 200,
-        msg: "登录成功"
+        msg: "登录成功",
       };
       return;
     }

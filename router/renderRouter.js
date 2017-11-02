@@ -78,7 +78,7 @@ router.get('/introduction/index',async ctx=>{
   await ctx.render("./introduction/index");
 })
 //友情链接
-router.get('/Links',async ctx=>{
+router.get('/links',async ctx=>{
   const links = await getLinkCatalog();
   console.log(links);
   await ctx.render("Links",{links});
