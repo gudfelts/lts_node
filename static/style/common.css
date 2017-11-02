@@ -64,18 +64,17 @@ img {
 header {
   width: 100%;
   position: relative;
-  -webkit-box-shadow: 0 12px 24px 0 rgba(7, 17, 27, 0.2);
-  box-shadow: 0 12px 24px 0 rgba(7, 17, 27, 0.2);
   font-size: 15px;
-  -webkit-box-shadow: 10px 10px 50px 10px rgba(7, 17, 27, 0.06);
-  box-shadow: 10px 10px 50px 10px rgba(7, 17, 27, 0.06);
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 30px;
   text-align: center;
 }
 
 /*顶部栏导航*/
 .header_name {
-  width: 820px;
+  width: 100%;
   height: 125px;
   margin: 0 auto;
   background: white;
@@ -117,12 +116,11 @@ header {
 .header_nav {
   width: 100%;
   height: 90px;
-  background: #06A3B1;
-  /* 一些不支持背景渐变的浏览器 */
+  border-top: 2px solid #06A3B1;
 }
 
 /*顶部栏导航栏子栏目*/
-.nav_box, .header_top {
+.nav_box {
   display: inline-block;
   margin: 0 auto;
   min-width: 900px;
@@ -130,18 +128,27 @@ header {
 }
 
 .nav_item {
+  text-align: center;
+  width: 14.2%;
   float: left;
+  height: 35px;
+  margin-top: 15px;
+  padding-bottom: 20px;
+  box-sizing: content-box;
+}
+
+.nav_item:nth-child(n+2) > a {
+  border-left: 1px solid #cfcccc;
 }
 
 .nav_item a {
   display: block;
-  color: white;
   text-align: center;
   font-size: 16px;
 }
 
 .nav_item > a {
-  line-height: 90px;
+  line-height: 35px;
   width: 120px;
   font-weight: bolder;
 }
@@ -156,43 +163,12 @@ a:hover {
   overflow: hidden;
 }
 
-/*导航栏箭头*/
-.nav_icon {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  background-image: url("../images/icons/nav_toBottom.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  margin-bottom: -9px;
-  -webkit-transition: transform .5s;
-  -webkit-transition: -webkit-transform .5s;
-  transition: -webkit-transform .5s;
-  transition: transform .5s;
-  transition: transform .5s, -webkit-transform .5s;
-}
-
-/*导航栏让箭头旋转*/
-.nav_item > a:hover .nav_icon {
-  -webkit-transform-origin: center center;
-  transform-origin: center center;
-  transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  /* IE 9 */
-  -moz-transform: rotate(180deg);
-  /* Firefox */
-  -webkit-transform: rotate(180deg);
-  /* Safari 和 Chrome */
-  -o-transform: rotate(180deg);
-  /* Opera */
-}
-
 /*导航栏子栏目*/
 .item_content {
   display: none;
   position: absolute;
   background-color: #06A3B1;
-  top: 100%;
+  top: 80%;
   z-index: 1000;
   -webkit-transition: transform .5s;
   -webkit-transition: -webkit-transform .5s;
@@ -202,7 +178,7 @@ a:hover {
   margin-left: -20px;
   -webkit-transition: height .4s;
   transition: height .4s;
-  /*导航栏子栏目中的小箭头*/
+  width: 120px;
 }
 
 .item_content a {
