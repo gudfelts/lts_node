@@ -10,6 +10,8 @@ module.exports = {
   HOST,
   serverPort: 3000,
   db: {
+    connectionLimit : 50,    
+    
     host: "localhost",
     user: "root",
     password: "root",
