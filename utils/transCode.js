@@ -15,7 +15,7 @@ module.exports.tranforIndex = async data => {
       }
     });
     IMG || (IMG = path);
-    return `<img src='${path}'>`;
+    return `<img src="${path}">`;
   });
 
   return { data, path: IMG };

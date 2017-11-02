@@ -54,8 +54,9 @@ router.post("/article", async ctx => {
     const id = await saveArticle(type[0], article);
 
     //储存banner
-
-    isBanner && saveBanner(type[0], article.type, id, path);
+    if(isBanner !== 'false'){
+      saveBanner(type[0], article.type, id, path);
+    }
 
     ctx.response.body = {
       code: 200,

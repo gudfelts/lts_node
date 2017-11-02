@@ -1,5 +1,5 @@
 const query = require("./db").query;
-const SQL = require("config-lite")(__dirname).sql;
+const SQL = require("../config/sql");
 
 module.exports = {
   //获取用户

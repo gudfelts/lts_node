@@ -29,7 +29,7 @@ function pagination(){
         jump: true,
         callback:function(api){
            
-            start = (api.getCurrent() - 1)*14 + api.getCurrent() - 1,
+            start = (api.getCurrent() - 1)*9 + api.getCurrent() - 1,
                 
             $.ajax({   
                 type: 'get',  

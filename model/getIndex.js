@@ -1,5 +1,5 @@
 const { getBanner, getAllNum, getIndex } = require("../model/OperationData");
-const SQL = require("config-lite")(__dirname).sql;
+const SQL = require("../config/sql");
 const trimHtml = require("../utils/trim-html");
 /**
  * 截取摘要
@@ -17,11 +17,18 @@ const pickBanner = aNew => {
     if (patt1.test(content)) {
       banner = aNew[i];
       //去掉引号
-      console.log(aNew)
-      banner.src = content.match(patt2)[0].replace(/[\'\"]?/g, "");
-      flag = true;
-      aNew.splice(i, 0);
-      break;
+      try {
+      
+        banner.src = content.match(patt2)[0].replace(/[\'\"]?/g, "");
+        flag = true;
+        aNew.splice(i, 0);
+        break;
+        
+      } catch (error) {
+        banner.src = false;
+      
+      }
+      
     }
   }
   if (!flag) return flag;

@@ -1,4 +1,4 @@
-const SQL = require("config-lite")(__dirname).sql;
+const SQL = require("../config/sql");
 const TYPE = require("config-lite")(__dirname).type;
 const operateDB = require("../db/operateDB");
 
@@ -138,7 +138,7 @@ module.exports.updatePerson = (id, name, content, position, avatar,summary) =>op
 //存放banner
 module.exports.saveBanner = (sort, type, id, path) => {
   try {
-    operateDB.deleteBanner();
+    // operateDB.deleteBanner();
     operateDB.saveBanner({ sort, type, id, path });
   } catch (error) {
     throw e;

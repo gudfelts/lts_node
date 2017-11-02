@@ -1,5 +1,6 @@
 const router = require("koa-router")();
 const getIndex = require("../model/getIndex");
+const getImg = require("../utils/getImg");
 
 
 const {getHotArticle,getTeamoOther,addBrowse,getTeam,getPerson,getNum,getArticleOne,getCatalog, getLinkCatalog} = require("../model/OperationData")
@@ -29,15 +30,14 @@ router.get("/showArticle/catalog", async ctx => {
   const type = ctx.query.type;
   let start = ctx.query.start || 0;
   let result = await getCatalog(sort, type, start);
-  
   //获取近期热门文章
   let HotArticle = await getHotArticle(sort);
   let pageCount = await getNum(sort,type);
   
-  if (pageCount % 15 > 0) {
-    pageCount = parseInt(pageCount / 15) + 1;
+  if (pageCount % 10 > 0) {
+    pageCount = parseInt(pageCount / 10) + 1;
   } else {
-    pageCount = pageCount / 15;
+    pageCount = pageCount / 10;
   }
   
   result.data.pageCount = pageCount;

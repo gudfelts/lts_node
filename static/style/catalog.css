@@ -39,18 +39,60 @@
     /*list-style-type: square;*/
     margin-top: 12.8px;
     font-size: 16px;
+    padding-bottom: 30px;
+    border-bottom:1px solid rgb(209, 209, 209);
 }
 
-  .detail ul li:before{
-    content: "\02022";
-    color: #006771;
-    font-size: 25.6px;
-}
 
-  .detail ul li a{
+
+.detail ul li a{
     margin-left: 12.8px;
     font-size: 19.2px;
     color: rgb(51, 51, 51);
+}
+.new-title{
+    color: #006771;
+    
+}
+.new-img{
+    width: 30%;
+    height: 150px;
+}
+
+.new-content{
+    display: inline-block;
+    height: 150px;
+    width: 69%;
+
+}
+.new-content a{
+    display: inline-block;
+    width: 100%;
+    height: 80%;    
+    font-size: 20px;
+    overflow: hidden;
+}
+.new-content-data {
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+}
+.new-content-data-other span,.new-content-data span{
+    padding: 2px 15px;
+    font-size: 15px;
+}
+.new-content-data-other span:nth-child(n+2),.new-content-data span:nth-child(n+2){
+    border-left: 1px solid rgb(189, 188, 188)
+    
+}    
+.new-content-other{
+    display: block;
+    height: 100%;    
+    
+}
+.new-content-data-other{
+    text-align: right;
+    width: 100%;
 }
 .datail-warm{
     position: absolute;

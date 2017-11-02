@@ -77,7 +77,23 @@
                         <%for(var i =  0;i < data.length ;i++){%>
                     
                         <li>
-                            <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><%=data[i].title %></a>
+                            <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><h3 class='new-title'><%=data[i].title %></h3></a>
+                            <div class='new-box'>
+                                <%if(data[i].img !=='0'){%>
+                                    <img <%=data[i].img%> class='new-img'>
+                              
+                                <div class='new-content'>
+                                    <a>简略</a>
+                                    <div class='new-content-data'><span><%=data[i].time%></span><span><%=data[i].browse%></span></div>
+                                </div>
+                                <%}else{%>
+                                     <div class='new-content-other'>
+                                        <a>简略</a>
+                                    <div class='new-content-data-other'>
+                                        <span><%=data[i].time%></span><span><%=data[i].browse%></span></div>
+                                    </div>
+                                <%}%>
+                            </div>
                         </li>
                        <%}%> 
                     </ul>
