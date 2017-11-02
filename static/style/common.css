@@ -64,38 +64,38 @@ img {
 header {
   width: 100%;
   position: relative;
-  background: #06A3B1;
-  /* 一些不支持背景渐变的浏览器 */
   -webkit-box-shadow: 0 12px 24px 0 rgba(7, 17, 27, 0.2);
   box-shadow: 0 12px 24px 0 rgba(7, 17, 27, 0.2);
   font-size: 15px;
   -webkit-box-shadow: 10px 10px 50px 10px rgba(7, 17, 27, 0.06);
   box-shadow: 10px 10px 50px 10px rgba(7, 17, 27, 0.06);
   margin-bottom: 30px;
-  min-width: 1600px;
   text-align: center;
 }
 
 /*顶部栏导航*/
 .header_name {
-  width: 100%;
+  width: 820px;
   height: 125px;
   margin: 0 auto;
   background: white;
-  padding: 0 200px;
 }
 
 .header_logo {
   display: inline-block;
   height: 100%;
   float: left;
-  margin-left: -20px;
+}
+
+.header_logo a {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  height: 125px;
 }
 
 .logo_img {
-  width: 350px;
-  height: 150%;
-  margin-top: -25px;
+  width: 210px;
   /*兼容ie*/
   border: 0px;
 }
@@ -117,19 +117,20 @@ header {
 .header_nav {
   width: 100%;
   height: 90px;
+  background: #06A3B1;
+  /* 一些不支持背景渐变的浏览器 */
 }
 
 /*顶部栏导航栏子栏目*/
 .nav_box, .header_top {
   display: inline-block;
   margin: 0 auto;
-  width: 1190px;
+  min-width: 900px;
   height: 100%;
 }
 
 .nav_item {
   float: left;
-  margin: 0 10px;
 }
 
 .nav_item a {
@@ -141,7 +142,7 @@ header {
 
 .nav_item > a {
   line-height: 90px;
-  width: 150px;
+  width: 120px;
   font-weight: bolder;
 }
 
@@ -184,8 +185,6 @@ a:hover {
   /* Safari 和 Chrome */
   -o-transform: rotate(180deg);
   /* Opera */
-  -webkit-filter: drop-shadow(0 0 red);
-  filter: drop-shadow(0 0 red);
 }
 
 /*导航栏子栏目*/
@@ -221,7 +220,6 @@ a:hover {
 /*底部栏*/
 footer {
   width: 100%;
-  min-width: 1600px;
   height: 190px;
   padding: 36px 0;
   background-color: #f8fafc;
