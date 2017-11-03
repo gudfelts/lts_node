@@ -24,7 +24,9 @@ const {
   deleteLink,
   addLink,
   getLink,
-  editLink
+  editLink,
+  getFeedBackCatalog,
+  getFeedBackOne
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -56,7 +58,7 @@ router.post("/article", async ctx => {
     const id = await saveArticle(type[0], article);
 
     //储存banner
-    if(isBanner !== 'false'){
+    if (isBanner !== "false") {
       saveBanner(type[0], article.type, id, path);
     }
 
@@ -207,7 +209,7 @@ router.get("/team/catalog", async ctx => {
     let result = await getTeam(start);
     //一页20条
     if (start === 0) {
-      var pageCount = await getNum("team",null);
+      var pageCount = await getNum("team", null);
     }
     result.code = 200;
     result.pageCount = pageCount;
@@ -262,9 +264,9 @@ router.post("/team/person/avatar", async ctx => {
 //增加专家信息
 router.post("/team/person", async ctx => {
   let data = ctx.request.body;
-  let { name, content, position, avatar} = data;
+  let { name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
-  await saveTeam({ name, content, position, avatar,summary})
+  await saveTeam({ name, content, position, avatar, summary })
     .then(result => {
       ctx.response.body = {
         code: 200,
@@ -287,7 +289,7 @@ router.post("/team/edit", async ctx => {
   let data = ctx.request.body;
   let { id, name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
-  
+
   id = parseInt(id);
   await updatePerson(id, name, content, position, avatar, summary)
     .then(result => {
@@ -335,28 +337,26 @@ router.post("/team/delete", async ctx => {
   let data = ctx.request.body.person;
   for (let i = 0, len = data.length; i < len; i++) {
     const id = parseInt(data[i].id);
-    await deletePerson(id).then(() => {
-      if (i === len - 1) {
+    await deletePerson(id)
+      .then(() => {
+        if (i === len - 1) {
+          ctx.response.body = {
+            code: 200,
+            msg: "删除成功"
+          };
+        }
+      })
+      .catch(e => {
         ctx.response.body = {
-          code: 200,
-          msg: "删除成功"
+          code: 500,
+          msg: "删除失败"
         };
-      }
-    })
-    .catch(e => {
-      ctx.response.body = {
-        code: 500,
-        msg: "删除失败"
-      };
-    });
+      });
   }
 });
 
-
 //获取友情链接信息目录
 router.get("/friendLinks/catalog", async ctx => {
-
-
   await getLinkCatalog()
     .then(links => {
       ctx.response.body = {
@@ -374,56 +374,55 @@ router.get("/friendLinks/catalog", async ctx => {
 });
 //获取友情链接信息
 router.get("/friendLinks/one", async ctx => {
-
-
-    const id = ctx.query.id;
-    console.log(id)
-    await getLink(id)
-      .then(data => {
-        console.log(data)
-        ctx.response.body = {
-          code: 200,
-          data,
-          msg: "获取成功"
-        };
-      })
-      .catch(err => {
-        ctx.response.body = {
-          code: 500,
-          msg: "获取失败"
-        };
-      });
+  const id = ctx.query.id;
+  console.log(id);
+  await getLink(id)
+    .then(data => {
+      console.log(data);
+      ctx.response.body = {
+        code: 200,
+        data,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
 });
 
 //删除链接
 router.post("/friendLinks/delete", async ctx => {
   let data = ctx.request.body.links;
-  console.log(data)
+  console.log(data);
   for (let i = 0, len = data.length; i < len; i++) {
     const id = parseInt(data[i].id);
-    await deleteLink(id).then(() => {
-      if (i === len - 1) {
+    await deleteLink(id)
+      .then(() => {
+        if (i === len - 1) {
+          ctx.response.body = {
+            code: 200,
+            msg: "删除成功"
+          };
+        }
+      })
+      .catch(e => {
         ctx.response.body = {
-          code: 200,
-          msg: "删除成功"
+          code: 500,
+          msg: "删除失败"
         };
-      }
-    })
-    .catch(e => {
-      ctx.response.body = {
-        code: 500,
-        msg: "删除失败"
-      };
-    });
+      });
   }
 });
 
 //增加链接信息
 router.post("/friendLinks/post", async ctx => {
   let data = ctx.request.body;
-  let { name, link} = data;
+  let { name, link } = data;
 
-  await addLink({name, link})
+  await addLink({ name, link })
     .then(result => {
       ctx.response.body = {
         code: 200,
@@ -436,15 +435,14 @@ router.post("/friendLinks/post", async ctx => {
         msg: "增加失败"
       };
     });
- 
 });
 //修改链接信息
 router.post("/friendLinks/edit", async ctx => {
   let data = ctx.request.body;
-  let { name, link,id} = data;
+  let { name, link, id } = data;
   id = parseInt(id);
-  console.log(name, link,id)
-  await editLink(name, link,id)
+  console.log(name, link, id);
+  await editLink(name, link, id)
     .then(result => {
       ctx.response.body = {
         code: 200,
@@ -457,6 +455,41 @@ router.post("/friendLinks/edit", async ctx => {
         msg: "修改失败"
       };
     });
- 
+});
+//获取意见反馈目录
+router.get("/feedback/catalog", async ctx => {
+  await getFeedBackCatalog()
+    .then(links => {
+      ctx.response.body = {
+        code: 200,
+        links,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
+});
+//获取意见反馈
+router.get("/feedback/one", async ctx => {
+  const id = ctx.query.id;
+  await getFeedBackOne(id)
+    .then(data => {
+      console.log(data);
+      ctx.response.body = {
+        code: 200,
+        data,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
 });
 module.exports = router;

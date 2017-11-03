@@ -1,6 +1,6 @@
 const router = require("koa-router")();
 
-const {searchArticle, getCatalog, addPraise, getSearchNum} = require("../model/OperationData");
+const {searchArticle, getCatalog, addPraise, getSearchNum,saveFeedBack} = require("../model/OperationData");
 
 //下一页
 router.get('/next', async ctx => {
@@ -35,7 +35,10 @@ router.get('/praise', ctx => {
 router.post('/feedBack', ctx => {
   const title = ctx.request.body.title;
   const content = ctx.request.body.content;
-  console.log(title,content)
+  const date = new Date();
+  const time = `${date.getFullYear()}年${date.getMonth()}月${date.getDay()}日 ${date.getHours()}:${date.getMinutes()}`;
+
+  saveFeedBack({title,content,isread:0,time});
   ctx.redirect('/');
 });
 

@@ -4,10 +4,17 @@ function render(data,sort){
     $detailBox.html('');
     var aLi = [];
     for(var i = 0;i < data.length;i++){
-        var olink = $('<a></a>');
-        var href = '/showArticle/article?id='+data[i].id+'&type='+data[i].type+'&sort='+sort;
-        olink.attr('href',href).text(data[i].title);
-        var oLi = $('<li></li>').html(olink);
+        var html = '<a href="'+'/showArticle/article?id='+data[i].id+'&type='+data[i].type+'&sort='+sort+'">'+data[i].title+'</a>';
+        
+        if(data[i].img !=='0'){
+            html +="<div class='new-box'><img "+data[i].img+" class='new-img'><div class='new-content'><a>简略</a><div class='new-content-data'>"
+            }
+        else{
+            html += "<div class='new-content-other'><a>简略</a><div class='new-content-data-other'>"
+            
+        }
+        html +="<span class='data-time'>"+data[i].time+"</span><span class='data-browse'>"+data[i].browse+"</span><span class='data-praise'>"+data[i].praise+"</span></div></div>"
+        var oLi = $('<li></li>').html(html);
         aLi.push(oLi);
         
     }

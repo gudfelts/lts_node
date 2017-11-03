@@ -124,14 +124,7 @@ article{
     width: 100%;
 }
 
-.content-main p {
-    /* display: block;
-    color: #555;
-    font-size: 16px;
-    line-height: 36px;
-    text-indent: 2em; */
-    font :35px/22px "Microsoft Yahei" 
-}
+
 
 .content-main img {
     display: block;

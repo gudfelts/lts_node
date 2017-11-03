@@ -70,7 +70,7 @@ module.exports = {
         //更新内容
         editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? where id = ? and type = ?",
         //查找文章
-        searchArticle : 'select title,author,id,type from ?? where title like ? and type = ? order by id desc limit ?,15',
+        searchArticle : 'select title,author,id,type,img,browse,praise from ?? where title like ? and type = ? order by id desc limit ?,15',
         //查找文章
         getReacherNumArticle : 'select count(1) from ?? where title like ? and type = ? ',
     
@@ -80,5 +80,10 @@ module.exports = {
         getLinkCatalog : 'select * from friendlinks',
         getLink : 'select * from friendlinks where id = ?',
         editLink : 'update  friendlinks set name = ?,link = ? where id = ?',
+
+        saveFeedBack : 'insert into feedback set ?',
+        getFeedBackCatalog : 'select id,time,title from feedback limit ?,20',
+        getFeedBackOne : 'select * from feedback where id = ? limit 1',
+        setFeedBackRead : 'update  feedback set isread = 1 where id = ?',
      
 }

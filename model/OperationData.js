@@ -147,3 +147,13 @@ module.exports.getUser = (account) => queryTest(SQL.getUser,account);
 module.exports.updateUser = (pass) => queryTest(SQL.changePassword,pass);
 module.exports.updateUserTime = (pass) => queryTest(SQL.changePassword,pass);
 
+
+//意见反馈
+module.exports.saveFeedBack = (val) => queryTest(SQL.saveFeedBack,val);
+module.exports.getFeedBackCatalog = () => queryTest(SQL.getFeedBackCatalog);
+module.exports.getFeedBackOne  = (id) => {
+
+  queryTest(SQL.setFeedBackRead,id);
+  return queryTest(SQL.getFeedBackOne,id);
+}
+

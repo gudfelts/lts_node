@@ -95,7 +95,8 @@ router.get('/introduction/acgency',async ctx=>{
 //获取专家目录
 router.get('/introduction/team/catalog',async ctx=>{
   let start = parseInt(ctx.query.start) || 0;
-  let result = await getTeam(start);
+  let result ={};
+   result.person= await getTeam(start);
   if (start === 0) {
     let pageCount = await getNum('team',null);
     //一页20条
@@ -104,7 +105,7 @@ router.get('/introduction/team/catalog',async ctx=>{
     } else {
       pageCount = pageCount / 20;
     }
-
+    console.log(result)
     result.pageCount = pageCount;
   }
   await ctx.render("./introduction/team", result);
