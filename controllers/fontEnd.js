@@ -24,7 +24,6 @@ router.get('/next', async ctx => {
 //点赞
 router.get('/praise', ctx => {
   const id = ctx.query.id;
-  console.log(id)
   const sort = ctx.query.sort;
   addPraise(sort, id);
   ctx.response.body = {

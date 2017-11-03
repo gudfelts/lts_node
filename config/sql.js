@@ -20,7 +20,7 @@ module.exports = {
         changePassword: "update admin set password = ?",
     
         //点赞
-        praise: "update ?? set praise = praise + 1 where id = ?",
+        addPraise: "update ?? set praise = praise + 1 where id = ?",
         //获取团队列表
         getTeam: "select * from team limit ?,20",
         //获取专家信息
