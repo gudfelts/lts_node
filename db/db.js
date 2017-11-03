@@ -52,8 +52,20 @@ function connect() {
 var db;
 connect();
 let query = function(sql, options, callback) {
+  
   db.query(sql, options, function(err, results) {
     callback(err, results);
   });
 };
-module.exports = { query };
+
+let queryTest = function(sql, options) {
+  
+    return new Promise((resolve, reject) => {
+      db.query(sql, options, function(err, results) {
+        if(err) reject(err)
+        else resolve(results);
+      });
+    })
+   
+  };
+module.exports = { query,queryTest  };

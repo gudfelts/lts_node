@@ -1,5 +1,6 @@
 const router = require("koa-router")();
 const transCode = require("../utils/transCode");
+const getImg = require("../utils/getImg");
 const downImg = require("../utils/downImg");
 const asyncBusboy = require("async-busboy");
 const trimHtml = require("../utils/trim-html");
@@ -47,6 +48,7 @@ router.post("/article", async ctx => {
   article.praise = 0;
   article.browse = 0;
   article.time = article.time.replace(/T.*$/, "");
+  article.img = getImg(article.content);
   try {
     var { data, path } = await transCode.tranforIndex(article.content);
     article.content = data;
@@ -156,7 +158,7 @@ router.post("/editarticle", async ctx => {
   source = data.source;
   author = data.author;
 
-  await editArticle(sort, title, author, source, time, content, id, type)
+  await editArticle([sort, title, author, source, time, content, id, type])
     .then(result => {
       ctx.response.body = {
         code: 200,

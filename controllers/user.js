@@ -1,7 +1,5 @@
 const router = require("koa-router")();
-const getUser = require("../db/operateDB").getUser;
-const updateUser = require("../db/operateDB").updateUser;
-const updateUserTime = require("../db/operateDB").updateUserTime;
+const {getUser, updateUser, updateUserTime} = require("../model/OperationData");
 
 //登录
 router.post('/login', async ctx => {

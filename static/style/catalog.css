@@ -105,6 +105,28 @@
     letter-spacing: 10px;
     color: gray;
 }
+.data-time::before,.data-browse::before,.data-praise::before{
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 0 7px -2px 0;
+}
+.data-time::before{
+    background: url('/images/icons/time.png') no-repeat center;
+    background-size: 100% 100%;
+    
+}
+.data-browse::before{
+    background: url('/images/icons/browse.png') no-repeat center;
+    background-size: 100% 100%;
+    
+}
+.data-praise::before{
+    background: url('/images/icons/praise_1.png') no-repeat center;
+    background-size: 100% 100%;
+    
+}
 /*分页组件*/
 .M-box{
     /* float: left;

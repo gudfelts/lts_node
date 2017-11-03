@@ -14,7 +14,7 @@ router.get("/showArticle/article", async ctx => {
   const HotArticle = await getHotArticle(sort);
   //增加浏览数
   addBrowse(sort, id, type);
-  await ctx.render("article", {data,HotArticle,sort});
+  await ctx.render("article", {data:data[0],HotArticle,sort});
 });
 
 //首页
