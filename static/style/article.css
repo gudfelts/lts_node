@@ -1,18 +1,18 @@
 .container-types{
-    width: 1500px;
+    width: 1200px;
+    position: relative;
 }
-.content {
 
-}
 
 /*右边栏*/
 .side-section{
     display: block;
-    width: 22%;
     float: left;
-    margin-left: 80px;    
 }
 
+.right-section{
+    width:20%;
+}
 .column1,.column2 {
     margin-top: 10px;
     margin-left: 15px;
@@ -63,14 +63,13 @@
 }
 
 
-.test{
-    width: 120px;
-}
+
 .content {
     padding: 30px;
     background: #FFFFFF;
     float: left;
-    width: 70%;
+    width: 65%;
+    margin-left: 150px;
 }
 
 .content-title {
@@ -131,7 +130,7 @@ article{
     font-size: 16px;
     line-height: 36px;
     text-indent: 2em; */
-    overflow: auto;    
+    font :35px/22px "Microsoft Yahei" 
 }
 
 .content-main img {
@@ -141,6 +140,7 @@ article{
     height: auto;
 }
 .parise-box{
+    margin: 0 auto 50px auto;
     text-align: center;
 }
 .parise-btn{
@@ -209,4 +209,65 @@ article{
 #goTop:hover{
     background-color: #BEBEBE;
 }
-
+.post_topshare .post_share{
+    position: relative;
+}
+.js_qrcode_wrap{
+    width: 120px;
+    height: 180px;
+    padding: 20px 20px 0;
+    position: absolute;
+    left: 0;
+    top: 105px;
+    background: #fff;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+.post_share li {
+    padding: 12px 0;
+    overflow: hidden;
+    width: 120px;
+    border-top: 1px solid #e5e5e5;
+    font: 14px/28px "Microsoft Yahei";
+    color: #888;
+}
+.post_topshare .post_share li i{
+    float: left;
+    position: relative;
+    overflow: hidden;
+    width: 40px;
+    height: 28px;
+    margin-right: 13px;
+    background: url('/images/sprite.png') no-repeat;
+    border-radius: 4px;
+}
+.post_topshare .post_share .share_weixin i{
+    background-position: -80px -50px;
+}
+.post_topshare .post_share .share_qzone i{
+    background-position: -120px -50px;
+}
+.post_topshare .post_share .share_weibo i{
+    background-position: -160px -50px;
+}
+.js_qrcode_close{
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    background: url('/images/sprite.png') no-repeat -156px -156px;
+}
+.hidden{
+    display: none;
+}
+.left-section{
+    width: 150px;
+    position: absolute;
+    top:500px;
+    margin-left: -580px;
+    margin-top: 70px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+}

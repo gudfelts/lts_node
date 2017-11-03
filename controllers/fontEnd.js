@@ -31,6 +31,13 @@ router.get('/praise', ctx => {
     code: 200
   };
 });
+//意见反馈
+router.post('/feedBack', ctx => {
+  const title = ctx.request.body.title;
+  const content = ctx.request.body.content;
+  console.log(title,content)
+  ctx.redirect('/');
+});
 
 
 router.get('/searchArticle',async (ctx,next) =>{

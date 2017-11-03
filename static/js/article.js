@@ -6,7 +6,7 @@ function praise(obj,self){
     $.ajax({   
         type: 'get',  
         dataType: "json",
-        url: 'http://lococo.site/OperationData/praise?id='+id+'&sort='+sort+'&type='+type,      //提交到一般处理程序请求数据   
+        url: '/OperationData/praise?id='+id+'&sort='+sort+'&type='+type,      //提交到一般处理程序请求数据   
         
         success: function() {
             
@@ -26,11 +26,22 @@ function praise(obj,self){
         }  
    }); 
 }
+function fixShare(){
+    $(window).scroll(function(e){
+        var scrollTop = $(window).scrollTop();
+        console.log(scrollTop)
+        if(scrollTop > 310){
+            $('.post_topshare').css({position : 'fixed',top:'5px'})
+        }else{
+            $('.post_topshare').css({position : 'absolute',top:'5px'})
+        }
+    })
+}
 $().ready(function(e) {
 
     var $oBtn = $('.icon-praise');
-    
     $oBtn.click(function(){
         praise( $('.parise-box'),$oBtn);
     })
+    fixShare()
 })    

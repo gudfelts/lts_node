@@ -20,6 +20,30 @@
     <%- include('./component/header')%>
 
         <div class="container-types">
+            <div class='side-section left-section'>
+            
+                <div class="post_topshare">
+						<span class="post_topshare_title">分享到：</span>
+						<ul class="post_share">
+							
+							<li class="share_weixin js_weixin" action-type="top">
+							    <a href="javascript:;" target="_self"><i title="分享到微信"></i><span></span>微信</a>
+							</li>
+							<li class="share_qzone js_share" action-type="qzone">
+								<a href="javascript:;" target="_self"><i title="分享到QQ空间"></i><span></span>QQ空间</a>
+							</li>
+							<li class="share_weibo js_share" action-type="weibo">
+								<a href="javascript:;" target="_self"><i title="分享到新浪微博"></i><span></span>微博</a>
+							</li>
+						</ul>
+                            <div class="js_qrcode_wrap hidden" id="js_qrcode_top">
+                                <div class="js_qrcode_arr"></div>
+                                <a href="javascript:;" target="_self" class="js_qrcode_close" data-type="top" title="关闭"></a>
+                                <p>用微信扫码二维码</p>
+                                <p>分享至好友和朋友圈</p>
+                            </div>
+					</div>
+            </div>   
             <div class="content ">
                 <article>
                     <div class="content-title">
@@ -43,19 +67,9 @@
                         <%-data.content%>
                     </div>
                 </article>
-                <div class="parise-box" data-id=<%=data.id%> data-sort=
-                    <%=sort%> data-type=
-                        <%=data.type%>>
-                            <input type='radio' class='parise-btn' id='parise-btn'>
-                            <label class='icon-praise' for="parise-btn">
-                            </label>
-                            <p class='parise-show'>
-                                <i class='praise-num'>
-                                    <%=data.praise%>
-                                </i>人推荐</p>
-                </div>
+               
             </div>
-            <div class="side-section">
+            <div class="side-section right-section">
                 
                 <!--热门文章-->
                 <div class='side-article column2'>
@@ -76,6 +90,17 @@
                 </div>
             </div>
         </div>
+         <div class="parise-box" data-id=<%=data.id%> data-sort=
+                    <%=sort%> data-type=
+                        <%=data.type%>>
+                            <input type='radio' class='parise-btn' id='parise-btn'>
+                            <label class='icon-praise' for="parise-btn">
+                            </label>
+                            <p class='parise-show'>
+                                <i class='praise-num'>
+                                    <%=data.praise%>
+                                </i>人推荐</p>
+                </div>
         </div>
         <%- include('./component/footer') -%>
             <!--回到顶部-->

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style/common.min.css">
+    <title>意见反馈</title>
+    <style>
+        .feedBack {
+            height: 530px;
+            width: 915px;
+            margin:50px auto 100px auto;
+            background-color: #F5F5F5;
+            
+            box-shadow: 0 12px 24px 0 rgba(7,17,27,.2);
+            border-radius:5px;  
+        }
+
+        .feedBack-text {
+            padding: 30px 48px;
+            font-size: 18px;
+            line-height: 1;
+            color: #424242;
+        }
+
+        .line {
+            display: block;
+            width: 90%;
+            height: 1px;
+            background: #aaaaaa;
+            color: red;
+            margin: 0px auto;
+        }
+
+        .title {
+            height: 20px;
+            width: 560px;
+            padding: 15px 16px;
+            margin: -5px 43px;
+            border: 1px solid #a1a6a9;
+            font-size: 14px;
+        }
+
+        .feedBack-area {
+            padding: 10px 16px;
+            margin: 39px 43px;
+            border: 1px solid #a1a6a9;
+            font-size: 14px;
+            width: 744px;
+            height: 122px;
+        }
+
+        .submit{
+            background: #ff6700;
+            color: #fff;
+            display: block;
+            width: 158px;
+            height: 38px;
+            border: 1px solid #b0b0b0;
+            font-size: 14px;
+            line-height: 35px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 3px;
+            margin: -2px 43px;
+        }
+
+        .submit:hover {
+            background-color: #ff8000;
+            transition: all .4s;
+        }
+    </style>
+</head>
+<body>
+<%- include('./component/header')%>
+<div class='container-types'>
+<div class="feedBack">
+    <div class="feedBack-text">
+        <span>问题反馈</span>
+    </div>
+    <div class="line"></div>
+    <div class="feedBack-text">
+        <span>对您给予的帮助和支持，深表感谢！</span>
+    </div>
+    <form action="/OperationData/feedBack" method="post">
+        <input type="text" placeholder="在此输入标题" name='title' class='title'>
+        <textarea name="content"  class="feedBack-area" placeholder="在这里描述您要反馈的内容" class='content'></textarea>
+        <input type="submit" value="提交反馈" class='submit'>
+    </form>
+</div>
+</div>
+    <%- include('./component/footer') -%>
+
+</body>
+</html>

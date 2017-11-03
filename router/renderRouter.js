@@ -77,6 +77,10 @@ router.get('/introduction/index',async ctx=>{
  
   await ctx.render("./introduction/index");
 })
+router.get('/feedback',async ctx=>{
+ 
+  await ctx.render("feedback");
+})
 //友情链接
 router.get('/links',async ctx=>{
   const links = await getLinkCatalog();
