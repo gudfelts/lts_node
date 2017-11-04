@@ -21,6 +21,7 @@ module.exports = {
     
         //点赞
         addPraise: "update ?? set praise = praise + 1 where id = ?",
+        
         //获取团队列表
         getTeam: "select * from team limit ?,20",
         //获取专家信息
@@ -41,6 +42,7 @@ module.exports = {
         saveBanner: "insert into banner set ?",
         deleteBanner: "delete from banner limit 1",
         getBanner: "select * from banner limit 5",
+        deleteBannerById: "delete from banner where id = ? and sort = ? limit 1",
     
         
         /*
@@ -85,5 +87,4 @@ module.exports = {
         getFeedBackCatalog : 'select id,time,title from feedback limit ?,20',
         getFeedBackOne : 'select * from feedback where id = ? limit 1',
         setFeedBackRead : 'update  feedback set isread = 1 where id = ?',
-     
 }

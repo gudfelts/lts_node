@@ -18,6 +18,8 @@ const {
   getCatalog,
   getNum,
   saveBanner,
+  getBanner,
+  deleteBannerById,
   searchArticle,
   getSearchNum,
   getLinkCatalog,
@@ -56,10 +58,9 @@ router.post("/article", async ctx => {
     article.content = data;
 
     const id = await saveArticle(type[0], article);
-
     //储存banner
     if (isBanner !== "false") {
-      saveBanner(type[0], article.type, id, path);
+      saveBanner(type[0], article.type, id, path, article.title);
     }
 
     ctx.response.body = {
@@ -106,11 +107,23 @@ router.get("/article", async ctx => {
   const id = ctx.query.id,
     sort = ctx.query.sort,
     type = ctx.query.type;
+
+  //获取当前banner
+  const banner = await getBanner();
   await getArticleOne(sort, id, type)
     .then(data => {
+      data[0].sort = sort;
+      let result = banner.filter(item => {
+        if (data[0].id == item.id && data[0].sort == item.sort) {
+          return 1;
+        }
+      });
+      result.length > 0
+        ? (data[0].isBanner = true)
+        : (data[0].isBanner = false);
       ctx.response.body = {
         code: 200,
-        data,
+        data: data[0],
         msg: "获取成功"
       };
     })
@@ -149,30 +162,53 @@ router.get("/searchArticle", async (ctx, next) => {
 });
 //修改文章
 router.post("/editarticle", async ctx => {
-  let data = ctx.request.body;
+  let article = ctx.request.body;
 
-  const id = data.id,
-    sort = data.selectedOptions[0],
-    type = data.selectedOptions[1];
-  content = data.content;
-  title = data.title;
-  time = data.time;
-  source = data.source;
-  author = data.author;
+  const id = parseInt(article.id),
+    sort = article.selectedOptions[0],
+    type = parseInt(article.selectedOptions[1]);
+  isBanner = article.isBanner;
+  content = article.content;
+  title = article.title;
+  time = article.time;
+  source = article.source;
+  author = article.author;
 
-  await editArticle([sort, title, author, source, time, content, id, type])
-    .then(result => {
-      ctx.response.body = {
-        code: 200,
-        msg: "修改成功"
-      };
-    })
-    .catch(() => {
-      ctx.response.body = {
-        code: 500,
-        msg: "修改失败"
-      };
-    });
+  try {
+    var { data, path } = await transCode.tranforIndex(content);
+    await editArticle([sort, title, author, source, time, content, id, type]);
+    //储存banner
+    if (isBanner === "true") {
+      saveBanner(sort, type, id, path, title);
+    } else {
+      //如果是false，应该检测他之前是否是轮播图
+      getBanner().then(banner=>{
+        let result = banner.filter(item => {
+          if (id == item.id && sort == item.sort) {
+            return 1;
+          }
+        });
+
+        if( result.length > 0){
+          deleteBannerById([id,sort])
+        }
+      });
+     
+    }
+
+    ctx.response.body = {
+      code: 200,
+      msg: "修改成功"
+    };
+  } catch (error) {
+    throw error;
+    console.log(error);
+    ctx.response.body = {
+      code: 500,
+      msg: "修改文章失败!"
+    };
+    return;
+  }
 });
 
 //获取文章目录
@@ -206,14 +242,18 @@ router.get("/team/catalog", async ctx => {
   let start = parseInt(ctx.query.start) || 0;
 
   try {
-    let result = await getTeam(start);
+    let person= await getTeam(start);
     //一页20条
     if (start === 0) {
       var pageCount = await getNum("team", null);
     }
-    result.code = 200;
-    result.pageCount = pageCount;
-    ctx.response.body = result;
+    
+    ctx.response.body ={
+      code : 200,
+      msg  :'获取成功',
+      person,
+      pageCount
+    }
   } catch (error) {
     ctx.response.body = {
       msg: "搜索失败",
@@ -291,6 +331,7 @@ router.post("/team/edit", async ctx => {
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
 
   id = parseInt(id);
+  
   await updatePerson(id, name, content, position, avatar, summary)
     .then(result => {
       ctx.response.body = {

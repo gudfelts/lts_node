@@ -5,7 +5,7 @@ const queryTest = require("../db/db").queryTest;
 //储存文章
 module.exports.saveArticle = (sort, val) => queryTest(SQL.saveArticle,[sort, val]);
 //修改文章
-module.exports.editArticle = (val) =>queryTest(sql.editArticle,val);
+module.exports.editArticle = (val) =>queryTest(SQL.editArticle,val);
 
 //删除文章
 module.exports.deleteArticle = (sort, id, type) => queryTest(SQL.deleteArticle,[sort, id, type]);
@@ -123,16 +123,23 @@ module.exports.deletePerson = id => queryTest(SQL.deletePerson,id);
 module.exports.updatePerson = (id, name, content, position, avatar,summary) =>queryTest(SQL.updatePerson,[name, position, content, avatar,summary, id]);
 
 //存放banner
-module.exports.saveBanner = (sort, type, id, path) => {
-  try {
-    SQL.deleteBanner();
-    queryTest(SQL.saveBanner,{ sort, type, id, path });
-  } catch (error) {
-    throw e;
-  }
+module.exports.saveBanner = (sort, type, id, path,title) => {
+    return new Promise((resolve, reject) => {
+      try {
+          // queryTest(SQL.deleteBanner)
+    
+          queryTest(SQL.saveBanner,{ sort, type, id, path,title});
+      } catch (error) {
+        reject(error)
+      }
+      resolve();
+    })
+  
+
 };
-//存放banner
+//获取banner
 module.exports.getBanner =  () => queryTest(SQL.getBanner);
+module.exports.deleteBannerById =  (val) => queryTest(SQL.deleteBannerById,val);
 //增加链接
 module.exports.addLink =  (val) => queryTest(SQL.addLink,val);
 //获取链接
