@@ -62,7 +62,9 @@ let queryTest = function(sql, options) {
   
     return new Promise((resolve, reject) => {
       db.query(sql, options, function(err, results) {
-        if(err) reject(err)
+        if(err){
+          reject(err)
+        }
         else resolve(results);
       });
     })

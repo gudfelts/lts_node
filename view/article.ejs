@@ -7,10 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/style/common.min.css">
     <link rel="stylesheet" href="/style/article.css">
+        <script type="text/javascript" src="/js/trim-html.js"></script>
+
     <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
     <script type="text/javascript" src="/js/article.js"></script>
     <script src='/js/common.js'></script>
-
+    <script>
+   
+  
+    </script>
     <title>
         <%=data.title%>
     </title>
@@ -21,18 +26,18 @@
 
         <div class="container-types">
             <div class='side-section left-section'>
-            
-                <div class="post_topshare">
+             
+                    <div class="post_topshare">
 						<span class="post_topshare_title">分享到：</span>
-						<ul class="post_share">
+						<ul class=" post_share " >
 							
-							<li class="share_weixin js_weixin" action-type="top">
-							    <a href="javascript:;" target="_self"><i title="分享到微信"></i><span></span>微信</a>
+							<li class="share_weixin" action-type="top">
+							    <a href="javascript:;" target="_self"><i title="分享到微信" ></i><span></span>微信</a>
 							</li>
-							<li class="share_qzone js_share" action-type="qzone">
+							<li class="share_qzone" action-type="qzone">
 								<a href="javascript:;" target="_self"><i title="分享到QQ空间"></i><span></span>QQ空间</a>
 							</li>
-							<li class="share_weibo js_share" action-type="weibo">
+							<li class="share_weibo" action-type="weibo">
 								<a href="javascript:;" target="_self"><i title="分享到新浪微博"></i><span></span>微博</a>
 							</li>
 						</ul>
@@ -43,6 +48,13 @@
                                 <p>分享至好友和朋友圈</p>
                             </div>
 					</div>
+                    
+                  <div class="jiathis_style_24x24 hidden">
+        <a class="jiathis_button_qzone"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_tqq"></a>
+        <a class="jiathis_button_weixin"></a>
+    </div>
             </div>   
             <div class="content ">
                 <article>
@@ -89,7 +101,9 @@
                     </ul>
                 </div>
             </div>
+          
         </div>
+        
          <div class="parise-box" data-id=<%=data.id%> data-sort=
                     <%=sort%> data-type=
                         <%=data.type%>>
@@ -105,6 +119,10 @@
         <%- include('./component/footer') -%>
             <!--回到顶部-->
         <div id="goTop"></div>
+       
+
+      <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        
 </body>
 
 </html>

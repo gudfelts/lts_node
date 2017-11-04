@@ -47,7 +47,6 @@
 
 .detail ul li a{
     margin-left: 12.8px;
-    font-size: 19.2px;
     color: rgb(51, 51, 51);
 }
 .new-title{
@@ -70,7 +69,6 @@
     width: 100%;
     height: 80%;    
     font-size: 20px;
-    overflow: hidden;
 }
 .new-content-data {
     display: inline-block;
@@ -89,6 +87,9 @@
     display: block;
     height: 100%;    
     
+}
+.new-content .new-content-summary{
+    font-size: 15px;
 }
 .new-content-data-other{
     text-align: right;
@@ -139,27 +140,43 @@
 .s-bar{
     display: inline-block;
     float: right;
-  }
-  
-  .s-icon{
-    float: left;
     position: relative;
-    left: 30px;
-    top: -7px;
   }
   
-  .s-icon img{
-    width:20px;
-    height: 20px;
-    text-indent: 10em;
+ 
+  
+  .search-icon{
+    width: 40px;
+    height: 30px;
+    display: inline-block;
+    cursor: pointer;
+    background: url('/images/icons/search.png') no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    left: 240px;
+    top: 5px;
   }
   
-  #search-input{
-    width: 205px;
-    height: 31px;
-    text-indent: 3em;
-    color: #b3b3b3;
-    border: 1px solid #e6e6e6;
+  .search-input
+  {
+      width: 280px;
+      height: 41px;
+      color: #bababa;
+      font-size: 14px;
+      border:1px #ececec solid;
+      line-height: 34px;
+      padding: 0 50px 0 25px;
+      background: #f9f9f9;
+      border-radius: 1px 0 0 1px;
+      vertical-align: middle;
+      text-align: left;
+
   }
+
+  .search-input:focus {
+    outline:none;
+    border: 1px solid #06A3B1;
+  }
+
   
 

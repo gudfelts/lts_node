@@ -53,6 +53,7 @@ router.post("/article", async ctx => {
   article.browse = 0;
   article.time = article.time.replace(/T.*$/, "");
   article.img = getImg(article.content);
+  article.summary = trimHtml(article.content, { preserveTags: false, limit: 30 }).html;
   try {
     var { data, path } = await transCode.tranforIndex(article.content);
     article.content = data;
@@ -153,7 +154,8 @@ router.get("/searchArticle", async (ctx, next) => {
         code: 200
       };
     })
-    .catch(() => {
+    .catch((e) => {
+      throw e;
       ctx.response.body = {
         code: 500,
         msg: "搜索出现错误"

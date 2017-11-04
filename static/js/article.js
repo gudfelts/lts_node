@@ -43,5 +43,22 @@ $().ready(function(e) {
     $oBtn.click(function(){
         praise( $('.parise-box'),$oBtn);
     })
-    fixShare()
+    fixShare();
+    $('.share_weibo').click(function(){
+        $('.jiathis_button_tsina').click();
+    })
+    $('.share_weixin').click(function(){
+        $('.jiathis_button_weixin').click();
+    })
+    $('.share_qzone').click(function(){
+        $('.jiathis_button_qzone').click();
+    });
+    var url = window.location.href;
+    var summary = window.trimHtml($('.content-main').html(), { preserveTags: false, limit: 50 }).html
+   
+    window.jiathis_config = { 
+        url: url, 
+        title: document.title, 
+        summary:summary 
+    }
 })    
