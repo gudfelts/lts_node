@@ -51,7 +51,6 @@ const getInfo = async () => {
 
   //获取带图的文章
   let data = pickBanner(aNew);
-  throw ('ssss')
   //从info_m到info_n的文章有一个带图的文章
   if (!!data) {
     data.banner.summary = pickSummary(data.banner.content);
