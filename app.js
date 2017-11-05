@@ -64,7 +64,10 @@ app.use(async (ctx, next) => {
 
 //测试 配置控制台日志中间件
 //正式 运行日志中间件
-app.use(env !== "production"&& koaLogger());
+if(env !== "production"){
+  app.use(koaLogger());
+
+}
 app.use(catchError);
 
 //设置静态资源
