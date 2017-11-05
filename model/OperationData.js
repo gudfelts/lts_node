@@ -89,9 +89,9 @@ module.exports.getAllNum = async (sort) => {
   return result[0]["count(1)"];
 };
 //获取表格条数
-module.exports.getNum = async (sort,type) => {
+module.exports.getNum = async (sort,type = false) => {
   let result = null;
-  if(sort === 'team'){
+  if(type === false){
       result = await queryTest(SQL.getNumNoTYPE,sort);
   }
   else{
@@ -157,7 +157,7 @@ module.exports.updateUserTime = (pass) => queryTest(SQL.changePassword,pass);
 
 //意见反馈
 module.exports.saveFeedBack = (val) => queryTest(SQL.saveFeedBack,val);
-module.exports.getFeedBackCatalog = () => queryTest(SQL.getFeedBackCatalog);
+module.exports.getFeedBackCatalog = (start) => queryTest(SQL.getFeedBackCatalog,start);
 module.exports.getFeedBackOne  = (id) => {
 
   queryTest(SQL.setFeedBackRead,id);

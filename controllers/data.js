@@ -52,9 +52,10 @@ router.post("/article", async ctx => {
   article.praise = 0;
   article.browse = 0;
   article.time = article.time.replace(/T.*$/, "");
+  try {
   article.img = getImg(article.content);
   article.summary = trimHtml(article.content, { preserveTags: false, limit: 30 }).html;
-  try {
+
     var { data, path } = await transCode.tranforIndex(article.content);
     article.content = data;
 
@@ -248,7 +249,7 @@ router.get("/team/catalog", async ctx => {
     let person= await getTeam(start);
     //一页20条
     if (start === 0) {
-      var pageCount = await getNum("team", null);
+      var pageCount = await getNum("team");
     }
     
     ctx.response.body ={
@@ -258,6 +259,7 @@ router.get("/team/catalog", async ctx => {
       pageCount
     }
   } catch (error) {
+    console.log(error)
     ctx.response.body = {
       msg: "搜索失败",
       code: 500
@@ -278,6 +280,7 @@ router.get("/team/person", async ctx => {
       };
     })
     .catch(err => {
+      console.log(err)
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -401,11 +404,16 @@ router.post("/team/delete", async ctx => {
 
 //获取友情链接信息目录
 router.get("/friendLinks/catalog", async ctx => {
+
+  const pageCount = await getNum('friendlinks');
+  
   await getLinkCatalog()
     .then(links => {
+
       ctx.response.body = {
         code: 200,
         links,
+        pageCount,
         msg: "获取成功"
       };
     })
@@ -502,15 +510,19 @@ router.post("/friendLinks/edit", async ctx => {
 });
 //获取意见反馈目录
 router.get("/feedback/catalog", async ctx => {
-  await getFeedBackCatalog()
-    .then(links => {
+  const start = parseInt(ctx.query.start);
+  const pageCount = await getNum('feedback');
+ await getFeedBackCatalog(start)
+    .then(feedback => {
       ctx.response.body = {
         code: 200,
-        links,
+        feedback,
+        pageCount,
         msg: "获取成功"
       };
     })
     .catch(err => {
+      console.log(err)
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -521,11 +533,11 @@ router.get("/feedback/catalog", async ctx => {
 router.get("/feedback/one", async ctx => {
   const id = ctx.query.id;
   await getFeedBackOne(id)
-    .then(data => {
-      console.log(data);
+    .then(feed => {
+      console.log(feed);
       ctx.response.body = {
         code: 200,
-        data,
+        feed : feed[0],
         msg: "获取成功"
       };
     })
