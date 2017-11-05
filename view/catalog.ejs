@@ -40,14 +40,18 @@
 
 
               <div class='side-article'>
-                    <div class="navTitle ">
-                        近期热门文章
-                    </div>
+                    <div class="top-band-title" style="display: block;">
+        
+        
+
+                <a class="no-comment-title">近期热门文章</a>
+            <em id="top-bandArrow" style="left: 145px;"></em>
+            </div>
                     <ul class="hotBox">
                     <%if(!!HotArticle){
                      for(var i =  0;i < HotArticle.length ;i++){%>
                      
-                        <li class="hot-Item">
+                        <li class="hot-item ">
                              <div class='item-img'>
                                      <%if(HotArticle[i].img !=='0'){%>
                                         <img <%=HotArticle[i].img%> class='hot-img' alt=''>
@@ -65,7 +69,7 @@
 
 
             </div>
-
+            
             <div class="boxRight">
                 <div class="part-title">
                     <%=title%>

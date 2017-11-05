@@ -64,9 +64,9 @@
                         </h1>
                         <div class="tit-info">
                             <span class="date">
-                                <%=data.time%>
+                                发布时间：<%=data.time%>
                             </span>
-                            <span class="post">作者：
+                            <span class="author">作者：
                                 <%-data.author%>
                             </span>
                             <span class="number">
@@ -85,14 +85,18 @@
                 
                 <!--热门文章-->
                 <div class='side-article column2'>
-                    <div class="navTitle ">
-                        近期热门文章
-                    </div>
+                     <div class="top-band-title" style="display: block;">
+        
+        
+
+                <a class="no-comment-title">近期热门文章</a>
+            <em id="top-bandArrow" style="left: 174px;"></em>
+            </div>
                     <ul class='hotBox'>
                         <%if(!!HotArticle){
                         for(var i =  0;i < HotArticle.length ;i++){%>
 
-                            <li class="hot-Item">
+                            <li class="hot-item ">
                                 <div class='item-img'>
                                      <%if(HotArticle[i].img !=='0'){%>
                                         <img <%=HotArticle[i].img%> class='hot-img' alt=''>

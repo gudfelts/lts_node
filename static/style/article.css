@@ -94,7 +94,8 @@
     font-size: 12px;
 }
 
-.post{
+/*作者*/
+.author{
     padding: 20px;
 }
 
@@ -124,14 +125,14 @@ article{
     width: 100%;
 }
 
-
-
 .content-main img {
     display: block;
     margin: 20px auto;
     width: 53%;
     height: auto;
 }
+
+/*点赞*/
 .parise-box{
     margin: 0 auto 50px auto;
     text-align: center;
@@ -151,7 +152,7 @@ article{
     cursor: pointer;
 
 }
-
+/*点赞动画*/
 .icon-praise-animate{
     transform-origin: 50% 50%;
     animation: parise-shake .5s ease-in-out;
@@ -202,6 +203,18 @@ article{
 #goTop:hover{
     background-color: #BEBEBE;
 }
+
+/*分享模块*/
+.left-section{
+    width: 100px;
+    position: absolute;
+    top:500px;
+    margin-left: -580px;
+    margin-top: 70px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+}
 .post_topshare .post_share{
     position: relative;
     left: -20px;
@@ -235,6 +248,7 @@ article{
     background: url('/images/sprite.png') no-repeat;
     border-radius: 4px;
 }
+/*雪碧图定位*/
 .post_topshare .post_share .share_weixin i{
     background-position: -80px -50px;
 }
@@ -254,14 +268,4 @@ article{
 }
 .hidden{
     display: none;
-}
-.left-section{
-    width: 100px;
-    position: absolute;
-    top:500px;
-    margin-left: -580px;
-    margin-top: 70px;
-    position: absolute;
-    left: 50%;
-    top: 0;
 }
