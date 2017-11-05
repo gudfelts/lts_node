@@ -59,7 +59,8 @@ router.post("/article", async ctx => {
     var { data, path } = await transCode.tranforIndex(article.content);
     article.content = data;
 
-    const id = await saveArticle(type[0], article);
+    const result = await saveArticle(type[0], article);
+    const id  = result.insertId;
     //储存banner
     if (isBanner !== "false") {
       saveBanner(type[0], article.type, id, path, article.title);
