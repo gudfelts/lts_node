@@ -15,7 +15,6 @@ module.exports = aNew => {
         img = false;
       }
     }
-    
      return  img
     
   };

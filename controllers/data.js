@@ -56,8 +56,8 @@ router.post("/article", async ctx => {
   try {
   article.img = getImg(article.content);
   article.summary = trimHtml(article.content, { preserveTags: false, limit: 30 }).html;
-
-    var { data, path } = await transCode.tranforIndex(article.content);
+   
+  var { data, path } = await transCode.tranforIndex(article.content);
     article.content = data;
 
     const result = await saveArticle(type[0], article);
