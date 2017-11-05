@@ -126,7 +126,7 @@ module.exports.updatePerson = (id, name, content, position, avatar,summary) =>qu
 module.exports.saveBanner = (sort, type, id, path,title) => {
     return new Promise((resolve, reject) => {
       try {
-          // query(SQL.deleteBanner)
+          query(SQL.deleteBanner)
     
           query(SQL.saveBanner,{ sort, type, id, path,title});
       } catch (error) {
