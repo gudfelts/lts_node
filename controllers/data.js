@@ -28,7 +28,8 @@ const {
   getLink,
   editLink,
   getFeedBackCatalog,
-  getFeedBackOne
+  getFeedBackOne,
+  setFeedBackRead
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -535,7 +536,7 @@ router.get("/feedback/one", async ctx => {
   const id = ctx.query.id;
   await getFeedBackOne(id)
     .then(feed => {
-      console.log(feed);
+      setFeedBackRead(id);
       ctx.response.body = {
         code: 200,
         feed : feed[0],

@@ -51,14 +51,14 @@ function connect() {
 
 var db;
 connect();
-let query = function(sql, options, callback) {
+// let query = function(sql, options, callback) {
   
-  db.query(sql, options, function(err, results) {
-    callback(err, results);
-  });
-};
+//   db.query(sql, options, function(err, results) {
+//     callback(err, results);
+//   });
+// };
 
-let queryTest = function(sql, options) {
+let query = function(sql, options) {
   
     return new Promise((resolve, reject) => {
       db.query(sql, options, function(err, results) {
@@ -70,4 +70,4 @@ let queryTest = function(sql, options) {
     })
    
   };
-module.exports = { query,queryTest  };
+module.exports = { query  };

@@ -1,35 +1,35 @@
 const SQL = require("../config/sql");
 const TYPE = require("config-lite")(__dirname).type;
-const queryTest = require("../db/db").queryTest;
+const query = require("../db/db").query;
 
 //储存文章
-module.exports.saveArticle = (sort, val) => queryTest(SQL.saveArticle,[sort, val]);
+module.exports.saveArticle = (sort, val) => query(SQL.saveArticle,[sort, val]);
 //修改文章
-module.exports.editArticle = (val) =>queryTest(SQL.editArticle,val);
+module.exports.editArticle = (val) =>query(SQL.editArticle,val);
 
 //删除文章
-module.exports.deleteArticle = (sort, id, type) => queryTest(SQL.deleteArticle,[sort, id, type]);
+module.exports.deleteArticle = (sort, id, type) => query(SQL.deleteArticle,[sort, id, type]);
 
 //获取单个文章
-module.exports.getArticleOne = (sort, id, type) => queryTest(SQL.getArticleOne,[sort, id, type])
+module.exports.getArticleOne = (sort, id, type) => query(SQL.getArticleOne,[sort, id, type])
 //搜索文章
-module.exports.searchArticle = (sort, title, type, start) => queryTest(SQL.searchArticle,[sort, title, type, start]);
+module.exports.searchArticle = (sort, title, type, start) => query(SQL.searchArticle,[sort, title, type, start]);
 
-module.exports.reacherPerson = (name, start) => queryTest(SQL.reacherPerson,[name, start]);
+module.exports.reacherPerson = (name, start) => query(SQL.reacherPerson,[name, start]);
 
 //搜索类，获取全部结果的条数
 module.exports.getSearchNum = async (kind, sort, title, type) => {
   let result = null;
   switch (kind) {
     case "article":
-      result = await queryTest(SQL.getReacherNumArticle, [
+      result = await query(SQL.getReacherNumArticle, [
         sort,
         title,
         type
       ]);
       break;
     case "person":
-      result = await queryTest(SQL.getReacherNumPerson, [sort]);
+      result = await query(SQL.getReacherNumPerson, [sort]);
       break;
   }
  
@@ -39,7 +39,7 @@ module.exports.getSearchNum = async (kind, sort, title, type) => {
 module.exports.getCatalog = async (sort, type, start) => {
   
   if(sort == 'researchdir'){
-    let data = await queryTest(SQL.getCatalog,[sort, type, start]).catch(e => {
+    let data = await query(SQL.getCatalog,[sort, type, start]).catch(e => {
       throw e;
     });
     return { data, code: 200,sort :'researchdir',type : 0};
@@ -47,7 +47,7 @@ module.exports.getCatalog = async (sort, type, start) => {
   else{
     let title = TYPE[sort][type - 1];
     
-      let data = await queryTest(SQL.getCatalog,[sort, type, start]).catch(e => {
+      let data = await query(SQL.getCatalog,[sort, type, start]).catch(e => {
         throw e;
       });
     
@@ -57,7 +57,7 @@ module.exports.getCatalog = async (sort, type, start) => {
 };
 //获取近期热门文章
 module.exports.getHotArticle = async sort => {
-  let result = await queryTest(SQL.getHotArticle,sort);
+  let result = await query(SQL.getHotArticle,sort);
   return result.splice(15);
 };
 
@@ -65,26 +65,26 @@ module.exports.getHotArticle = async sort => {
 module.exports.getIndex = (sort, val) => {
   switch (sort) {
     case "information":
-      return queryTest(SQL.getIndexInfo, val);
+      return query(SQL.getIndexInfo, val);
       break;
     case "research":
-      return queryTest(SQL.getIndexResearch, val);
+      return query(SQL.getIndexResearch, val);
       break;
     case "exchange":
-      return queryTest(SQL.getIndexExchange, val);
+      return query(SQL.getIndexExchange, val);
       break;
     case "train":
-      return queryTest(SQL.getIndexTrain, val);
+      return query(SQL.getIndexTrain, val);
       break;
     case "construction":
-      return queryTest(SQL.getIndexConstruction, val);
+      return query(SQL.getIndexConstruction, val);
       break;
   }
 };
 
 module.exports.getAllNum = async (sort) => {
  
-    result = await queryTest(SQL.getAllNum,sort);
+    result = await query(SQL.getAllNum,sort);
   
   return result[0]["count(1)"];
 };
@@ -92,10 +92,10 @@ module.exports.getAllNum = async (sort) => {
 module.exports.getNum = async (sort,type = false) => {
   let result = null;
   if(type === false){
-      result = await queryTest(SQL.getNumNoTYPE,sort);
+      result = await query(SQL.getNumNoTYPE,sort);
   }
   else{
-      result = await queryTest(SQL.getNum,[sort,type]);
+      result = await query(SQL.getNum,[sort,type]);
   }
 
 
@@ -104,31 +104,31 @@ module.exports.getNum = async (sort,type = false) => {
 
 //点赞
 module.exports.addPraise = async (sort, id) => {
-  result = await queryTest(SQL.addPraise,[sort, id]);
+  result = await query(SQL.addPraise,[sort, id]);
 };
 
 //增加浏览数
-module.exports.addBrowse = (sort, id, type) => queryTest(SQL.addBrowse,[sort, id, type]);
+module.exports.addBrowse = (sort, id, type) => query(SQL.addBrowse,[sort, id, type]);
 
 
 
 
 
 //专家团队
-module.exports.getTeam = start => queryTest(SQL.getTeam,start);
-module.exports.saveTeam = value => queryTest(SQL.saveTeam,value);
-module.exports.getPerson = id => queryTest(SQL.getPerson,id);
-module.exports.getTeamoOther = id => queryTest(SQL.getTeamoOther,id);
-module.exports.deletePerson = id => queryTest(SQL.deletePerson,id);
-module.exports.updatePerson = (id, name, content, position, avatar,summary) =>queryTest(SQL.updatePerson,[name, position, content, avatar,summary, id]);
+module.exports.getTeam = start => query(SQL.getTeam,start);
+module.exports.saveTeam = value => query(SQL.saveTeam,value);
+module.exports.getPerson = id => query(SQL.getPerson,id);
+module.exports.getTeamoOther = id => query(SQL.getTeamoOther,id);
+module.exports.deletePerson = id => query(SQL.deletePerson,id);
+module.exports.updatePerson = (id, name, content, position, avatar,summary) =>query(SQL.updatePerson,[name, position, content, avatar,summary, id]);
 
 //存放banner
 module.exports.saveBanner = (sort, type, id, path,title) => {
     return new Promise((resolve, reject) => {
       try {
-          // queryTest(SQL.deleteBanner)
+          // query(SQL.deleteBanner)
     
-          queryTest(SQL.saveBanner,{ sort, type, id, path,title});
+          query(SQL.saveBanner,{ sort, type, id, path,title});
       } catch (error) {
         reject(error)
       }
@@ -138,29 +138,30 @@ module.exports.saveBanner = (sort, type, id, path,title) => {
 
 };
 //获取banner
-module.exports.getBanner =  () => queryTest(SQL.getBanner);
-module.exports.deleteBannerById =  (val) => queryTest(SQL.deleteBannerById,val);
+module.exports.getBanner =  () => query(SQL.getBanner);
+module.exports.deleteBannerById =  (val) => query(SQL.deleteBannerById,val);
 //增加链接
-module.exports.addLink =  (val) => queryTest(SQL.addLink,val);
+module.exports.addLink =  (val) => query(SQL.addLink,val);
 //获取链接
-module.exports.getLinkCatalog = () => queryTest(SQL.getLinkCatalog);
-module.exports.getLink =  (id) => queryTest(SQL.getLink,id);
-module.exports.editLink =  (name,link,id) => queryTest(SQL.editLink,[name,link,id]);
+module.exports.getLinkCatalog = () => query(SQL.getLinkCatalog);
+module.exports.getLink =  (id) => query(SQL.getLink,id);
+module.exports.editLink =  (name,link,id) => query(SQL.editLink,[name,link,id]);
 //删除链接
-module.exports.deleteLink = (id) => queryTest(SQL.deleteLink,id);
+module.exports.deleteLink = (id) => query(SQL.deleteLink,id);
 
 //后台用户
-module.exports.getUser = (account) => queryTest(SQL.getUser,account);
-module.exports.updateUser = (pass) => queryTest(SQL.changePassword,pass);
-module.exports.updateUserTime = (pass) => queryTest(SQL.changePassword,pass);
+module.exports.getUser = (account) => query(SQL.getUser,account);
+module.exports.updateUser = (pass) => query(SQL.changePassword,pass);
+module.exports.updateUserTime = (pass) => query(SQL.changePassword,pass);
 
 
 //意见反馈
-module.exports.saveFeedBack = (val) => queryTest(SQL.saveFeedBack,val);
-module.exports.getFeedBackCatalog = (start) => queryTest(SQL.getFeedBackCatalog,start);
+module.exports.saveFeedBack = (val) => query(SQL.saveFeedBack,val);
+module.exports.getFeedBackCatalog = (start) => query(SQL.getFeedBackCatalog,start);
+module.exports.setFeedBackRead = (id) => query(SQL.setFeedBackRead,id);
 module.exports.getFeedBackOne  = (id) => {
 
-  queryTest(SQL.setFeedBackRead,id);
-  return queryTest(SQL.getFeedBackOne,id);
+  query(SQL.setFeedBackRead,id);
+  return query(SQL.getFeedBackOne,id);
 }
 
