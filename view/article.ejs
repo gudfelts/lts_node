@@ -93,9 +93,17 @@
                         for(var i =  0;i < HotArticle.length ;i++){%>
 
                             <li class="hot-Item">
-                                <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
+                                <div class='item-img'>
+                                     <%if(HotArticle[i].img !=='0'){%>
+                                        <img <%=HotArticle[i].img%> class='hot-img' alt=''>
+                                  <%}%>
+                                </div>
+                                 <div class='item-content'>
+                                    <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
                                     <%=HotArticle[i].title %>
                                 </a>
+                                 </div>
+                                
                             </li>
                         <%}}%>
                     </ul>

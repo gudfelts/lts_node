@@ -12,7 +12,7 @@ module.exports = {
         getIndexConstruction: "select title,id,type from construction order by id desc limit ?,?",
         
         //热门文章
-        getHotArticle: "select title,id,type from(select title,id,type,browse from ?? order by id desc limit 20) as total order by browse",
+        getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from ?? order by id desc limit 20) as total order by browse",
     
         //获取管理员信息
         getUser: "select * from admin where account = ?",

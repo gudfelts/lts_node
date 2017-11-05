@@ -1,5 +1,5 @@
 .container-types{
-    width: 1200px;
+    width: 1400px;
     position: relative;
 }
 
@@ -11,7 +11,7 @@
 }
 
 .right-section{
-    width:20%;
+    width:26%;
 }
 .column1,.column2 {
     margin-top: 10px;
@@ -68,8 +68,8 @@
     padding: 30px;
     background: #FFFFFF;
     float: left;
-    width: 65%;
-    margin-left: 150px;
+    width: 55%;
+    margin-left: 200px;
 }
 
 .content-title {
@@ -204,9 +204,10 @@ article{
 }
 .post_topshare .post_share{
     position: relative;
+    left: -20px;
 }
 .js_qrcode_wrap{
-    width: 120px;
+    width: 100px;
     height: 180px;
     padding: 20px 20px 0;
     position: absolute;
@@ -255,7 +256,7 @@ article{
     display: none;
 }
 .left-section{
-    width: 150px;
+    width: 100px;
     position: absolute;
     top:500px;
     margin-left: -580px;

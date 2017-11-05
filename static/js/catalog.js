@@ -3,36 +3,33 @@ function render(data, sort) {
   $detailBox.html("");
   var aLi = [];
   for (var i = 0; i < data.length; i++) {
-    var html =
-      '<a href="' +
-      "/showArticle/article?id=" +
-      data[i].id +
-      "&type=" +
-      data[i].type +
-      "&sort=" +
-      sort +
-      '"><h3 class="new-title">' +
-      data[i].title +
-      "</h3></a>";
-     
+    let href = '/showArticle/article?id=' +data[i].id +'&type=' +data[i].type +'&sort=' +sort;
+
+    let title =$('<a></a>').attr('href',href).append('<h3 class="new-title">' +data[i].title +'</h3>')
+    let oDiv = $('<div class="new-box"></div>');
     if (data[i].img !== "0") {
-      html +=
-        "<div class='new-box'><img " +
-        data[i].img +
-        " class='new-img'><div class='new-content'> <a class='new-content-summary' href='/showArticle/article?id=' "+data[i].id +"&type=" +data[i].type +"&sort="+sort +">"+data[i].summary+"</a></a><div class='new-content-data'>";
+
+      let img = $('<img class="new-img" alt="" '+data[i].img+'>');
+      let summary = $('<a class="new-content-summary"></a>').attr('href',href).html(data[i].summary);
+      let content = $('<div class="new-content"></div>').append(summary);
+
+      oDiv.append(img,content);
     } else {
-      html +=
-        "<div class='new-content-other'><a>"+data[i].summary+"</a><div class='new-content-data-other'>";
+      
+      let summary = $('<a class="new-content-summary"></a>').attr('href',href).html(data[i].summary);
+      let content = $('<div class="new-content-other"></div>').append(summary);
+      oDiv.append(content);
+      
     }
-    html +=
-      "<span class='data-time'>" +
+    oDiv.append(
+      "<div class='new-content-data'><span class='data-time'>" +
       data[i].time +
       "</span><span class='data-browse'>" +
       data[i].browse +
       "</span><span class='data-praise'>" +
       data[i].praise +
-      "</span></div></div>";
-    var oLi = $("<li></li>").html(html);
+      "</span></div>");
+    var oLi = $("<li></li>").append(title,oDiv);
     aLi.push(oLi);
   }
   $detailBox.append(aLi);

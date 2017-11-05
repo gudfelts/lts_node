@@ -48,8 +48,16 @@
                      for(var i =  0;i < HotArticle.length ;i++){%>
                      
                         <li class="hot-Item">
-                            <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'><%=HotArticle[i].title %></a>
-                        </li>
+                             <div class='item-img'>
+                                     <%if(HotArticle[i].img !=='0'){%>
+                                        <img <%=HotArticle[i].img%> class='hot-img' alt=''>
+                                  <%}%>
+                                </div>
+                                 <div class='item-content'>
+                                    <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
+                                    <%=HotArticle[i].title %>
+                                </a>
+                                 </div>     </li>
                         <%}}%>
                     
                     </ul>
@@ -79,26 +87,25 @@
                             <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><h3 class='new-title'><%=data[i].title %></h3></a>
                             <div class='new-box'>
                                 <%if(data[i].img !=='0'){%>
-                                    <img <%=data[i].img%> class='new-img'>
+                                <img <%=data[i].img%> class='new-img' alt=''>
                               
                                 <div class='new-content'>
                                     <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
                                     <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
                                     </a>
-
-                                    <div class='new-content-data'><span class='data-time'><%=data[i].time%></span><span class='data-browse'><%=data[i].browse%></span><span class='data-praise'><%=data[i].praise%></span></div>
                                 </div>
+                                
                                 <%}else{%>
                                      <div class='new-content-other'>
                                          <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
                                     <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
                                     </a>
-                                    <div class='new-content-data-other'>
-                                        <span class='data-time'><%=data[i].time%></span ><span class='data-browse'><%=data[i].browse%></span><span class='data-praise'><%=data[i].praise%></span></div>
-                                    </div>
+                                   </div>
                                 <%}%>
+                                    <div class='new-content-data'><span class='data-time'><%=data[i].time%></span><span class='data-browse'><%=data[i].browse%></span><span class='data-praise'><%=data[i].praise%></span></div>
+                                
                             </div>
                         </li>
                        <%}%> 
