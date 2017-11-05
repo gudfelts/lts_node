@@ -175,10 +175,11 @@ router.post("/editarticle", async ctx => {
   time = article.time;
   source = article.source;
   author = article.author;
-
+  img = getImg(content);
+  
   try {
     var { data, path } = await transCode.tranforIndex(content);
-    await editArticle([sort, title, author, source, time, content, id, type]);
+    await editArticle([sort, title, author, source, time, content,img, id, type]);
     //储存banner
     if (isBanner === "true") {
       saveBanner(sort, type, id, path, title);
