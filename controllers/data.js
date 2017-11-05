@@ -234,7 +234,7 @@ router.get("/catalog", async (ctx, next) => {
       ctx.response.body = result;
     });
   } catch (error) {
-    console.log("err");
+    console.log(error);
     ctx.response.body = {
       code: 201,
       msg: "搜索出现错误"
