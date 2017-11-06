@@ -57,7 +57,7 @@ router.post("/article", async ctx => {
   article.img = getImg(article.content);
   article.summary = trimHtml(article.content, { preserveTags: false, limit: 30 }).html;
    
-  var { data, path } = await transCode.tranforIndex(article.content);
+  var { data, path } = await transCode.tranforBase64(article.content);
     article.content = data;
 
     const result = await saveArticle(type[0], article);
@@ -181,7 +181,7 @@ router.post("/editarticle", async ctx => {
   img = getImg(content);
   
   try {
-    var { data, path } = await transCode.tranforIndex(content);
+    var { data, path } = await transCode.tranforBase64(content);
     await editArticle([sort, title, author, source, time, content,img, id, type]);
     //储存banner
     if (isBanner === "true") {
@@ -314,6 +314,9 @@ router.post("/team/person", async ctx => {
   let data = ctx.request.body;
   let { name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
+
+  let result = await transCode.tranforBase64(content);
+  content = result.data;
   await saveTeam({ name, content, position, avatar, summary })
     .then(result => {
       ctx.response.body = {
@@ -337,7 +340,9 @@ router.post("/team/edit", async ctx => {
   let data = ctx.request.body;
   let { id, name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
-
+  
+  let result = await transCode.tranforBase64(content);
+  content = result.data;
   id = parseInt(id);
   
   await updatePerson(id, name, content, position, avatar, summary)

@@ -98,7 +98,7 @@ router.get('/introduction/team/catalog',async ctx=>{
   let result ={};
    result.person= await getTeam(start);
   if (start === 0) {
-    let pageCount = await getNum('team',null);
+    let pageCount = await getNum('team');
     //一页20条
     if (pageCount % 20 > 0) {
       pageCount = parseInt(pageCount / 20) + 1;

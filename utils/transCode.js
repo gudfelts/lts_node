@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports.tranforIndex = async data => {
+module.exports.tranforBase64 = async data => {
 
 
   const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
@@ -25,9 +25,6 @@ module.exports.tranforIndex = async data => {
     IMG = data.match(patt3)[1];
     
   }
-
-  console.log(IMG);
-  
 
   return { data, path: IMG };
 };
