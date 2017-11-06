@@ -8,14 +8,14 @@ router.post('/login', async ctx => {
   if (requestData.password && requestData.account) {
     const account = [];
     account.push(requestData.account);
-    let user = await getUser(account).catch(err => {
+    let result = await getUser(account).catch(err => {
       ctx.throw(500, "服务器内部错误-查找admin错误！");
     });
-
+    let user = result[0];
     if (user && user.password === requestData.password) {
       ctx.session.user = user;
       ctx.session.isLogin = true;
-      updateUserTime([requestData.time,acount])
+      // updateUserTime([requestData.time,requestData.account])
       ctx.response.body = {
         code: 200,
         time : user.time,
