@@ -152,7 +152,7 @@ module.exports.deleteLink = (id) => query(SQL.deleteLink,id);
 //后台用户
 module.exports.getUser = (account) => query(SQL.getUser,account);
 module.exports.updateUser = (pass) => query(SQL.changePassword,pass);
-module.exports.updateUserTime = (pass) => query(SQL.changePassword,pass);
+module.exports.updateUserTime = (val) => query(SQL.updateUserTime,val);
 
 
 //意见反馈

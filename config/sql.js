@@ -18,7 +18,7 @@ module.exports = {
         getUser: "select * from admin where account = ?",
         //更新密码
         changePassword: "update admin set password = ?",
-    
+        updateUserTime:'update admin set time = ? where account = ?',
         //点赞
         addPraise: "update ?? set praise = praise + 1 where id = ?",
         

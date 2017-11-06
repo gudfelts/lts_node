@@ -60,7 +60,7 @@ router.post("/article", async ctx => {
 
     var { data, path } = await transCode.tranforBase64(article.content);
     article.content = data;
-
+    article.img = path;
     const result = await saveArticle(type[0], article);
     const id = result.insertId;
     //储存banner

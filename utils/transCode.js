@@ -7,7 +7,10 @@ module.exports.tranforBase64 = async data => {
   const patt2 = /data:image\/(jpeg|png|gif);base64,/;
   const patt3 = /<img [^>]*src=['"]([^'"]+)[^>]*>/;
   let IMG = false;
+  
   if(patt2.test(data)){
+
+  
     data = await data.replace(patt1, function(match, capture) {
       const path = "/images/article/" + Date.now() + ".png";
       //去掉图片base64码前面部分data:image/png;base64
@@ -18,13 +21,13 @@ module.exports.tranforBase64 = async data => {
           throw "图片上传失败";
         }
       });
-      IMG || (IMG = path);
+      IMG || (IMG = `src="${path}"`);
       return `<img src="${path}">`;
     });
   }else if(patt3.test(data)){
     IMG = data.match(patt3)[1];
     
   }
-
+  console.log(IMG)
   return { data, path: IMG };
 };
