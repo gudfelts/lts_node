@@ -123,10 +123,10 @@ module.exports.deletePerson = id => query(SQL.deletePerson,id);
 module.exports.updatePerson = (id, name, content, position, avatar,summary) =>query(SQL.updatePerson,[name, position, content, avatar,summary, id]);
 
 //存放banner
-module.exports.saveBanner = (sort, type, id, path,title) => {
+module.exports.saveBanner = (sort, type, id, path,title,flag = false) => {
     return new Promise((resolve, reject) => {
       try {
-          query(SQL.deleteBanner)
+         flag  ||query(SQL.deleteBanner)
     
           query(SQL.saveBanner,{ sort, type, id, path,title});
       } catch (error) {

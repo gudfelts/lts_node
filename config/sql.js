@@ -61,7 +61,7 @@ module.exports = {
         //获取特定资讯
         getArticleOne: "select * from ?? where id = ? and type = ? limit 1",
         //获取目录
-        getCatalog: "select  title,id,type,author,time,img,browse,praise,summary from ?? where type = ? order by id desc  limit ?,10",
+        getCatalog: "select  title,id,type,author,time,img,browse,praise,summary,isbanner from ?? where type = ? order by id desc  limit ?,10",
         
         //获取总条数
         getNum: "select count(1) from ?? where type = ?",
@@ -70,7 +70,7 @@ module.exports = {
         //获取总条数
         getNumNoTYPE: "select count(1) from ??",
         //更新内容
-        editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? where id = ? and type = ?",
+        editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,isbanner = ? where id = ? and type = ?",
         //查找文章
         searchArticle : 'select title,author,id,type,img,browse,praise,summary from ?? where title like ? and type = ? order by id desc limit ?,15',
         //查找文章

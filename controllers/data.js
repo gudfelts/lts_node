@@ -45,26 +45,27 @@ router.post("/article", async ctx => {
   let article = ctx.request.body;
 
   const type = article.selectedOptions;
-  const isBanner = article.isBanner;
-
+  const isbanner = parseInt(article.isbanner);
   delete article.selectedOptions;
-  delete article.isBanner;
   article.type = type[1];
   article.praise = 0;
   article.browse = 0;
   article.time = article.time.replace(/T.*$/, "");
   try {
-  article.img = getImg(article.content);
-  article.summary = trimHtml(article.content, { preserveTags: false, limit: 30 }).html;
-   
-  var { data, path } = await transCode.tranforBase64(article.content);
+    article.img = getImg(article.content);
+    article.summary = trimHtml(article.content, {
+      preserveTags: false,
+      limit: 30
+    }).html;
+
+    var { data, path } = await transCode.tranforBase64(article.content);
     article.content = data;
 
     const result = await saveArticle(type[0], article);
-    const id  = result.insertId;
+    const id = result.insertId;
     //储存banner
-    if (isBanner !== "false") {
-      saveBanner(type[0], article.type, id, path, article.title);
+    if (isbanner === 1) {
+      saveBanner(type[0], article.type, id, path, article.title,false);
     }
 
     ctx.response.body = {
@@ -88,6 +89,9 @@ router.post("/deletearticle", async (ctx, next) => {
   for (let i = 0, len = data.length; i < len; i++) {
     const id = data[i].id,
       type = data[i].type;
+    if (data[i].isbanner) {
+      deleteBannerById([id, sort]);
+    }
     await deleteArticle(sort, id, type)
       .then(() => {
         if (i === len - 1) {
@@ -113,18 +117,10 @@ router.get("/article", async ctx => {
     type = ctx.query.type;
 
   //获取当前banner
-  const banner = await getBanner();
   await getArticleOne(sort, id, type)
     .then(data => {
       data[0].sort = sort;
-      let result = banner.filter(item => {
-        if (data[0].id == item.id && data[0].sort == item.sort) {
-          return 1;
-        }
-      });
-      result.length > 0
-        ? (data[0].isBanner = true)
-        : (data[0].isBanner = false);
+
       ctx.response.body = {
         code: 200,
         data: data[0],
@@ -157,7 +153,7 @@ router.get("/searchArticle", async (ctx, next) => {
         code: 200
       };
     })
-    .catch((e) => {
+    .catch(e => {
       throw e;
       ctx.response.body = {
         code: 500,
@@ -172,34 +168,44 @@ router.post("/editarticle", async ctx => {
   const id = parseInt(article.id),
     sort = article.selectedOptions[0],
     type = parseInt(article.selectedOptions[1]);
-  isBanner = article.isBanner;
+  isbanner = parseInt(article.isbanner);
   content = article.content;
   title = article.title;
   time = article.time;
   source = article.source;
   author = article.author;
   img = getImg(content);
-  
   try {
     var { data, path } = await transCode.tranforBase64(content);
-    await editArticle([sort, title, author, source, time, content,img, id, type]);
+    await editArticle([
+      sort,
+      title,
+      author,
+      source,
+      time,
+      content,
+      img,
+      isbanner,
+      id,
+      type
+    ]);
+    //true表示之前是轮播图，false表示之前不是轮播图
+    let flag = true;
+    //检测他之前是否是轮播图
+    let banner = await getBanner();
+    let result = banner.filter(item => {
+      if (id == item.id && sort == item.sort) {
+        return 1;
+      }
+    });
+    //之前是轮播图，则删掉之前的数据
+    if (result.length > 0) {
+      deleteBannerById([id, sort]);
+      flag = false;
+    }
     //储存banner
-    if (isBanner === "true") {
-      saveBanner(sort, type, id, path, title);
-    } else {
-      //如果是false，应该检测他之前是否是轮播图
-      getBanner().then(banner=>{
-        let result = banner.filter(item => {
-          if (id == item.id && sort == item.sort) {
-            return 1;
-          }
-        });
-
-        if( result.length > 0){
-          deleteBannerById([id,sort])
-        }
-      });
-     
+    if (isbanner === 1) {
+      saveBanner(sort, type, id, path, title,flag);
     }
 
     ctx.response.body = {
@@ -248,20 +254,20 @@ router.get("/team/catalog", async ctx => {
   let start = parseInt(ctx.query.start) || 0;
 
   try {
-    let person= await getTeam(start);
+    let person = await getTeam(start);
     //一页20条
     if (start === 0) {
       var pageCount = await getNum("team");
     }
-    
-    ctx.response.body ={
-      code : 200,
-      msg  :'获取成功',
+
+    ctx.response.body = {
+      code: 200,
+      msg: "获取成功",
       person,
       pageCount
-    }
+    };
   } catch (error) {
-    console.log(error)
+    console.log(error);
     ctx.response.body = {
       msg: "搜索失败",
       code: 500
@@ -282,7 +288,7 @@ router.get("/team/person", async ctx => {
       };
     })
     .catch(err => {
-      console.log(err)
+      console.log(err);
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -340,11 +346,11 @@ router.post("/team/edit", async ctx => {
   let data = ctx.request.body;
   let { id, name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
-  
+
   let result = await transCode.tranforBase64(content);
   content = result.data;
   id = parseInt(id);
-  
+
   await updatePerson(id, name, content, position, avatar, summary)
     .then(result => {
       ctx.response.body = {
@@ -411,12 +417,10 @@ router.post("/team/delete", async ctx => {
 
 //获取友情链接信息目录
 router.get("/friendLinks/catalog", async ctx => {
+  const pageCount = await getNum("friendlinks");
 
-  const pageCount = await getNum('friendlinks');
-  
   await getLinkCatalog()
     .then(links => {
-
       ctx.response.body = {
         code: 200,
         links,
@@ -518,8 +522,8 @@ router.post("/friendLinks/edit", async ctx => {
 //获取意见反馈目录
 router.get("/feedback/catalog", async ctx => {
   const start = parseInt(ctx.query.start);
-  const pageCount = await getNum('feedback');
- await getFeedBackCatalog(start)
+  const pageCount = await getNum("feedback");
+  await getFeedBackCatalog(start)
     .then(feedback => {
       ctx.response.body = {
         code: 200,
@@ -529,7 +533,7 @@ router.get("/feedback/catalog", async ctx => {
       };
     })
     .catch(err => {
-      console.log(err)
+      console.log(err);
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -544,7 +548,7 @@ router.get("/feedback/one", async ctx => {
       setFeedBackRead(id);
       ctx.response.body = {
         code: 200,
-        feed : feed[0],
+        feed: feed[0],
         msg: "获取成功"
       };
     })
