@@ -12,6 +12,7 @@ router.post('/login', async ctx => {
       ctx.throw(500, "服务器内部错误-查找admin错误！");
     });
     let user = result[0];
+    
     if (user && user.password === requestData.password) {
       ctx.session.user = user;
       ctx.session.isLogin = true;
