@@ -41,6 +41,7 @@ router.get("/showArticle/catalog", async ctx => {
   }
   
   result.data.pageCount = pageCount;
+  result.data.pageCount = pageCount;
   result.type = parseInt(type);
   result.HotArticle = HotArticle;
   await ctx.render("catalog", result);

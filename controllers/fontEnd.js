@@ -16,6 +16,7 @@ router.get("/next", async ctx => {
 
   await getCatalog(sort, type, start)
     .then(result => {
+      result.code = 200;
       ctx.response.body = result;
     })
     .catch(err => {

@@ -38,7 +38,7 @@ function pagination() {
   var pageCount = $(".M-box").attr("data-page");
   var sort = $(".M-box").attr("data-sort");
   var type = $(".M-box").attr("data-type");
-  console.log(pageCount);
+
   $(".M-box").pagination({
     coping: true,
     homePage: "首页",
@@ -48,21 +48,46 @@ function pagination() {
     pageCount: pageCount,
     jump: true,
     callback: function(api) {
-      (start = (api.getCurrent() - 1) * 9 + api.getCurrent() - 1),
+    var isSearch = $(".M-box").attr("search-type");
+    var start = (api.getCurrent() - 1) * 9 + api.getCurrent() - 1;
+    console.log(!!isSearch,typeof isSearch)
+    var url = '';
+      if(isSearch === '1'){
+
+        var value = $(".search-input").attr('search-value');
+  
+        url =  "/OperationData/searchArticle?value=" +
+        value +
+        "&type=" +
+        type +
+        "&sort=" +
+        sort +
+        "&start=" +
+        start
+      }else{
+        url =  "/OperationData/next?start=" +
+        start +
+        "&type=" +
+        type +
+        "&sort=" +
+        sort
+      }
+
+      console.log()
         $.ajax({
           type: "get",
           dataType: "json",
-          url:
-            "/OperationData/next?start=" +
-            start +
-            "&type=" +
-            type +
-            "&sort=" +
-            sort, //提交到一般处理程序请求数据
+          url:url, //提交到一般处理程序请求数据
 
           success: function(result) {
             //后台服务返回数据，重新加载数据
-            render(result.data, result.sort);
+            console.log(result)
+            if (result.code === 200) {
+              render(result.data, result.sort);
+              $('html,body').animate({ scrollTop: 0 }, 700);  
+            } else {
+              alert(result.msg);
+            }
           }
         });
     }
@@ -72,11 +97,15 @@ function search() {
   var sort = $(".M-box").attr("data-sort");
   var type = $(".M-box").attr("data-type");
   var value = $(".search-input").val();
+
+  //标志分页为搜索
+  $(".M-box").attr("search-type",'1');
+  
   if (value === "") {
     alert("请输入搜索内容");
     return;
   }
-
+  $(".search-input").attr('search-value',value);
   $.ajax({
     type: "get",
     dataType: "json",
