@@ -84,7 +84,9 @@ module.exports = {
         editLink : 'update  friendlinks set name = ?,link = ? where id = ?',
 
         saveFeedBack : 'insert into feedback set ?',
-        getFeedBackCatalog : 'select id,time,title from feedback limit ?,20',
+        getFeedBackCatalog : 'select id,time,title,isread from feedback limit ?,20',
         getFeedBackOne : 'select * from feedback where id = ? limit 1',
         setFeedBackRead : 'update  feedback set isread = 1 where id = ?',
+        deleteFeedBack : 'delete from feedback where id = ? limit 1',
+        
 }

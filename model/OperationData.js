@@ -98,7 +98,6 @@ module.exports.getNum = async (sort,type = false) => {
       result = await query(SQL.getNum,[sort,type]);
   }
 
-
   return result[0]["count(1)"];
 };
 
@@ -106,13 +105,8 @@ module.exports.getNum = async (sort,type = false) => {
 module.exports.addPraise = async (sort, id) => {
   result = await query(SQL.addPraise,[sort, id]);
 };
-
 //增加浏览数
 module.exports.addBrowse = (sort, id, type) => query(SQL.addBrowse,[sort, id, type]);
-
-
-
-
 
 //专家团队
 module.exports.getTeam = start => query(SQL.getTeam,start);
@@ -159,6 +153,7 @@ module.exports.updateUserTime = (val) => query(SQL.updateUserTime,val);
 module.exports.saveFeedBack = (val) => query(SQL.saveFeedBack,val);
 module.exports.getFeedBackCatalog = (start) => query(SQL.getFeedBackCatalog,start);
 module.exports.setFeedBackRead = (id) => query(SQL.setFeedBackRead,id);
+module.exports.deleteFeedBack = (id) => query(SQL.deleteFeedBack,id);
 module.exports.getFeedBackOne  = (id) => {
 
   query(SQL.setFeedBackRead,id);

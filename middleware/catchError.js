@@ -15,6 +15,7 @@ const catchError = async (ctx, next) => {
     let message = err.message || "服务器错误";
     const status = err.status || 500;
     ms = new Date() - start;
+    console.log(err)
     logUtil.logError(ctx, err, ms); // 记录异常日志
     ctx.status = status;
     if (status === 404) {

@@ -29,7 +29,8 @@ const {
   editLink,
   getFeedBackCatalog,
   getFeedBackOne,
-  setFeedBackRead
+  setFeedBackRead,
+  deleteFeedBack
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -558,5 +559,28 @@ router.get("/feedback/one", async ctx => {
         msg: "获取失败"
       };
     });
+});
+//删除意见反馈
+router.post("/feedback/delete", async ctx => {
+  let data = ctx.request.body.feed;
+  console.log(data);
+  for (let i = 0, len = data.length; i < len; i++) {
+    const id = parseInt(data[i].id);
+    await deleteFeedBack(id)
+      .then(() => {
+        if (i === len - 1) {
+          ctx.response.body = {
+            code: 200,
+            msg: "删除成功"
+          };
+        }
+      })
+      .catch(e => {
+        ctx.response.body = {
+          code: 500,
+          msg: "删除失败"
+        };
+      });
+  }
 });
 module.exports = router;

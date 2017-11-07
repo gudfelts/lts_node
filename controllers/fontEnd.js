@@ -24,7 +24,8 @@ router.get("/next", async ctx => {
         code: 500,
         msg: "服务器内部错误-分页查找错误!"
       };
-      ctx.throw(500, "服务器内部错误-分页查找错误!");
+      ctx.throw({errno:500,cdoe : "服务器内部错误-分页查找错误!"});
+      ctx.status = 500
     });
 });
 //点赞
