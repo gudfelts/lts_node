@@ -16,10 +16,11 @@ router.post('/login', async ctx => {
     if (user && user.password === requestData.password) {
       ctx.session.user = user;
       ctx.session.isLogin = true;
-      updateUserTime([requestData.time,requestData.account])
+      updateUserTime([requestData.loginTime,requestData.loginSite,requestData.account])
       ctx.response.body = {
         code: 200,
-        time : user.time,
+        loginTime : user.loginTime,
+        loginSite : user.loginSite,
         msg: "登录成功",
       };
       return;
