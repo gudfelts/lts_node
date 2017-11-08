@@ -20,6 +20,8 @@ const {
   saveBanner,
   getBanner,
   deleteBannerById,
+  changeBanner,
+  updateBanner,
   searchArticle,
   getSearchNum,
   getLinkCatalog,
@@ -50,7 +52,7 @@ router.post("/article", async ctx => {
   delete article.selectedOptions;
   article.type = type[1];
   article.praise = 0;
-  article.browse = 0;
+  article.browse = 1;
   article.time = article.time.replace(/T.*$/, "");
   try {
     article.img = getImg(article.content);
@@ -66,7 +68,14 @@ router.post("/article", async ctx => {
     const id = result.insertId;
     //储存banner
     if (isbanner === 1) {
-      saveBanner(type[0], article.type, id, path, article.title,false);
+      let banner = await getBanner();
+      if(banner.length === 5){
+
+        saveBanner(type[0], article.type, id, path, article.title,false);
+      }else{
+        saveBanner(type[0], article.type, id, path, article.title,true);
+        
+      }
     }
 
     ctx.response.body = {
@@ -91,8 +100,36 @@ router.post("/deletearticle", async (ctx, next) => {
     const id = data[i].id,
       type = data[i].type;
     if (data[i].isbanner) {
-      deleteBannerById([id, sort]);
+
+        let banner = await getBanner();
+        console.log(banner.length)
+        if(banner.length === 3){
+          if(len > 1){
+            console.log("1")
+            
+            ctx.response.body = {
+              code: 500,
+              msg: "删除失败，第"+(i+1)+"篇文章为轮播图，目前轮播图少于四个"
+            };
+            return ;
+          }else{
+            console.log("2")
+            ctx.response.body = {
+              code: 500,
+              msg: "删除失败，目前轮播图少于四个"
+            };
+            return;
+          }
+          
+        }else{
+        
+          deleteBannerById([id, sort]);
+      
+        }
+      
     }
+    console.log("3")
+    
     await deleteArticle(sort, id, type)
       .then(() => {
         if (i === len - 1) {
@@ -165,12 +202,10 @@ router.get("/searchArticle", async (ctx, next) => {
 //修改文章
 router.post("/editarticle", async ctx => {
   let article = ctx.request.body;
-
   const id = parseInt(article.id),
     sort = article.selectedOptions[0],
     type = parseInt(article.selectedOptions[1]);
 
-    console.log(type)
   isbanner = parseInt(article.isbanner);
   content = article.content;
   title = article.title;
@@ -178,7 +213,6 @@ router.post("/editarticle", async ctx => {
   source = article.source;
   author = article.author;
   img = getImg(content);
-  try {
     var { data, path } = await transCode.tranforBase64(content);
     await editArticle([
       sort,
@@ -188,9 +222,9 @@ router.post("/editarticle", async ctx => {
       time,
       content,
       img,
-      isbanner,
-      id,
-      type
+
+      type,
+      id
     ]);
     //true表示之前是轮播图，false表示之前不是轮播图
     let flag = true;
@@ -201,30 +235,69 @@ router.post("/editarticle", async ctx => {
         return 1;
       }
     });
-    //之前是轮播图，则删掉之前的数据
-    if (result.length > 0) {
-      deleteBannerById([id, sort]);
-      flag = false;
-    }
-    //储存banner
-    if (isbanner === 1) {
-      saveBanner(sort, type, id, path, title,flag);
-    }
+    console.log(banner)
+    console.log(banner.length)
+    
+    //之前是轮播图
+    if(result.length > 0){
+      console.log("1")
 
+        //取消轮播
+        if(isbanner == 0){
+          console.log("2")
+          
+          //总轮播图小于4个时，拒绝取消
+          if(banner.length < 4){
+            console.log("ssss")
+            ctx.response.body = {
+              code: 500,
+              msg: "总轮播图小于3个!"
+            };
+            return;
+          }else{
+            console.log("3")
+      
+            changeBanner([sort,isbanner,id,type]);
+
+            //之前是轮播图，则删掉之前的数据
+            deleteBannerById([id, sort]);
+          }
+         
+          
+        }else{
+      console.log("4")
+      
+          updateBanner([type, path, title,id,sort]).catch(e => {
+            throw e;
+          });
+        
+        }
+    //之前不是轮播图    
+    }else{
+      console.log("5")
+      changeBanner([sort,isbanner,id,type]);
+      
+      if(banner.length === 5){
+      console.log("6")
+      
+        saveBanner(sort, type, id, path, title,false);
+      
+      }else{
+      console.log("7")
+      
+        saveBanner(sort, type, id, path, title,true);
+        
+      }
+      
+    }
+  
     ctx.response.body = {
       code: 200,
       msg: "修改成功"
     };
-  } catch (error) {
-    throw error;
-    console.log(error);
-    ctx.response.body = {
-      code: 500,
-      msg: "修改文章失败!"
-    };
-    return;
-  }
-});
+  
+  
+})
 
 //获取文章目录
 router.get("/catalog", async (ctx, next) => {

@@ -54,7 +54,7 @@
                         <li class="hot-item ">
                              <div class='item-img'>
                                      <%if(HotArticle[i].img !=='0'){%>
-                                        <img <%=HotArticle[i].img%> class='hot-img' alt=''>
+                                        <img src=<%=HotArticle[i].img%> class='hot-img' alt=''>
                                   <%}%>
                                 </div>
                                  <div class='item-content'>
@@ -91,7 +91,7 @@
                             <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><h3 class='new-title'><%=data[i].title %></h3></a>
                             <div class='new-box'>
                                 <%if(data[i].img !=='0'){%>
-                                <img <%=data[i].img%> class='new-img' alt=''>
+                                <img src=<%=data[i].img%> class='new-img' alt=''>
                               
                                 <div class='new-content'>
                                     <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>

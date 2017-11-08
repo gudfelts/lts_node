@@ -21,7 +21,7 @@ module.exports.tranforBase64 = async data => {
           throw "图片上传失败";
         }
       });
-      IMG || (IMG = `src=${path}`);
+      IMG || (IMG = path);
       return `<img src="${path}">`;
     });
   }else if(patt3.test(data)){
