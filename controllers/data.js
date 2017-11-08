@@ -169,6 +169,8 @@ router.post("/editarticle", async ctx => {
   const id = parseInt(article.id),
     sort = article.selectedOptions[0],
     type = parseInt(article.selectedOptions[1]);
+
+    console.log(type)
   isbanner = parseInt(article.isbanner);
   content = article.content;
   title = article.title;

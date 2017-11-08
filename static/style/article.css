@@ -78,13 +78,9 @@
 }
 
 /*标题*/
-.content-title h3 {
-    display: block;
-    font-size: 18px;
-    line-height: 50px;
-    color: #555;
-    font-weight: bold;
-    margin-bottom: 10px;
+.content-title h1 {
+    font: bold 36px/1 "Microsoft Yahei";
+    color: #404040
 }
 
 /*发布日期 作者 浏览次数等*/
@@ -92,6 +88,8 @@
     display: block;
     color: #928d8d;
     font-size: 12px;
+    padding: 20px 0;
+    
 }
 
 /*作者*/
@@ -99,30 +97,18 @@
     padding: 20px;
 }
 
-/*上横线*/
-.content-title .tit-info:before {
-    content: '';
-    display: block;
-    height: 2px;
-    width: 504px;
-    margin: 3px auto;
-}
 
-/*下横线*/
-.content-title .tit-info:after {
-    content: '';
-    display: block;
-    height: 2px;
-    width: 504px;
-    background: #666666;
-    margin: 3px auto 50px;
-}
+
+
+
 article{
     width: 100%;
     overflow: hidden;
 }
 .content-main {
     width: 100%;
+    border-top: 1px solid #ddd;
+    
 }
 
 .content-main img {

@@ -70,7 +70,7 @@ module.exports = {
         //获取总条数
         getNumNoTYPE: "select count(1) from ??",
         //更新内容
-        editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,isbanner = ? where id = ? and type = ?",
+        editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,isbanner = ?where id = ? and type = ?",
         //查找文章
         searchArticle : 'select title,author,id,type,img,browse,praise,summary,time from ?? where title like ? and type = ? order by id desc limit ?,15',
         //查找文章
