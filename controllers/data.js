@@ -55,7 +55,6 @@ router.post("/article", async ctx => {
   article.browse = 1;
   article.time = article.time.replace(/T.*$/, "");
   try {
-    article.img = getImg(article.content);
     article.summary = trimHtml(article.content, {
       preserveTags: false,
       limit: 30
@@ -204,17 +203,18 @@ router.post("/editarticle", async ctx => {
   let article = ctx.request.body;
   const id = parseInt(article.id),
     sort = article.selectedOptions[0],
-    type = parseInt(article.selectedOptions[1]);
+    type = parseInt(article.selectedOptions[1]),
 
-  isbanner = parseInt(article.isbanner);
-  content = article.content;
-  title = article.title;
-  time = article.time;
-  source = article.source;
+  isbanner = parseInt(article.isbanner),
+  content = article.content,
+  title = article.title,
+  time = article.time,
+  source = article.source,
   author = article.author;
-  img = getImg(content);
-    var { data, path } = await transCode.tranforBase64(content);
-    console.log(path);
+
+  let { data, path } = await transCode.tranforBase64(content);
+  img = path;
+    
     await editArticle([
       sort,
       title,
@@ -222,7 +222,7 @@ router.post("/editarticle", async ctx => {
       source,
       time,
       content,
-      img,
+      path,
       type,
       id
     ]);
@@ -266,7 +266,7 @@ router.post("/editarticle", async ctx => {
           
         }else{
       console.log("保持轮播")
-      
+      console.log(path)
           updateBanner([type, path, title,id,sort]).catch(e => {
             throw e;
           });

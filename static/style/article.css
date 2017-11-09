@@ -104,11 +104,12 @@
 article{
     width: 100%;
     overflow: hidden;
+
 }
-.content-main {
+.content .content-main {
     width: 100%;
     border-top: 1px solid #ddd;
-    
+    white-space:normal;
 }
 
 .content-main img {
