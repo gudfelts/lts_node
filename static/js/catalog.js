@@ -9,7 +9,7 @@ function render(data, sort) {
     let oDiv = $('<div class="new-box"></div>');
     if (data[i].img !== "0") {
 
-      let img = $('<img class="new-img" alt="" '+data[i].img+'>');
+      let img = $('<img class="new-img" alt="" src='+data[i].img+'>');
       let summary = $('<a class="new-content-summary"></a>').attr('href',href).html(data[i].summary);
       let content = $('<div class="new-content"></div>').append(summary);
 
