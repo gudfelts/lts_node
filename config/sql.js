@@ -45,7 +45,7 @@ module.exports = {
         getDeleteBannerID: "select id,sort,type from banner limit 1",
         deleteBannerById: "delete from banner where id = ? and sort = ? limit 1",
         //
-        updateBanner : 'update  banner set type = ? path = ?,title = ? where id = ? and sort = ?',
+        updateBanner : 'update  banner set type = ?, path = ?,title = ? where id = ? and sort = ?',
         
         /*
         科研成果，其中type数据：1为学术论文，2为著作，3为研究报告

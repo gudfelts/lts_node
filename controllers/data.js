@@ -214,6 +214,7 @@ router.post("/editarticle", async ctx => {
   author = article.author;
   img = getImg(content);
     var { data, path } = await transCode.tranforBase64(content);
+    console.log(path);
     await editArticle([
       sort,
       title,
@@ -222,7 +223,6 @@ router.post("/editarticle", async ctx => {
       time,
       content,
       img,
-
       type,
       id
     ]);
@@ -240,22 +240,22 @@ router.post("/editarticle", async ctx => {
     
     //之前是轮播图
     if(result.length > 0){
-      console.log("1")
+      console.log("是轮播图")
 
         //取消轮播
         if(isbanner == 0){
-          console.log("2")
+          console.log("取消轮播")
           
           //总轮播图小于4个时，拒绝取消
           if(banner.length < 4){
-            console.log("ssss")
+            console.log("小于4个")
             ctx.response.body = {
               code: 500,
               msg: "总轮播图小于3个!"
             };
             return;
           }else{
-            console.log("3")
+            console.log("合适")
       
             changeBanner([sort,isbanner,id,type]);
 
@@ -265,7 +265,7 @@ router.post("/editarticle", async ctx => {
          
           
         }else{
-      console.log("4")
+      console.log("保持轮播")
       
           updateBanner([type, path, title,id,sort]).catch(e => {
             throw e;
@@ -274,11 +274,11 @@ router.post("/editarticle", async ctx => {
         }
     //之前不是轮播图    
     }else{
-      console.log("5")
+      console.log("之前不是轮播图")
       changeBanner([sort,isbanner,id,type]);
       
       if(banner.length === 5){
-      console.log("6")
+      console.log("刚好5个")
       
         saveBanner(sort, type, id, path, title,false);
       
