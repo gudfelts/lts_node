@@ -143,6 +143,7 @@ module.exports.saveBanner =   (sort, type, id, path,title,flag = false) => {
 module.exports.getBanner =  () => query(SQL.getBanner);
 module.exports.changeBanner  =  (val) => query(SQL.changeBanner,val );
 module.exports.updateBanner  =  (val) => query(SQL.updateBanner,val );
+module.exports.updateBannerAll  =  (val) => query(SQL.updateBannerAll,val );
 module.exports.deleteBannerById =  (val) => query(SQL.deleteBannerById,val);
 //增加链接
 module.exports.addLink =  (val) => query(SQL.addLink,val);
@@ -170,3 +171,5 @@ module.exports.getFeedBackOne  = (id) => {
   return query(SQL.getFeedBackOne,id);
 }
 
+module.exports.getIntro = () => query(SQL.getIntro);
+module.exports.updateIntro = (content) => query(SQL.updateIntro,content);

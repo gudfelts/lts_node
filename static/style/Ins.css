@@ -151,7 +151,8 @@
 .colu_info
  {
     padding: 50px;
-   
+    white-space:normal;
+    
 }
 .colu_news p
 {

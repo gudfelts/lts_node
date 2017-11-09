@@ -22,6 +22,7 @@ const {
   deleteBannerById,
   changeBanner,
   updateBanner,
+  updateBannerAll,
   searchArticle,
   getSearchNum,
   getLinkCatalog,
@@ -32,7 +33,9 @@ const {
   getFeedBackCatalog,
   getFeedBackOne,
   setFeedBackRead,
-  deleteFeedBack
+  deleteFeedBack,
+  getIntro,
+  updateIntro
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -279,7 +282,7 @@ router.post("/editarticle", async ctx => {
       
       if(banner.length === 5){
       console.log("刚好5个")
-      
+        
         saveBanner(sort, type, id, path, title,false);
       
       }else{
@@ -324,7 +327,43 @@ router.get("/catalog", async (ctx, next) => {
     };
   }
 });
+//批量修改
+router.post("/article/batchMove", async (ctx, next) => {
+  let data = ctx.request.body.article;
+  let sort = ctx.request.body.sort;
+  let type = ctx.request.body.type;
+  let sortNEW =  ctx.request.body.column[0]
+  let typeNEW = ctx.request.body.column[1];
 
+  for (let i = 0, len = data.length; i < len; i++) {
+    const id = data[i].id;
+    
+      let articles = await getArticleOne(sort, id, type);
+      const article = articles[0];
+      article.type = parseInt(typeNEW);
+     
+      await deleteArticle(sort, id, type);
+      
+      article.id = null;
+      let result = await saveArticle(sortNEW, article);
+      const idNEW =parseInt(result.insertId);
+    if (article.isbanner) {
+      updateBannerAll([typeNEW,sortNEW,idNEW,id,sort]).catch(e => {
+        throw e;
+      });
+        
+      
+    }
+    if (i === len - 1) {
+      ctx.response.body = {
+        code: 200,
+        msg: "转移成功"
+      };
+    }
+  }
+
+ 
+});
 //获取团队列表
 router.get("/team/catalog", async ctx => {
   let start = parseInt(ctx.query.start) || 0;
@@ -657,5 +696,43 @@ router.post("/feedback/delete", async ctx => {
         };
       });
   }
+});
+
+router.get("/intro", async ctx => {
+  
+await getIntro().then(data => {
+     console.log(data[0].content)
+      ctx.response.body = {
+        code: 200,
+        content: data[0].content,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
+});
+
+router.post("/intro", async ctx => {
+    let article = ctx.request.body;
+    console.log(article.content)
+    let { data, path } = await transCode.tranforBase64(article.content);
+    const content = data;
+    const result = await updateIntro(content);
+   
+    ctx.response.body = {
+      code: 200,
+      msg: "成功"
+    };
+  // } catch (error) {
+  //   ctx.response.body = {
+  //     code: 500,
+  //     msg: "上传文章失败!"
+  //   };
+  //   return;
+  // }
 });
 module.exports = router;

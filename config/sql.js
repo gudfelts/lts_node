@@ -44,8 +44,9 @@ module.exports = {
         getBanner: "select * from banner limit 5",
         getDeleteBannerID: "select id,sort,type from banner limit 1",
         deleteBannerById: "delete from banner where id = ? and sort = ? limit 1",
-        //
+        
         updateBanner : 'update  banner set type = ?, path = ?,title = ? where id = ? and sort = ?',
+        updateBannerAll : 'update  banner set type = ?,sort = ? ,id = ? where id = ? and sort = ?',
         
         /*
         科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
@@ -94,5 +95,10 @@ module.exports = {
         getFeedBackOne : 'select * from feedback where id = ? limit 1',
         setFeedBackRead : 'update  feedback set isread = 1 where id = ?',
         deleteFeedBack : 'delete from feedback where id = ? limit 1',
+
+        //网站介绍
+
+        getIntro : 'select content from intro limit 1',
+        updateIntro : 'update intro set content = ?'
         
 }
