@@ -14,7 +14,8 @@ const pickBanner = aNew => {
   let flag = false;
   for (let i = 0; i < aNew.length; i++) {
     let content = aNew[i].content;
-    if (patt1.test(content)) {
+    let isbanner = aNew[i].isbanner;
+    if (patt1.test(content) && !isbanner) {
       banner = aNew[i];
       //去掉引号
       try {

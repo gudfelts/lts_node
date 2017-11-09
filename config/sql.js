@@ -1,9 +1,9 @@
 module.exports = {
     
         //首页科研资讯
-        getIndexInfo: "select title,id,type,content from information order by id desc limit ?,?",
+        getIndexInfo: "select title,id,type,content,isbanner from information order by id desc limit ?,?",
         //首页科研研究
-        getIndexResearch: "select title,id,type,content from research order by id desc limit ?,?",
+        getIndexResearch: "select title,id,type,content,isbanner from research order by id desc limit ?,?",
         //首页学术交流 
         getIndexExchange: "select title,id,type from exchange order by id desc limit ?,?",
         //首页咨询培训 
