@@ -72,12 +72,12 @@ router.post("/feedBack", ctx => {
 });
 
 router.get("/searchArticle", async (ctx, next) => {
-  const title = "%" + ctx.query.value + "%";
+  const key = "%" + ctx.query.key + "%";
   const sort = ctx.query.sort;
   const type = ctx.query.type;
   let start = parseInt(ctx.query.start) || 0;
-
-  let result = await searchArticle(sort, title, type, start).catch(() => {
+console.log(key)
+  let result = await searchArticle(sort, key,  start).catch(() => {
     ctx.response.body = {
       code: 500,
       msg: "搜索出现错误"
@@ -86,7 +86,7 @@ router.get("/searchArticle", async (ctx, next) => {
   });
 
   if (start === 0) {
-    var pageCount = await getSearchNum("article", sort, title, type);
+    var pageCount = await getSearchNum("article", sort, key);
     //一页15条
 
     if (pageCount % 15 > 0) {

@@ -1,7 +1,7 @@
 const router = require("koa-router")();
 const getIndex = require("../model/getIndex");
 const getImg = require("../utils/getImg");
-
+const TYPE = require('config-lite')(__dirname).type;
 const {
   getHotArticle,
   getTeamoOther,
@@ -12,7 +12,9 @@ const {
   getArticleOne,
   getCatalog,
   getLinkCatalog,
-  getIntro
+  getIntro,
+  searchArticle,
+  getSearchNum
 } = require("../model/OperationData");
 //获取文章
 router.get("/showArticle/article", async ctx => {
@@ -49,13 +51,48 @@ router.get("/showArticle/catalog", async ctx => {
     pageCount = pageCount / 10;
   }
 
-  result.data.pageCount = pageCount;
-  result.data.pageCount = pageCount;
+  result.pageCount = pageCount;
+
   result.type = parseInt(type);
   result.HotArticle = HotArticle;
   await ctx.render("catalog", result);
 });
+//搜索
+router.get("/showArticle/search", async (ctx, next) => {
+  const key = "%" + ctx.query.key + "%";
+  const sort = ctx.query.sort;
+  const type = parseInt(ctx.query.type);
+  let start = parseInt(ctx.query.start) || 0;
+  
+  let data = await searchArticle(sort, key,  start).catch(() => {
+    
+    ctx.throw(500, "搜索出现错误");
+  });
 
+  if (start === 0) {
+    var pageCount = await getSearchNum("article", sort, key);
+    //一页15条
+
+    if (pageCount % 15 > 0) {
+      pageCount = parseInt(pageCount / 15) + 1;
+    } else {
+      pageCount = pageCount / 15;
+    }
+  }
+
+  console.log(ctx.query.key)
+  await ctx.render('search',{
+    key : ctx.query.key,
+    pageCount,
+    code :200,
+    sort,
+    data,
+    type,
+    title : TYPE[sort][type-1],
+    sorts: TYPE[sort]
+  })
+ 
+});
 //获取专家
 router.get("/introduction/team/person", async ctx => {
   const id = ctx.query.id;

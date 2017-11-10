@@ -37,38 +37,7 @@
                     </li>
                     <%}%>
                 </ul>
-
-
-              <div class='side-article'>
-                    <div class="top-band-title" style="display: block;">
-        
-        
-
-                <a class="no-comment-title">近期热门文章</a>
-            <em id="top-bandArrow" style="left: 145px;"></em>
-            </div>
-                    <ul class="hotBox">
-                    <%if(!!HotArticle){
-                     for(var i =  0;i < HotArticle.length ;i++){%>
-                     
-                        <li class="hot-item ">
-                             <div class='item-img'>
-                                     <%if(HotArticle[i].img !=='0'){%>
-                                        <img src=<%=HotArticle[i].img%> class='hot-img' alt=''>
-                                  <%}%>
-                                </div>
-                                 <div class='item-content'>
-                                    <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
-                                    <%=HotArticle[i].title %>
-                                </a>
-                                 </div>     </li>
-                        <%}}%>
-                    
-                    </ul>
-                </div>
-
-
-            </div>
+           </div>
             
             <div class="boxRight">
                 <div class="part-title">
@@ -129,7 +98,7 @@
                 </div>
                 <%if(data.length > 0){%>
                 <!--分页组件-->
-                <div class="M-box" search-type = '0' data-page=<%=pageCount%> data-sort=<%=sort%> data-type=<%=type%>></div>
+                <div class="M-box" search-type = '1' data-page=<%=pageCount%> data-sort=<%=sort%> data-type=<%=type%> data-key=<%=key%>></div>
                 <%}%>
             </div>
         </div>

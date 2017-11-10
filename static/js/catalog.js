@@ -50,14 +50,14 @@ function pagination() {
     callback: function(api) {
     var isSearch = $(".M-box").attr("search-type");
     var start = (api.getCurrent() - 1) * 9 + api.getCurrent() - 1;
-    console.log(!!isSearch,typeof isSearch)
+   
     var url = '';
       if(isSearch === '1'){
 
-        var value = $(".search-input").attr('search-value');
-  
-        url =  "/OperationData/searchArticle?value=" +
-        value +
+        var key = $(".M-box").attr('data-key');
+
+        url =  "/OperationData/searchArticle?key=" +
+        key +
         "&type=" +
         type +
         "&sort=" +
@@ -93,42 +93,7 @@ function pagination() {
     }
   });
 }
-function search() {
-  var sort = $(".M-box").attr("data-sort");
-  var type = $(".M-box").attr("data-type");
-  var value = $(".search-input").val();
 
-  //标志分页为搜索
-  $(".M-box").attr("search-type",'1');
-  
-  if (value === "") {
-    alert("请输入搜索内容");
-    return;
-  }
-  $(".search-input").attr('search-value',value);
-  $.ajax({
-    type: "get",
-    dataType: "json",
-    url:
-      "/OperationData/searchArticle?value=" +
-      value +
-      "&type=" +
-      type +
-      "&sort=" +
-      sort +
-      "&start=" +
-      0, //提交到一般处理程序请求数据
-
-    success: function(result) {
-      //后台服务返回数据，重新加载数据
-      if (result.code === 200) {
-        render(result.data, result.sort);
-      } else {
-        alert(result.msg);
-      }
-    }
-  });
-}
 $().ready(function(e) {
   pagination();
 
@@ -136,11 +101,10 @@ $().ready(function(e) {
     var e = event || window.event;
     if (e && e.keyCode == 13) {
       //回车键的键值为13
-      search();
+      $("#search").submit()
     }
   });
   $(".search-icon").click(function() {
-    console.log("s");
-    search();
+    $("#search").submit()
   });
 });
