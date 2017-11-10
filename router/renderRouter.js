@@ -133,10 +133,10 @@ router.get("/links", async ctx => {
   console.log(links);
   await ctx.render("Links", { links });
 });
-//获取简介
-router.get("/introduction/acgency", async ctx => {
-  await ctx.render("./introduction/acgency");
-});
+// //获取机构设置
+// router.get("/introduction/acgency", async ctx => {
+//   await ctx.render("./introduction/acgency");
+// });
 //获取专家目录
 router.get("/introduction/team/catalog", async ctx => {
   let start = parseInt(ctx.query.start) || 0;

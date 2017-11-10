@@ -113,7 +113,6 @@ header {
 }
 
 .header_logo {
-  display: inline-block;
   height: 100%;
   float: left;
   a {
@@ -131,7 +130,6 @@ header {
 }
 
 .header_banner {
-  display: inline-block;
   vertical-align: top;
   float: right;
   height: 100%;
@@ -157,6 +155,12 @@ header {
   margin: 0 auto;
   min-width: 900px;
   height: 100%;
+}
+.nav_box{
+  width: 900px;
+  
+  display:flex;
+  justify-content: space-around;
 }
 .nav_item {
   float: left;
@@ -185,36 +189,7 @@ a:hover {
   overflow: hidden;
 }
 
-/*导航栏箭头*/
 
-.nav_icon {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  @include bis(url("../images/icons/nav_toBottom.png"));
-  margin-bottom: -9px;
-  -webkit-transition: transform 0.5s;
-  -webkit-transition: -webkit-transform 0.5s;
-  transition: -webkit-transform 0.5s;
-  transition: transform 0.5s;
-  transition: transform 0.5s, -webkit-transform 0.5s;
-}
-
-/*导航栏让箭头旋转*/
-
-.nav_item > a:hover .nav_icon {
-  -webkit-transform-origin: center center;
-  transform-origin: center center;
-  transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  /* IE 9 */
-  -moz-transform: rotate(180deg);
-  /* Firefox */
-  -webkit-transform: rotate(180deg);
-  /* Safari 和 Chrome */
-  -o-transform: rotate(180deg);
-  /* Opera */
-}
 
 /*导航栏子栏目*/
 
