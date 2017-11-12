@@ -48,7 +48,7 @@
             <div class='flexbox'>
                 <div class='newsLeft'>
                     <a href='/showArticle/article?id=<%=info.banner.id%>&type=<%=info.banner.type%>&sort=information'>
-                        <img <%=info.banner.src%>>
+                        <img src=<%=info.banner.src%>>
                         <h4><%=info.banner.title%></h4>
                     </a>
                     <p>
@@ -78,7 +78,7 @@
                     </p>
                     <div class='box1-content'>
                         <a href='/showArticle/article?id=<%=research.id%>&type=<%=research.type%>&sort=research'>
-                            <img <%=research.src%> >
+                            <img src=<%=research.src%> >
                         </a>
                         <div class='secient-content'>
                             <h3>
@@ -130,38 +130,8 @@
     
         </section>
         <!--咨询培训、智库建设-->
-        <section class='container-types bottom-block'>
-        <div class='train'>
-            <p class='part-title train-title'>
-                咨询培训
-                <a href="/showArticle/catalog?sort=train&type=1" class='toMore'>more</a>
-    
-            </p>
-    
-            <div class='train-box'>
-            <%for(var i = 0,len = train.length;i < len;i++){%>
-                <a href='/showArticle/article?id=<%=train[i].id%>&type=<%=train[i].type%>&sort=train' class='train-item'>
-                               <%-train[i].title%>                           
-                </a>
-            <%}%>
-            </div>
-        </div>
-         <div class='construction'>
-            <p class='part-title construction-title'>
-                智库建设
-                <a href="/showArticle/catalog?sort=construction&type=1" class='toMore'>more</a>
-    
-            </p>
-    
-            <div class='construction-box'>
-            <%for(var i = 0,len = construction.length;i < len;i++){%>
-                <a href='/showArticle/article?id=<%=construction[i].id%>&type=<%=construction[i].type%>&sort=construction' class='construction-item'>
-                               <%-construction[i].title%>                           
-                </a>
-            <%}%>
-            </div>
-        </div>
-        </section>
+       
+       
         <!-- </div> -->
     
     </div>

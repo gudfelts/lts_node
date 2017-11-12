@@ -101,7 +101,7 @@ router.get("/introduction/team/person", async ctx => {
   const other = await getTeamoOther(id);
   await ctx.render("./introduction/person", { person: person[0], other });
 });
-//获取研究方向目录
+//获取机构设置目录
 
 router.get("/introduction/researchdir", async ctx => {
   const sort = "researchdir";

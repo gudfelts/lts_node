@@ -1,16 +1,9 @@
 module.exports = {
     
         //首页科研资讯
-        getIndexInfo: "select title,id,type,content,isbanner from information order by id desc limit ?,?",
-        //首页科研研究
-        getIndexResearch: "select title,id,type,content,isbanner from research order by id desc limit ?,?",
-        //首页学术交流 
-        getIndexExchange: "select title,id,type from exchange order by id desc limit ?,?",
-        //首页咨询培训 
-        getIndexTrain: "select title,id,type from train order by id desc limit ?,?",
-        //首页智库建设 
-        getIndexConstruction: "select title,id,type from construction order by id desc limit ?,?",
-        
+        getIndexData: "select title,id,type,content,isbanner,img,summary from ?? order by id desc limit ?,?",
+
+         
         //热门文章
         getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from ?? order by id desc limit 20) as total order by browse",
     
@@ -50,7 +43,7 @@ module.exports = {
         
         /*
         科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
-        科研资讯，其中type数据：1为流通所新闻，2为基地资讯，3为媒体报道
+        科研资讯，其中type数据：1为科研简讯，2为基地资讯，3为媒体报道
         科学研究，其中type数据：1为课题研究，2为课题招标，3为成果影响
         学术交流，其中type数据：1为来访交流，2为调研考察，3为主办年会，4为流通论坛
         咨询培训，其中type数据：1为资讯顾问，2为企业策划，3为专家培训

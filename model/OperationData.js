@@ -38,13 +38,7 @@ module.exports.getSearchNum = async (kind, sort, title, type) => {
 //获取目录
 module.exports.getCatalog = async (sort, type, start) => {
   
-  if(sort == 'researchdir'){
-    let data = await query(SQL.getCatalog,[sort, type, start]).catch(e => {
-      throw e;
-    });
-    return { data, code: 200,sort :'researchdir',type : 0};
-  }
-  else{
+  
     let title = TYPE[sort][type - 1];
     
       let data = await query(SQL.getCatalog,[sort, type, start]).catch(e => {
@@ -52,7 +46,7 @@ module.exports.getCatalog = async (sort, type, start) => {
       });
     
       return { data, title, sorts: TYPE[sort], sort, code: 200 };
-  }
+  
  
 };
 //获取近期热门文章
@@ -62,25 +56,9 @@ module.exports.getHotArticle = async sort => {
 };
 
 //首页获取数据
-module.exports.getIndex = (sort, val) => {
-  switch (sort) {
-    case "information":
-      return query(SQL.getIndexInfo, val);
-      break;
-    case "research":
-      return query(SQL.getIndexResearch, val);
-      break;
-    case "exchange":
-      return query(SQL.getIndexExchange, val);
-      break;
-    case "train":
-      return query(SQL.getIndexTrain, val);
-      break;
-    case "construction":
-      return query(SQL.getIndexConstruction, val);
-      break;
-  }
-};
+module.exports.getIndex = (val) => query(SQL.getIndexData,val)
+  
+
 
 module.exports.getAllNum = async (sort) => {
  

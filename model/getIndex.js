@@ -1,26 +1,20 @@
 const { getBanner, getAllNum, getIndex } = require("../model/OperationData");
 const SQL = require("../config/sql");
-const trimHtml = require("../utils/trim-html");
-/**
- * 截取摘要
- * @param {*} content 
- */
-const pickSummary = content => trimHtml(content, { preserveTags: false, limit: 70 }).html;
 
-const pickBanner = aNew => {
-  let banner = {};
-  const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
-  const patt2 = /src="[\'\"]?([^\'\"]*)[\'\"]?"/gi;
-  let flag = false;
+/**
+ * 选取带图新闻
+ * @param {*} aNew 
+ */
+const pick = aNew => {
   for (let i = 0; i < aNew.length; i++) {
-    let content = aNew[i].content;
+    let hasIMG = aNew[i].img;
     let isbanner = aNew[i].isbanner;
-    if (patt1.test(content) && !isbanner) {
+    if (hasIMG !=='0' && !isbanner) {
       banner = aNew[i];
       //去掉引号
       try {
-      
-        banner.src = content.match(patt2)[0].replace(/[\'\"]?/g, "");
+        
+        banner.src = hasIMG;
         flag = true;
         aNew.splice(i, 0);
         break;
@@ -35,7 +29,7 @@ const pickBanner = aNew => {
   if (!flag) return flag;
   else return { banner, aNew };
   return 0;
-};
+}  
 /**
  * 获取首页科研资讯，选取一个带图的文章作为左边大图展示。
  */
@@ -48,13 +42,13 @@ const getInfo = async () => {
   //获取从info_m到info_n的数据
   let aNew;
 
-  aNew = await getIndex("information", [info_m, info_n]);
+  aNew = await getIndex(["information", info_m, info_n]);
 
   //获取带图的文章
-  let data = pickBanner(aNew);
+  let data = pick(aNew);
   //从info_m到info_n的文章有一个带图的文章
   if (!!data) {
-    data.banner.summary = pickSummary(data.banner.content);
+    // data.banner.summary = pickSummary(data.banner.content);
     info.banner = data.banner;
     info.aNew = data.aNew;
   } else {
@@ -70,8 +64,8 @@ const getInfo = async () => {
     }
 
     while (NUM >= info_n) {
-      aNew = await getIndex("information", [info_m, info_n]);
-      let data = pickBanner(aNew);
+      aNew = await getIndex(["information",info_m, info_n]);
+      let data = pick(aNew);
 
       if (!!data) {
         // data.banner = pickSummary(data.banner)
@@ -103,13 +97,13 @@ const getResearch = async () => {
 
   while (NUM >= info_n) {
     //获取从info_m到info_n的数据
-    let aNew = await getIndex("research", [info_m, info_n]);
+    let aNew = await getIndex(["research", info_m, info_n]);
     //获取带图的文章
-    let { banner } = pickBanner(aNew);
+    let { banner } = pick(aNew);
 
     if (!!banner) {
       research = banner;
-      research.summary = pickSummary(research.content);
+      
       break;
     } else {
       //继续往下遍历，找到带图的文章
@@ -127,32 +121,22 @@ const getResearch = async () => {
 };
 
 const getExchange = async () => {
-  let aNew = await getIndex("exchange", [0, 8]);
+  let aNew = await getIndex(["exchange",0, 8]);
   return aNew;
 };
-const getTrain = async () => {
-  let aNew = await getIndex("train", [0, 5]);
-  return aNew;
-};
-const getConstruction = async () => {
-  let aNew = await getIndex("construction", [0, 5]);
-  return aNew;
-};
-const getData = async () => {
+
+
+
+module.exports =  async () => {
   try {
     let info = await getInfo();
     let research = await getResearch();
     let exchange = await getExchange();
-    let train = await getTrain();
-    let construction = await getConstruction();
+   
     let banner = await getBanner();
-    return { info, research, exchange, train, construction ,banner};
+    return { info, research, exchange, banner};
   } catch (error) {
     throw error;
   }
 };
 
-module.exports = async () => {
-  const data = await getData();
-  return data;
-};
