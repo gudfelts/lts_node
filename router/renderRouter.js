@@ -103,21 +103,9 @@ router.get("/introduction/team/person", async ctx => {
 });
 //获取机构设置目录
 
-router.get("/introduction/researchdir", async ctx => {
-  const sort = "researchdir";
-  let start = ctx.query.start || 0;
-  let result = await getCatalog(sort, 0, start);
+router.get("/introduction/acgency", async ctx => {
 
-  let pageCount = await getNum(sort, 0);
-
-  if (pageCount % 15 > 0) {
-    pageCount = parseInt(pageCount / 15) + 1;
-  } else {
-    pageCount = pageCount / 15;
-  }
-
-  result.data.pageCount = pageCount;
-  await ctx.render("./introduction/researchdir", result);
+  await ctx.render("./introduction/acgency");
 });
 //获取简介
 router.get("/introduction/index", async ctx => {
