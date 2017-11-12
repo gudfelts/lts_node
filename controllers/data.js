@@ -327,7 +327,7 @@ router.get("/catalog", async (ctx, next) => {
     };
   }
 });
-//批量修改
+//修改栏目
 router.post("/article/batchMove", async (ctx, next) => {
   let data = ctx.request.body.article;
   let sort = ctx.request.body.sort;

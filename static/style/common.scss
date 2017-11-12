@@ -139,7 +139,7 @@ header {
 
 .banner_a1 {
   font-size: 22px;
-  color: #06a3b1;
+  color: #007579 !important;
 }
 
 .header_nav {
@@ -230,7 +230,7 @@ a:hover {
     text-align: left;
     display: block;
     &:hover {
-      background-color: #006771;
+      background-color: #007579 !important;
     }
   }
 }
