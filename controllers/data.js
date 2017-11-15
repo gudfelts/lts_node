@@ -88,7 +88,6 @@ router.post("/article", async ctx => {
       msg: "成功"
     };
   } catch (error) {
-    console.log(error)
     ctx.response.body = {
       code: 500,
       msg: "上传文章失败!"
