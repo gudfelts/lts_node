@@ -52,8 +52,10 @@ router.post("/article", async ctx => {
   let article = ctx.request.body;
 
   const type = article.selectedOptions;
+  const indexBanner = parseInt(article.indexBanner);
   const isbanner = parseInt(article.isbanner);
   delete article.selectedOptions;
+  delete article.indexBanner;
   article.type = type[1];
   article.praise = 0;
   article.browse = 1;
@@ -64,7 +66,7 @@ router.post("/article", async ctx => {
       limit: 30
     }).html;
 
-    var { data, path } = await transCode.tranforBase64(article.content);
+    var { data, path } = await transCode.tranforBase64(article.content,indexBanner);
     article.content = data;
     article.img = path;
     const result = await saveArticle(type[0], article);
@@ -86,6 +88,7 @@ router.post("/article", async ctx => {
       msg: "成功"
     };
   } catch (error) {
+    console.log(error)
     ctx.response.body = {
       code: 500,
       msg: "上传文章失败!"
