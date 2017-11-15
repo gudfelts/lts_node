@@ -14,14 +14,14 @@ module.exports.tranforBase64 = async (data,indexBanner) => {
     data = await data.replace(patt1, function(match, capture) {
       const path = "/images/article/" + Date.now() + ".png";
       //去掉图片base64码前面部分data:image/png;base64
-      console.log(indexBanner);
       let base64 = capture.replace(patt2, "");
       fs.writeFile("static" + path, base64, "base64", function(err) {
         if (err) {
           throw "图片上传失败";
         }
       });
-      if(indexBanner-- == 1) (IMG = path);
+      console.log(path);
+      if(indexBanner-- == 0) (IMG = path);
       return `<img src=${path}>`;
     });
   }else if(patt3.test(data)){
