@@ -35,7 +35,8 @@ const {
   setFeedBackRead,
   deleteFeedBack,
   getIntro,
-  updateIntro
+  updateIntro,
+  searchPerson
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -482,21 +483,25 @@ router.post("/team/edit", async ctx => {
 });
 
 //搜索专家
-router.get("/team/reacher", async ctx => {
-  const name = "%" + ctx.query.title + "%";
-
+router.get("/team/search", async ctx => {
+  const name = "%" + ctx.query.name + "%";
+  console.log(name)
   let start = parseInt(ctx.query.start) || 0;
 
-  await reacherPerson(name, start)
+  await searchPerson(name, start)
     .then(async result => {
       if (start === 0) {
-        var pageCount = await getSearchNum("person", name);
+        var pageCount = await getSearchNum("person", null, name);
         //一页15条
       }
+      console.log(result)
+     
 
-      result.pageCount = pageCount;
-      result.code = 200;
-      ctx.response.body = result;
+      ctx.response.body = {
+        persons: result,
+        pageCount,
+        code: 200
+      };
     })
     .catch(() => {
       ctx.response.body = {
@@ -634,6 +639,7 @@ router.post("/friendLinks/edit", async ctx => {
       };
     });
 });
+
 //获取意见反馈目录
 router.get("/feedback/catalog", async ctx => {
   const start = parseInt(ctx.query.start);

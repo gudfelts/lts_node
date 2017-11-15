@@ -23,7 +23,7 @@ module.exports = {
         //更新专家信息
         updatePerson: "update team set name = ?,position = ?,content = ? ,avatar = ? ,summary = ?where id = ? limit 1",
         //查找专家
-        reacherPerson : 'select * from team where name like ? order by id desc limit ?,15',
+        searchPerson : 'select * from team where name like ? order by id desc limit ?,15',
         //
         getReacherNumPerson : 'select count(1) from team where name like ? ',
         //删除专家信息

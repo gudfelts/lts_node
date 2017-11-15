@@ -21,7 +21,7 @@ const app = new koa();
 
 const env = process.env.NODE_ENV;
 onerror(app);
-app.use(bodyParser({ formLimit: "1mb"}));
+app.use(bodyParser({ formLimit: "20mb"}));
 
 
 app.keys = ["lts_node"];
@@ -96,7 +96,11 @@ app.use(apiRoute.routes()).use(apiRoute.allowedMethods());
 app.use(renderRoute.routes()).use(renderRoute.allowedMethods());
 app.on("error", (err, ctx) => {
   console.log(err);
-  ctx.status = 404;
+  ctx.response.body = {
+    code: 400,
+    msg: "文件过大"
+  };
+  // ctx.status = 404;
 });
 
 app.listen(config.serverPort, () =>

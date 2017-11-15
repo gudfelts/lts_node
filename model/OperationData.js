@@ -15,22 +15,23 @@ module.exports.getArticleOne = (sort, id, type) => query(SQL.getArticleOne,[sort
 //搜索文章
 module.exports.searchArticle = (sort, title, type, start) => query(SQL.searchArticle,[sort, title, type, start]);
 
-module.exports.reacherPerson = (name, start) => query(SQL.reacherPerson,[name, start]);
+module.exports.searchPerson = (name, start) => query(SQL.searchPerson,[name, start]);
 
 //搜索类，获取全部结果的条数
-module.exports.getSearchNum = async (kind, sort, title, type) => {
+module.exports.getSearchNum = async (kind, sort, val, type) => {
   let result = null;
   switch (kind) {
     case "article":
       result = await query(SQL.getReacherNumArticle, [
         sort,
-        title,
+        val,
         type
       ]);
       break;
     case "person":
-      result = await query(SQL.getReacherNumPerson, [sort]);
+      result = await query(SQL.getReacherNumPerson, val);
       break;
+   
   }
  
   return result[0]["count(1)"];
