@@ -14,7 +14,8 @@ const {
   getLinkCatalog,
   getIntro,
   searchArticle,
-  getSearchNum
+  getSearchNum,
+  getResearchdir
 } = require("../model/OperationData");
 //获取文章
 router.get("/showArticle/article", async ctx => {
@@ -121,10 +122,12 @@ router.get("/links", async ctx => {
   console.log(links);
   await ctx.render("Links", { links });
 });
-// //获取研究方向
-// router.get("/introduction/acgency", async ctx => {
-//   await ctx.render("./introduction/acgency");
-// });
+//获取研究方向
+router.get("/introduction/researchdir", async ctx => {
+  const data = await getResearchdir();
+  
+  await ctx.render("./introduction/researchdir",data);
+});
 //获取专家目录
 router.get("/introduction/team/catalog", async ctx => {
   let start = parseInt(ctx.query.start) || 0;

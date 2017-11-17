@@ -36,7 +36,9 @@ const {
   deleteFeedBack,
   getIntro,
   updateIntro,
-  searchPerson
+  searchPerson,
+  getResearchdir,
+  updateResearchdir
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -50,7 +52,6 @@ const {
 //存储文章
 router.post("/article", async ctx => {
   let article = ctx.request.body;
-
   const type = article.selectedOptions;
   const indexBanner = parseInt(article.indexBanner);
   const isbanner = parseInt(article.isbanner);
@@ -59,7 +60,11 @@ router.post("/article", async ctx => {
   article.type = type[1];
   article.praise = 0;
   article.browse = 1;
+  console.log(article.time)
+  
   article.time = article.time.replace(/T.*$/, "");
+  console.log(article.time)
+  
   try {
     article.summary = trimHtml(article.content, {
       preserveTags: false,
@@ -107,10 +112,9 @@ router.post("/deletearticle", async (ctx, next) => {
     if (data[i].isbanner) {
 
         let banner = await getBanner();
-        console.log(banner.length)
+      
         if(banner.length === 3){
           if(len > 1){
-            console.log("1")
             
             ctx.response.body = {
               code: 500,
@@ -118,7 +122,6 @@ router.post("/deletearticle", async (ctx, next) => {
             };
             return ;
           }else{
-            console.log("2")
             ctx.response.body = {
               code: 500,
               msg: "删除失败，目前轮播图少于四个"
@@ -133,7 +136,6 @@ router.post("/deletearticle", async (ctx, next) => {
         }
       
     }
-    console.log("3")
     
     await deleteArticle(sort, id, type)
       .then(() => {
@@ -163,7 +165,7 @@ router.get("/article", async ctx => {
   await getArticleOne(sort, id, type)
     .then(data => {
       data[0].sort = sort;
-
+      
       ctx.response.body = {
         code: 200,
         data: data[0],
@@ -210,15 +212,17 @@ router.post("/editarticle", async ctx => {
   const id = parseInt(article.id),
     sort = article.selectedOptions[0],
     type = parseInt(article.selectedOptions[1]),
+    indexBanner = parseInt(article.indexBanner),
+    isbanner = parseInt(article.isbanner);
+  delete article.indexBanner;
 
-  isbanner = parseInt(article.isbanner),
   content = article.content,
   title = article.title,
   time = article.time,
   source = article.source,
   author = article.author;
 
-  let { data, path } = await transCode.tranforBase64(content);
+  let { data, path } = await transCode.tranforBase64(content,indexBanner);
   img = path;
     
     await editArticle([
@@ -241,27 +245,21 @@ router.post("/editarticle", async ctx => {
         return 1;
       }
     });
-    console.log(banner)
-    console.log(banner.length)
     
     //之前是轮播图
     if(result.length > 0){
-      console.log("是轮播图")
 
         //取消轮播
         if(isbanner == 0){
-          console.log("取消轮播")
           
           //总轮播图小于4个时，拒绝取消
           if(banner.length < 4){
-            console.log("小于4个")
             ctx.response.body = {
               code: 500,
               msg: "总轮播图小于3个!"
             };
             return;
           }else{
-            console.log("合适")
       
             changeBanner([sort,isbanner,id,type]);
 
@@ -271,8 +269,6 @@ router.post("/editarticle", async ctx => {
          
           
         }else{
-      console.log("保持轮播")
-      console.log(path)
           updateBanner([type, path, title,id,sort]).catch(e => {
             throw e;
           });
@@ -280,16 +276,13 @@ router.post("/editarticle", async ctx => {
         }
     //之前不是轮播图    
     }else{
-      console.log("之前不是轮播图")
       changeBanner([sort,isbanner,id,type]);
       
       if(banner.length === 5){
-      console.log("刚好5个")
         
         saveBanner(sort, type, id, path, title,false);
       
       }else{
-      console.log("7")
       
         saveBanner(sort, type, id, path, title,true);
         
@@ -487,7 +480,6 @@ router.post("/team/edit", async ctx => {
 //搜索专家
 router.get("/team/search", async ctx => {
   const name = "%" + ctx.query.name + "%";
-  console.log(name)
   let start = parseInt(ctx.query.start) || 0;
 
   await searchPerson(name, start)
@@ -496,7 +488,6 @@ router.get("/team/search", async ctx => {
         var pageCount = await getSearchNum("person", null, name);
         //一页15条
       }
-      console.log(result)
      
 
       ctx.response.body = {
@@ -560,10 +551,8 @@ router.get("/friendLinks/catalog", async ctx => {
 //获取友情链接信息
 router.get("/friendLinks/one", async ctx => {
   const id = ctx.query.id;
-  console.log(id);
   await getLink(id)
     .then(data => {
-      console.log(data);
       ctx.response.body = {
         code: 200,
         data,
@@ -581,7 +570,6 @@ router.get("/friendLinks/one", async ctx => {
 //删除链接
 router.post("/friendLinks/delete", async ctx => {
   let data = ctx.request.body.links;
-  console.log(data);
   for (let i = 0, len = data.length; i < len; i++) {
     const id = parseInt(data[i].id);
     await deleteLink(id)
@@ -626,7 +614,6 @@ router.post("/friendLinks/edit", async ctx => {
   let data = ctx.request.body;
   let { name, link, id } = data;
   id = parseInt(id);
-  console.log(name, link, id);
   await editLink(name, link, id)
     .then(result => {
       ctx.response.body = {
@@ -685,7 +672,6 @@ router.get("/feedback/one", async ctx => {
 //删除意见反馈
 router.post("/feedback/delete", async ctx => {
   let data = ctx.request.body.feed;
-  console.log(data);
   for (let i = 0, len = data.length; i < len; i++) {
     const id = parseInt(data[i].id);
     await deleteFeedBack(id)
@@ -705,11 +691,10 @@ router.post("/feedback/delete", async ctx => {
       });
   }
 });
-
+//网站简介
 router.get("/intro", async ctx => {
   
 await getIntro().then(data => {
-     console.log(data[0].content)
       ctx.response.body = {
         code: 200,
         content: data[0].content,
@@ -726,7 +711,6 @@ await getIntro().then(data => {
 
 router.post("/intro", async ctx => {
     let article = ctx.request.body;
-    console.log(article.content)
     let { data, path } = await transCode.tranforBase64(article.content);
     const content = data;
     const result = await updateIntro(content);
@@ -743,4 +727,26 @@ router.post("/intro", async ctx => {
   //   return;
   // }
 });
+//研究方向
+router.get('/researchdir',async ctx=>{
+  const data = await getResearchdir();
+
+  ctx.response.body = {
+    content : data[0].content,
+    code: 200,
+    msg: "成功"
+  };
+})
+router.post('/researchdir',async ctx=>{
+  let article = ctx.request.body;
+  console.log(article)
+  let { data, path } = await transCode.tranforBase64(article.content);
+  const content = data;
+  const result = await updateResearchdir(content);
+ 
+  ctx.response.body = {
+    code: 200,
+    msg: "成功"
+  };
+})
 module.exports = router;

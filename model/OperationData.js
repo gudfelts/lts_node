@@ -152,3 +152,7 @@ module.exports.getFeedBackOne  = (id) => {
 
 module.exports.getIntro = () => query(SQL.getIntro);
 module.exports.updateIntro = (content) => query(SQL.updateIntro,content);
+
+
+module.exports.getResearchdir = () => query(SQL.getResearchdir);
+module.exports.updateResearchdir = (val) => query(SQL.updateResearchdir,val);

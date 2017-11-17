@@ -92,6 +92,9 @@ module.exports = {
         //网站介绍
 
         getIntro : 'select content from intro limit 1',
-        updateIntro : 'update intro set content = ?'
+        updateIntro : 'update intro set content = ?',
+        
+        getResearchdir:'select * from researchdir limit 1',
+        updateResearchdir : 'update researchdir set content = ?',
         
 }
