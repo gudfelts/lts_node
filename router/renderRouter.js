@@ -125,8 +125,8 @@ router.get("/links", async ctx => {
 //获取研究方向
 router.get("/introduction/researchdir", async ctx => {
   const data = await getResearchdir();
-  
-  await ctx.render("./introduction/researchdir",data);
+  console.log(data)
+  await ctx.render("./introduction/researchdir",{data:data[0].content});
 });
 //获取专家目录
 router.get("/introduction/team/catalog", async ctx => {
