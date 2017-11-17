@@ -100,7 +100,27 @@ router.post("/article", async ctx => {
     return;
   }
 });
-
+//上传头像
+router.post("/article/uploadImg", async ctx => {
+  const { files, fields } = await asyncBusboy(ctx.req);
+  
+  await downImg(files[0],'article')
+    .then(path => {
+      console.log(path)
+      ctx.response.body = {
+        code: 200,
+        path,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      console.log(err);
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
+});
 //删除
 router.post("/deletearticle", async (ctx, next) => {
   let data = ctx.request.body.article;
@@ -411,7 +431,7 @@ router.get("/team/person", async ctx => {
 router.post("/team/person/avatar", async ctx => {
   const { files, fields } = await asyncBusboy(ctx.req);
 
-  await downImg(files[0])
+  await downImg(files[0],'person')
     .then(path => {
       ctx.response.body = {
         code: 200,
