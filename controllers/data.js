@@ -100,7 +100,7 @@ router.post("/article", async ctx => {
     return;
   }
 });
-//上传头像
+//上传文章图片
 router.post("/article/uploadImg", async ctx => {
   const { files, fields } = await asyncBusboy(ctx.req);
   
@@ -471,6 +471,28 @@ router.post("/team/person", async ctx => {
     code: 200,
     msg: "增加成功"
   };
+});
+
+//上传文章图片
+router.post("/person/uploadImg", async ctx => {
+  const { files, fields } = await asyncBusboy(ctx.req);
+  
+  await downImg(files[0],'person')
+    .then(path => {
+      
+      ctx.response.body = {
+        code: 200,
+        path,
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      console.log(err);
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
 });
 //修改专家信息
 router.post("/team/edit", async ctx => {
