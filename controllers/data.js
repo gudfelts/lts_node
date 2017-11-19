@@ -60,7 +60,7 @@ router.post("/article", async ctx => {
   article.type = type[1];
   article.praise = 0;
   article.browse = 1;
-  console.log(article.time)
+  console.log(article.isbanner)
   
   article.time = article.time.replace(/T.*$/, "");
   console.log(article.time)
@@ -430,9 +430,10 @@ router.get("/team/person", async ctx => {
 //上传头像
 router.post("/team/person/avatar", async ctx => {
   const { files, fields } = await asyncBusboy(ctx.req);
-
   await downImg(files[0],'person')
     .then(path => {
+      console.log("s")
+      console.log(path)
       ctx.response.body = {
         code: 200,
         path,
@@ -440,6 +441,7 @@ router.post("/team/person/avatar", async ctx => {
       };
     })
     .catch(err => {
+      console.error(err)
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
