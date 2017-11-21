@@ -54,7 +54,13 @@
                 <div class="detail_colu">
              
                 <div class="colu_news colu_info ql-editor">
+                    <%if(!!data){%>
+                    
                     <%-data%>
+                    <%}%>
+                    <%if(!data){%>
+                        <p class='content-warm'>暂无内容</p>
+                    <%}%>   
 
                 </div>
 

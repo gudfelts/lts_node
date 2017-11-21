@@ -55,6 +55,11 @@
              
                 <div class="colu_news">
                     <div class="personList">
+
+                     <%if(person.length !== 0){%>
+                    
+                    
+                    
                        <%for(var i =0,len=person.length;i<len;i++){%>
                         <a class="list_item" href="/introduction/team/person?id=<%=person[i].id%>">
                             <img  class="list_img" src="<%=person[i].avatar%>" alt="图片加载失败" title="7七月"><br>
@@ -63,6 +68,11 @@
                             <div class="list_content"><%=person[i].summary%></div>
                         </a>
                        <%}%>
+                    <%}%>
+                       
+                    <%if(person.length === 0){%>
+                        <p class='content-warm'>暂无内容</p>
+                    <%}%>   
                     </div>
 
                 </div>
