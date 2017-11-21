@@ -1,32 +1,5 @@
 
 
-    /*-- 内容栏新闻css Start--*/
-
-.detail_colu
-{
-    width: 820px;    
-    margin: 0 auto;
-    padding: 15px 0px 35px 0;
-}
-
-
-
-.colu_news_list li ::before
-{
-    content: "\02022";
-    color: #006771;
-    font-size: 28px;
-    margin-right: 10px;
-}
-
-.colu_news_list li a
-{
-    font-size: 20px;
-    color: #565656;
-    margin-left: 5px;
-
-}
-
 .personList
 {
     width: 98%;
@@ -141,47 +114,3 @@
     transition: transform 0.8s;
     display: none;
 }
-
-
-   /*-- 内容栏新闻css end--*/
-
-
-   /* -- Ins 机构介绍内容css  Start--*/
-
-.colu_info
- {
-    padding: 50px;
-    white-space:normal;
-    
-}
-.colu_news p
-{
-    text-indent: 2em;
-    font-size: 18px;
-    color:#565656;
-    line-height: 35px;
-}
-
-.colu_info img 
-{
-    width: 820px;
-    height: 820px;
-}
-
-
-.colu_name h3:hover
-{
-    color: #006771;
-}
-
-.colu_news_list li a:hover
-{
-    color: #006771;
-}
-
-   /* -- Ins 机构介绍内容css  end--*/
-
-
-
-
-/*--内容栏css end--*/

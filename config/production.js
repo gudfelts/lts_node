@@ -27,6 +27,29 @@ module.exports = {
     // train: ["资讯顾问", "企业策划", "专家培训"],
     // construction: ["名家百人讲座", "智库动态"],
   },
+  type2: {
+    information: {
+      self : '科研资讯',
+      childen: ["科研简讯", "媒体报道"]
+    },
+    achievement: {
+      self:'科研成果',
+      childen:["著作","学术论文", "研究报告"]
+    },
+    research:{
+      self:'科学研究',
+      
+      childen:["课题研究", "调研考察"]
+    },
+    exchange: {
+      self:'学术交流',
+      childen:["学术学会", "流通论坛", "来访交流" ]
+    },
+    introduction :{
+      self:'机构介绍',
+      childen:['简介','研究方向','专家团队']
+    }
+  },
    logConfig : {
     appenders:[
       // 错误日志

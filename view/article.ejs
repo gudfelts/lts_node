@@ -59,6 +59,12 @@
             </div>   
             <div class="content ">
                 <article>
+                    <div class='post_crumb'>
+                    <%for(var i = 0,len = route.length;i < len;i++){%>
+                       <a href="<%=route[i].path%>"><%=route[i].name%></a> > 
+                       <%}%>
+                       正文
+                    </div>
                     <div class="content-title">
                         <h1>
                             <%=data.title%>

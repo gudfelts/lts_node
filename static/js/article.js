@@ -14,12 +14,9 @@ function praise(obj,self){
                     var icon =$(".icon-praise");
                                     
                     icon.addClass("icon-praise-animate");
-                    console.log("ssss")
                     var pariseNum = $('.praise-num');
                     var Num = pariseNum.text();
-                    console.log(Num)
                     var nowNum = parseInt(Num)+1;
-                    console.log(nowNum)
                     
                     pariseNum.text(nowNum);
                     $(self).unbind("click");
@@ -29,7 +26,6 @@ function praise(obj,self){
 function fixShare(){
     $(window).scroll(function(e){
         var scrollTop = $(window).scrollTop();
-        console.log(scrollTop)
         if(scrollTop > 310){
             $('.post_topshare').css({position : 'fixed',top:'5px'})
         }else{

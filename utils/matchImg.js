@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports.tranforBase64 = async (data,indexBanner) => {
+module.exports = async (data,indexBanner = 0) => {
 
 
   const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
@@ -9,6 +9,8 @@ module.exports.tranforBase64 = async (data,indexBanner) => {
   let IMG = false;
   let i = 0;
   let path = null;
+
+  //图片为BASE64格式，转换下载
   if(patt2.test(data)){
 
   
@@ -23,15 +25,18 @@ module.exports.tranforBase64 = async (data,indexBanner) => {
           throw "图片上传失败";
         }
       });
-      if(indexBanner == 0) (IMG = path);
+       
+      if(indexBanner == 0) {
+        IMG = path
+      }
       indexBanner--;
+      
       console.log(path)
       return `<img src=${path}>`;
     });
   }else if(patt3.test(data)){
-    IMG = data.match(patt3)[1];
-    
+      IMG = data.match(patt1);
+      IMG = IMG[indexBanner].match(patt3)[1];
   }
-  console.log(IMG)
   return { data, path: IMG };
 };

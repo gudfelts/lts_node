@@ -39,14 +39,13 @@ module.exports.getSearchNum = async (kind, sort, val, type) => {
 //获取目录
 module.exports.getCatalog = async (sort, type, start) => {
   
-  
-    let title = TYPE[sort][type - 1];
+    let title = TYPE[sort].self;
     
       let data = await query(SQL.getCatalog,[sort, type, start]).catch(e => {
         throw e;
       });
     
-      return { data, title, sorts: TYPE[sort], sort, code: 200 };
+      return { data, title, sorts: TYPE[sort].childen, sort, code: 200 };
   
  
 };

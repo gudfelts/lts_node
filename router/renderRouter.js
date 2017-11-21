@@ -1,7 +1,8 @@
 const router = require("koa-router")();
 const getIndex = require("../model/getIndex");
-const getImg = require("../utils/getImg");
 const TYPE = require('config-lite')(__dirname).type;
+const HOST = require('config-lite')(__dirname).HOST;
+
 const {
   getHotArticle,
   getTeamoOther,
@@ -27,7 +28,9 @@ router.get("/showArticle/article", async ctx => {
   const HotArticle = await getHotArticle(sort);
   //增加浏览数
   addBrowse(sort, id, type);
-  await ctx.render("article", { data: data[0], HotArticle, sort });
+  let route = [{name:'流通所首页',path:HOST},{name:TYPE[sort].self,path:`${HOST}/showArticle/catalog?sort=${sort}&type=${type}`}];
+  
+  await ctx.render("article", { data: data[0], HotArticle, sort, route });
 });
 
 //首页
@@ -81,7 +84,6 @@ router.get("/showArticle/search", async (ctx, next) => {
     }
   }
 
-  console.log(ctx.query.key)
   await ctx.render('search',{
     key : ctx.query.key,
     pageCount,
@@ -89,8 +91,8 @@ router.get("/showArticle/search", async (ctx, next) => {
     sort,
     data,
     type,
-    title : TYPE[sort][type-1],
-    sorts: TYPE[sort]
+    title : TYPE[sort].childen[type-1],
+    sorts: TYPE[sort].childen
   })
  
 });

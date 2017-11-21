@@ -24,6 +24,7 @@
     margin-bottom: 10px;
     border-bottom:1px solid #999999;
     padding-bottom: 8px;
+   
 }
 
 .title::before{
@@ -68,8 +69,8 @@
     padding: 30px;
     background: #FFFFFF;
     float: left;
-    width: 55%;
-    margin-left: 200px;
+    width: 65%;
+    margin-left: 120px
 }
 
 .content-title {
@@ -80,13 +81,14 @@
 /*标题*/
 .content-title h1 {
     font: bold 36px/1 "Microsoft Yahei";
-    color: #404040
+    color: #404040;
+    line-height: 50px;
 }
 
 /*发布日期 作者 浏览次数等*/
 .content-title .tit-info {
     display: block;
-    color: #928d8d;
+    color: #888;
     font-size: 12px;
     padding: 20px 0;
     
@@ -96,7 +98,10 @@
 .author{
     padding: 20px;
 }
-
+.post_crumb{
+    margin-bottom: 50px;
+    padding-left: 15px;
+}
 
 
 
@@ -108,10 +113,11 @@ article{
 }
 .content .content-main {
     width: 100%;
-    border-top: 1px solid #ddd;
+
     white-space:normal;
 }
 
+/*路径*/
 
 
 /*点赞*/
@@ -190,11 +196,12 @@ article{
 .left-section{
     width: 100px;
     position: absolute;
-    top:500px;
+    top: 500px;
     margin-left: -580px;
-    margin-top: 70px;
+    margin-top: 90px;
+    margin-right: 20px;
     position: absolute;
-    left: 50%;
+    left: 45%;
     top: 0;
 }
 .post_topshare .post_share{

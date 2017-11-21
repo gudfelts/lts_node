@@ -1,6 +1,5 @@
 const router = require("koa-router")();
-const transCode = require("../utils/transCode");
-const getImg = require("../utils/getImg");
+const matchImg = require("../utils/matchImg");
 const downImg = require("../utils/downImg");
 const asyncBusboy = require("async-busboy");
 const trimHtml = require("../utils/trim-html");
@@ -71,7 +70,7 @@ router.post("/article", async ctx => {
       limit: 30
     }).html;
 
-    var { data, path } = await transCode.tranforBase64(article.content,indexBanner);
+    var { data, path } = await matchImg(article.content,indexBanner);
     article.content = data;
     article.img = path;
     const result = await saveArticle(type[0], article);
@@ -185,10 +184,10 @@ router.get("/article", async ctx => {
   await getArticleOne(sort, id, type)
     .then(data => {
       data[0].sort = sort;
-      
       ctx.response.body = {
         code: 200,
         data: data[0],
+        route,
         msg: "获取成功"
       };
     })
@@ -235,14 +234,13 @@ router.post("/editarticle", async ctx => {
     indexBanner = parseInt(article.indexBanner),
     isbanner = parseInt(article.isbanner);
   delete article.indexBanner;
-
   content = article.content,
   title = article.title,
   time = article.time,
   source = article.source,
   author = article.author;
 
-  let { data, path } = await transCode.tranforBase64(content,indexBanner);
+  let { data, path } = await matchImg(content,indexBanner);
   img = path;
     
     await editArticle([
@@ -454,7 +452,7 @@ router.post("/team/person", async ctx => {
   let { name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
 
-  let result = await transCode.tranforBase64(content);
+  let result = await matchImg(content);
   content = result.data;
   await saveTeam({ name, content, position, avatar, summary })
     .then(result => {
@@ -502,7 +500,7 @@ router.post("/team/edit", async ctx => {
   let { id, name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
 
-  let result = await transCode.tranforBase64(content);
+  let result = await matchImg(content);
   content = result.data;
   id = parseInt(id);
 
@@ -753,24 +751,30 @@ await getIntro().then(data => {
     });
 });
 
+//修改简介
 router.post("/intro", async ctx => {
     let article = ctx.request.body;
-    let { data, path } = await transCode.tranforBase64(article.content);
+    let { data} = await matchImg(article.content);
     const content = data;
-    const result = await updateIntro(content);
+    
+    await updateIntro(content).then(() => {
+      ctx.response.body = {
+        code: 200,
+        msg: "修改成功"
+      };
+    }).catch( e=>{
+      ctx.response.body = {
+            code: 500,
+             msg: "更新失败!"
+           };
+      throw e;
+      
+    });
    
-    ctx.response.body = {
-      code: 200,
-      msg: "成功"
-    };
-  // } catch (error) {
-  //   ctx.response.body = {
-  //     code: 500,
-  //     msg: "上传文章失败!"
-  //   };
-  //   return;
-  // }
+  
+  
 });
+
 //研究方向
 router.get('/researchdir',async ctx=>{
   const data = await getResearchdir();
@@ -781,16 +785,24 @@ router.get('/researchdir',async ctx=>{
     msg: "成功"
   };
 })
+//修改研究方向
 router.post('/researchdir',async ctx=>{
   let article = ctx.request.body;
   console.log(article)
-  let { data, path } = await transCode.tranforBase64(article.content);
+  let { data} = await matchImg(article.content);
   const content = data;
-  const result = await updateResearchdir(content);
+  await updateResearchdir(content).then(() => {
+    ctx.response.body = {
+      code: 200,
+      msg: "修改成功"
+    };
+  }).catch( e=>{
+    ctx.response.body = {
+          code: 500,
+           msg: "更新失败!"
+         };
+    throw e;  
+  });;
  
-  ctx.response.body = {
-    code: 200,
-    msg: "成功"
-  };
 })
 module.exports = router;

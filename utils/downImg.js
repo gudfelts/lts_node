@@ -16,7 +16,8 @@ module.exports = (file,type)=>{
             }
              else {
                  console.log(target_path)
-                resolve( target_path)
+                 resolve( config.HOST+""+target_path)
+                 
 
             } 
             
