@@ -35,7 +35,8 @@ module.exports = {
         saveBanner: "insert into banner set ?",
         deleteBanner: "delete from banner limit 1",
         getBanner: "select * from banner limit 5",
-        getDeleteBannerID: "select id,sort,type from banner limit 1",
+        geBannerOne: "select id,sort,type from banner limit 1",
+        geBannerOneById: "select id,sort,type,path from banner where id = ? and sort = ? limit 1",
         deleteBannerById: "delete from banner where id = ? and sort = ? limit 1",
         
         updateBanner : 'update  banner set type = ?, path = ?,title = ? where id = ? and sort = ?',

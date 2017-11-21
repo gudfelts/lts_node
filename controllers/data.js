@@ -1,6 +1,7 @@
 const router = require("koa-router")();
 const matchImg = require("../utils/matchImg");
 const downImg = require("../utils/downImg");
+const matchBanner = require("../utils/matchBanner");
 const asyncBusboy = require("async-busboy");
 const trimHtml = require("../utils/trim-html");
 
@@ -18,6 +19,7 @@ const {
   getNum,
   saveBanner,
   getBanner,
+  geBannerOneById,
   deleteBannerById,
   changeBanner,
   updateBanner,
@@ -52,17 +54,15 @@ const {
 router.post("/article", async ctx => {
   let article = ctx.request.body;
   const type = article.selectedOptions;
-  const indexBanner = parseInt(article.indexBanner);
+  const indexbanner = parseInt(article.indexbanner);
   const isbanner = parseInt(article.isbanner);
   delete article.selectedOptions;
-  delete article.indexBanner;
+  delete article.indexbanner;
   article.type = type[1];
   article.praise = 0;
   article.browse = 1;
-  console.log(article.isbanner)
   
   article.time = article.time.replace(/T.*$/, "");
-  console.log(article.time)
   
   try {
     article.summary = trimHtml(article.content, {
@@ -70,14 +70,14 @@ router.post("/article", async ctx => {
       limit: 30
     }).html;
 
-    var { data, path } = await matchImg(article.content,indexBanner);
+    var { data, path } = await matchImg(article.content,indexbanner);
     article.content = data;
     article.img = path;
     const result = await saveArticle(type[0], article);
     const id = result.insertId;
     //储存banner
     if (isbanner === 1) {
-      let banner = await getBanner();
+      let banner = await geBannerOne();
       if(banner.length === 5){
 
         saveBanner(type[0], article.type, id, path, article.title,false);
@@ -182,16 +182,28 @@ router.get("/article", async ctx => {
 
   //获取当前banner
   await getArticleOne(sort, id, type)
-    .then(data => {
-      data[0].sort = sort;
+    .then(async data => {
+      data = data[0];
+      const isbanner = parseInt(data.isbanner);
+      let indexbanner = 0;
+      
+      if(isbanner){
+     
+        let banner = await geBannerOneById([data.id,sort]);
+        indexbanner = matchBanner(data.content,banner[0].path);
+        data.indexbanner = indexbanner;
+      }
+      data.sort = sort;
+
+      
       ctx.response.body = {
         code: 200,
-        data: data[0],
-        route,
+        data,
         msg: "获取成功"
       };
     })
     .catch(err => {
+      console.log(err)
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -231,16 +243,15 @@ router.post("/editarticle", async ctx => {
   const id = parseInt(article.id),
     sort = article.selectedOptions[0],
     type = parseInt(article.selectedOptions[1]),
-    indexBanner = parseInt(article.indexBanner),
+    indexbanner = parseInt(article.indexbanner),
     isbanner = parseInt(article.isbanner);
-  delete article.indexBanner;
+  delete article.indexbanner;
   content = article.content,
   title = article.title,
   time = article.time,
   source = article.source,
   author = article.author;
-
-  let { data, path } = await matchImg(content,indexBanner);
+  let { data, path } = await matchImg(content,indexbanner);
   img = path;
     
     await editArticle([

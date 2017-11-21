@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = async (data,indexBanner = 0) => {
+module.exports = async (data,indexbanner = 0) => {
 
 
   const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
@@ -26,17 +26,17 @@ module.exports = async (data,indexBanner = 0) => {
         }
       });
        
-      if(indexBanner == 0) {
+      if(indexbanner == 0) {
         IMG = path
       }
-      indexBanner--;
+      indexbanner--;
       
       console.log(path)
       return `<img src=${path}>`;
     });
   }else if(patt3.test(data)){
       IMG = data.match(patt1);
-      IMG = IMG[indexBanner].match(patt3)[1];
+      IMG = IMG[indexbanner].match(patt3)[1];
   }
   return { data, path: IMG };
 };

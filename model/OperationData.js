@@ -94,19 +94,25 @@ module.exports.getTeamoOther = id => query(SQL.getTeamoOther,id);
 module.exports.deletePerson = id => query(SQL.deletePerson,id);
 module.exports.updatePerson = (id, name, content, position, avatar,summary) =>query(SQL.updatePerson,[name, position, content, avatar,summary, id]);
 
-//存放banner
+/**
+ * 存放banner
+ * @param {*} sort 
+ * @param {*} type 
+ * @param {*} id 
+ * @param {*} path 
+ * @param {*} title 
+ * @param {*} flag flag为false表示当前banner有5个，需要删除一个
+ */
 module.exports.saveBanner =   (sort, type, id, path,title,flag = false) => {
     return new Promise(async(resolve, reject) => {
     try {
         
          if(!flag){
-          let result = await query(SQL.getDeleteBannerID); 
+          let result = await query(SQL.geBannerOne); 
           let {id,sort,type} = result[0]
-          console.log(id,sort,type)
           query(SQL.changeBanner,[sort,0,id,type]); 
           await query(SQL.deleteBanner)
          }
-         console.log(id,sort,type)
          
           query(SQL.saveBanner,{ sort, type, id, path,title});
       } catch (error) {
@@ -121,6 +127,7 @@ module.exports.saveBanner =   (sort, type, id, path,title,flag = false) => {
 module.exports.getBanner =  () => query(SQL.getBanner);
 module.exports.changeBanner  =  (val) => query(SQL.changeBanner,val );
 module.exports.updateBanner  =  (val) => query(SQL.updateBanner,val );
+module.exports.geBannerOneById  =  (val) => query(SQL.geBannerOneById,val );
 module.exports.updateBannerAll  =  (val) => query(SQL.updateBannerAll,val );
 module.exports.deleteBannerById =  (val) => query(SQL.deleteBannerById,val);
 //增加链接
