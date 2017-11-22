@@ -76,6 +76,8 @@
 .content-title {
     display: block;
     margin-bottom: 30px;
+    text-align: center;
+    
 }
 
 /*标题*/
@@ -83,7 +85,6 @@
     font: bold 36px/1 "Microsoft Yahei";
     color: #404040;
     line-height: 50px;
-    text-align: center;
 
 }
 
@@ -93,7 +94,7 @@
     color: #888;
     font-size: 12px;
     padding: 10px 0;
-    text-align: left;
+    
     
 }
 
