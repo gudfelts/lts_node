@@ -13,6 +13,8 @@
 
 .right-section{
     width:26%;
+    margin-left: 20px;
+    
 }
 .column1,.column2 {
     margin-top: 10px;
@@ -67,10 +69,10 @@
 
 
 .content {
-    padding: 30px;
     background: #FFFFFF;
     float: left;
-    width: 72%;
+    width: 70%;
+    margin-left: 10px;
 
 }
 
@@ -92,8 +94,8 @@
 /*发布日期 作者 浏览次数等*/
 .content-title .tit-info {
     display: block;
+    font: 12px/1 Arial, "Sim sun";
     color: #888;
-    font-size: 12px;
     padding: 10px 0;
     
     
@@ -121,13 +123,28 @@ article{
 .content .content-main {
     width: 100%;
     padding-left: 140px;
-    white-space:normal;
 }
-.content-main img{
+.post_text{
+    border-top: 1px solid #ddd;
+    white-space:normal;
+    
+}
+.post_text img{
     margin:20px auto;
 }
 
-
+.post_text > p{
+    font: 18px/32px "Microsoft Yahei";
+    color: #404040;
+    text-indent: 2em;
+    margin: 32px 0 0;
+}
+.article-editor{
+    font-family: "Sim sun";
+    color: #888888;
+    margin-top: 24px;
+    text-align: right;
+}
 
 /*点赞*/
 .parise-box{
@@ -136,6 +153,9 @@ article{
 }
 .parise-btn{
     display: none;
+}
+.parise-show{
+    text-align: center;
 }
 .icon-praise{
     display: block;
@@ -203,22 +223,14 @@ article{
 
 /*分享模块*/
 .left-section{
-    width: 100px;
+    width: 130px;
     position: absolute;
-    top: 500px;
-    margin-left: -550px;
-    margin-top: 320px;
-    margin-right: 20px;
-    position: absolute;
-    left: 45%;
-    top: 0;
+    top: 70px;
 }
 .post_topshare .post_share{
     position: relative;
-    left: -20px;
 }
 .post_topshare_title{
-    margin-left: -15px;
     margin-bottom: 10px;
     font-size: 20px;
 }

@@ -26,7 +26,7 @@ function praise(obj,self){
 function fixShare(){
     $(window).scroll(function(e){
         var scrollTop = $(window).scrollTop();
-        if(scrollTop > 585){
+        if(scrollTop > 385){
             $('.post_topshare').css({position : 'fixed',top:'5px'})
         }else{
             $('.post_topshare').css({position : 'absolute',top:'5px'})
