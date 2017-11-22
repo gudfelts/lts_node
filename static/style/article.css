@@ -69,13 +69,14 @@
     padding: 30px;
     background: #FFFFFF;
     float: left;
-    width: 65%;
-    margin-left: 120px
+    width: 72%;
+
 }
 
 .content-title {
     display: block;
     text-align: center;
+    margin-bottom: 50px;
 }
 
 /*标题*/
@@ -83,6 +84,7 @@
     font: bold 36px/1 "Microsoft Yahei";
     color: #404040;
     line-height: 50px;
+
 }
 
 /*发布日期 作者 浏览次数等*/
@@ -90,7 +92,8 @@
     display: block;
     color: #888;
     font-size: 12px;
-    padding: 20px 0;
+    padding: 10px;
+    text-align: left;
     
 }
 
@@ -99,8 +102,8 @@
     padding: 20px;
 }
 .post_crumb{
-    margin-bottom: 50px;
-    padding-left: 15px;
+    margin-bottom: 20px;
+    padding-left: 12px;
 }
 
 
@@ -113,11 +116,11 @@ article{
 }
 .content .content-main {
     width: 100%;
-
+    padding-left: 140px;
     white-space:normal;
 }
 
-/*路径*/
+
 
 
 /*点赞*/
@@ -198,8 +201,8 @@ article{
     width: 100px;
     position: absolute;
     top: 500px;
-    margin-left: -580px;
-    margin-top: 90px;
+    margin-left: -600px;
+    margin-top: 320px;
     margin-right: 20px;
     position: absolute;
     left: 45%;
@@ -208,6 +211,11 @@ article{
 .post_topshare .post_share{
     position: relative;
     left: -20px;
+}
+.post_topshare_title{
+    margin-left: -15px;
+    margin-bottom: 10px;
+    font-size: 20px;
 }
 .js_qrcode_wrap{
     width: 100px;
