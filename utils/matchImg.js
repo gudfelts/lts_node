@@ -37,7 +37,7 @@ module.exports = async (data,indexbanner = 0,isbanner = 0) => {
       if(isbanner){
         IMG = data.match(patt1);
        
-            IMG = IMG[indexbanner].match(patt3)[1];
+        IMG = IMG[indexbanner].match(patt3)[1];
       }else{
         IMG = data.match(patt1);
         IMG = IMG[0].match(patt3)[1];
@@ -45,6 +45,7 @@ module.exports = async (data,indexbanner = 0,isbanner = 0) => {
     }
     catch(error){
       throw error;
+      IMG = data.match(patt1);
       IMG = IMG[0].match(patt3)[1];
       
     }

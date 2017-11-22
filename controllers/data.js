@@ -196,7 +196,7 @@ router.get("/article", async ctx => {
         data.indexbanner = indexbanner;
       }
       data.sort = sort;
-
+      data.indexbanner = indexbanner;
       
       ctx.response.body = {
         code: 200,
