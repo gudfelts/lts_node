@@ -75,8 +75,7 @@
 
 .content-title {
     display: block;
-    text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 /*标题*/
@@ -92,7 +91,7 @@
     display: block;
     color: #888;
     font-size: 12px;
-    padding: 10px;
+    padding: 10px 0;
     text-align: left;
     
 }
@@ -103,7 +102,6 @@
 }
 .post_crumb{
     margin-bottom: 20px;
-    padding-left: 12px;
 }
 
 
@@ -127,7 +125,6 @@ article{
 .parise-box{
     width:300px;
     margin: 0 auto 50px auto;
-    text-align: center;
 }
 .parise-btn{
     display: none;
