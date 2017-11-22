@@ -20,6 +20,7 @@ const {
   saveBanner,
   getBanner,
   geBannerOneById,
+  geBannerOne,
   deleteBannerById,
   changeBanner,
   updateBanner,
@@ -96,6 +97,7 @@ router.post("/article", async ctx => {
       code: 500,
       msg: "上传文章失败!"
     };
+    throw error
     return;
   }
 });
@@ -251,7 +253,7 @@ router.post("/editarticle", async ctx => {
   time = article.time,
   source = article.source,
   author = article.author;
-  let { data, path } = await matchImg(content,indexbanner);
+  let { data, path } = await matchImg(content,indexbanner,isbanner);
   img = path;
     
     await editArticle([

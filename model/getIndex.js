@@ -6,6 +6,7 @@ const SQL = require("../config/sql");
  * @param {*} aNew 
  */
 const pick = aNew => {
+  let flag = false;
   for (let i = 0; i < aNew.length; i++) {
     let hasIMG = aNew[i].img;
     let isbanner = aNew[i].isbanner;
