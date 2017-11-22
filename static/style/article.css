@@ -1,5 +1,5 @@
 .container-types{
-    width: 1400px;
+    width: 1300px;
     position: relative;
 }
 
@@ -83,6 +83,7 @@
     font: bold 36px/1 "Microsoft Yahei";
     color: #404040;
     line-height: 50px;
+    text-align: center;
 
 }
 
@@ -102,8 +103,11 @@
 }
 .post_crumb{
     margin-bottom: 20px;
+    font: 14px/1 "Sim sun";
 }
-
+.post_crumb a{
+    color: #252525;
+}
 
 
 
