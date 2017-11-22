@@ -129,15 +129,12 @@ const getExchange = async () => {
 
 
 module.exports =  async () => {
-  try {
+ 
     let info = await getInfo();
     let research = await getResearch();
     let exchange = await getExchange();
-   
     let banner = await getBanner();
     return { info, research, exchange, banner};
-  } catch (error) {
-    throw error;
-  }
+ 
 };
 

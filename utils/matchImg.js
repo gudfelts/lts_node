@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = async (data,indexbanner = 0,isbanner = 1) => {
+module.exports = async (data,indexbanner = 0,isbanner = 0) => {
 
 
   const patt1 = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
@@ -13,7 +13,6 @@ module.exports = async (data,indexbanner = 0,isbanner = 1) => {
   //图片为BASE64格式，转换下载
   if(patt2.test(data)){
 
-  
     data = await data.replace(patt1, function(match, capture) {
       
       path = "/images/article/" + (parseInt(Date.now()) +Math.ceil(Math.random()*10)) +".png";
@@ -34,12 +33,22 @@ module.exports = async (data,indexbanner = 0,isbanner = 1) => {
       return `<img src=${path}>`;
     });
   }else if(patt3.test(data)){
-      IMG = data.match(patt1);
-      try {
-          IMG = IMG[indexbanner].match(patt3)[1];
-      } catch (error) {
-          IMG = IMG[0].match(patt3)[1];
+    try {
+      if(isbanner){
+        IMG = data.match(patt1);
+       
+            IMG = IMG[indexbanner].match(patt3)[1];
+      }else{
+        IMG = data.match(patt1);
+        IMG = IMG[0].match(patt3)[1];
       }
+    }
+    catch(error){
+      throw error;
+      IMG = IMG[0].match(patt3)[1];
+      
+    }
+      
   }
   return { data, path: IMG };
 };

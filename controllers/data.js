@@ -71,7 +71,7 @@ router.post("/article", async ctx => {
       limit: 30
     }).html;
 
-    var { data, path } = await matchImg(article.content,indexbanner);
+    var { data, path } = await matchImg(article.content,indexbanner,isbanner);
     article.content = data;
     article.img = path;
     const result = await saveArticle(type[0], article);
@@ -465,8 +465,6 @@ router.post("/team/person", async ctx => {
   let { name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
 
-  let result = await matchImg(content);
-  content = result.data;
   await saveTeam({ name, content, position, avatar, summary })
     .then(result => {
       ctx.response.body = {
@@ -513,8 +511,6 @@ router.post("/team/edit", async ctx => {
   let { id, name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
 
-  let result = await matchImg(content);
-  content = result.data;
   id = parseInt(id);
 
   await updatePerson(id, name, content, position, avatar, summary)
@@ -767,10 +763,8 @@ await getIntro().then(data => {
 //修改简介
 router.post("/intro", async ctx => {
     let article = ctx.request.body;
-    let { data} = await matchImg(article.content);
-    const content = data;
     
-    await updateIntro(content).then(() => {
+    await updateIntro(article.content).then(() => {
       ctx.response.body = {
         code: 200,
         msg: "修改成功"
@@ -802,9 +796,7 @@ router.get('/researchdir',async ctx=>{
 router.post('/researchdir',async ctx=>{
   let article = ctx.request.body;
   console.log(article)
-  let { data} = await matchImg(article.content);
-  const content = data;
-  await updateResearchdir(content).then(() => {
+  await updateResearchdir(article.content).then(() => {
     ctx.response.body = {
       code: 200,
       msg: "修改成功"
