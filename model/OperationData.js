@@ -128,7 +128,7 @@ module.exports.getBanner =  () => query(SQL.getBanner);
 module.exports.changeBanner  =  (val) => query(SQL.changeBanner,val );
 module.exports.updateBanner  =  (val) => query(SQL.updateBanner,val );
 module.exports.geBannerOneById  =  (val) => query(SQL.geBannerOneById,val );
-module.exports.geBannerOne  =  () => query(SQL.geBannerOne);
+module.exports.geBannerOne  =  () => query(SQL.getBanner);
 module.exports.updateBannerAll  =  (val) => query(SQL.updateBannerAll,val );
 module.exports.deleteBannerById =  (val) => query(SQL.deleteBannerById,val);
 //增加链接
