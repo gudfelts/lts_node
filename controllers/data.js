@@ -218,13 +218,13 @@ router.get("/searchArticle", async (ctx, next) => {
   const sort = ctx.query.sort;
   const type = parseInt(ctx.query.type);
   let start = parseInt(ctx.query.start) || 0;
-
   await searchArticle(sort, title, type, start)
     .then(async result => {
-      if (start === 0) {
+      if (start == 0) {
         var pageCount = await getSearchNum("article", sort, title, type);
         //一页15条
       }
+    
       ctx.response.body = {
         data: result,
         pageCount,
