@@ -41,7 +41,13 @@ const {
   updateIntro,
   searchPerson,
   getResearchdir,
-  updateResearchdir
+  updateResearchdir,
+
+  saveDraft,
+  getDraft,
+  getDraftOne,
+  updateDraft,
+  deleteDraft
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -63,16 +69,16 @@ router.post("/article", async ctx => {
   article.type = type[1];
   article.praise = 0;
   article.browse = 1;
-  
+
   article.time = article.time.replace(/T.*$/, "");
-  
+
   try {
     article.summary = trimHtml(article.content, {
       preserveTags: false,
       limit: 30
     }).html;
 
-    var { data, path } = await matchImg(article.content,indexbanner,isbanner);
+    var { data, path } = await matchImg(article.content, indexbanner, isbanner);
     article.content = data;
     article.img = path;
     const result = await saveArticle(type[0], article);
@@ -80,33 +86,31 @@ router.post("/article", async ctx => {
     //储存banner
     if (isbanner === 1) {
       let banner = await geBannerOne();
-      if(banner.length === 5){
-
-        saveBanner(type[0], article.type, id, path, article.title,false);
-      }else{
-        saveBanner(type[0], article.type, id, path, article.title,true);
-        
+      if (banner.length === 5) {
+        saveBanner(type[0], article.type, id, path, article.title, false);
+      } else {
+        saveBanner(type[0], article.type, id, path, article.title, true);
       }
     }
 
     ctx.response.body = {
       code: 200,
-      msg: "成功"
+      msg: "发布文章成功"
     };
   } catch (error) {
     ctx.response.body = {
       code: 500,
-      msg: "上传文章失败!"
+      msg: "发布文章失败!"
     };
-    throw error
+    throw error;
     return;
   }
 });
 //上传文章图片
 router.post("/article/uploadImg", async ctx => {
   const { files, fields } = await asyncBusboy(ctx.req);
-  
-  await downImg(files[0],'article')
+
+  await downImg(files[0])
     .then(path => {
       ctx.response.body = {
         code: 200,
@@ -123,7 +127,7 @@ router.post("/article/uploadImg", async ctx => {
     });
 });
 //删除
-router.post("/deletearticle", async (ctx, next) => {
+router.post("/article/delete", async (ctx, next) => {
   let data = ctx.request.body.article;
   let sort = ctx.request.body.sort;
 
@@ -131,33 +135,27 @@ router.post("/deletearticle", async (ctx, next) => {
     const id = data[i].id,
       type = data[i].type;
     if (data[i].isbanner) {
+      let banner = await getBanner();
 
-        let banner = await getBanner();
-      
-        if(banner.length === 3){
-          if(len > 1){
-            
-            ctx.response.body = {
-              code: 500,
-              msg: "删除失败，第"+(i+1)+"篇文章为轮播图，目前轮播图少于四个"
-            };
-            return ;
-          }else{
-            ctx.response.body = {
-              code: 500,
-              msg: "删除失败，目前轮播图少于四个"
-            };
-            return;
-          }
-          
-        }else{
-        
-          deleteBannerById([id, sort]);
-      
+      if (banner.length === 3) {
+        if (len > 1) {
+          ctx.response.body = {
+            code: 500,
+            msg: "删除失败，第" + (i + 1) + "篇文章为轮播图，目前轮播图少于四个"
+          };
+          return;
+        } else {
+          ctx.response.body = {
+            code: 500,
+            msg: "删除失败，目前轮播图少于四个"
+          };
+          return;
         }
-      
+      } else {
+        deleteBannerById([id, sort]);
+      }
     }
-    
+
     await deleteArticle(sort, id, type)
       .then(() => {
         if (i === len - 1) {
@@ -188,16 +186,15 @@ router.get("/article", async ctx => {
       data = data[0];
       const isbanner = parseInt(data.isbanner);
       let indexbanner = 0;
-      
-      if(isbanner){
-     
-        let banner = await geBannerOneById([data.id,sort]);
-        indexbanner = matchBanner(data.content,banner[0].path);
+
+      if (isbanner) {
+        let banner = await geBannerOneById([data.id, sort]);
+        indexbanner = matchBanner(data.content, banner[0].path);
         data.indexbanner = indexbanner;
       }
       data.sort = sort;
       data.indexbanner = indexbanner;
-      
+
       ctx.response.body = {
         code: 200,
         data,
@@ -205,7 +202,7 @@ router.get("/article", async ctx => {
       };
     })
     .catch(err => {
-      console.log(err)
+      console.log(err);
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -213,7 +210,7 @@ router.get("/article", async ctx => {
     });
 });
 //搜索文章
-router.get("/searchArticle", async (ctx, next) => {
+router.get("/article/search", async (ctx, next) => {
   const title = "%" + ctx.query.title + "%";
   const sort = ctx.query.sort;
   const type = parseInt(ctx.query.type);
@@ -224,7 +221,7 @@ router.get("/searchArticle", async (ctx, next) => {
         var pageCount = await getSearchNum("article", sort, title, type);
         //一页15条
       }
-    
+
       ctx.response.body = {
         data: result,
         pageCount,
@@ -240,7 +237,7 @@ router.get("/searchArticle", async (ctx, next) => {
     });
 });
 //修改文章
-router.post("/editarticle", async ctx => {
+router.post("/article/edit", async ctx => {
   let article = ctx.request.body;
   const id = parseInt(article.id),
     sort = article.selectedOptions[0],
@@ -248,89 +245,76 @@ router.post("/editarticle", async ctx => {
     indexbanner = parseInt(article.indexbanner),
     isbanner = parseInt(article.isbanner);
   delete article.indexbanner;
-  content = article.content,
-  title = article.title,
-  time = article.time,
-  source = article.source,
-  author = article.author;
-  let { data, path } = await matchImg(content,indexbanner,isbanner);
+    content = article.content,
+    title = article.title,
+    time = article.time,
+    source = article.source,
+    author = article.author;
+  let { data, path } = await matchImg(content, indexbanner, isbanner);
   img = path;
-    
-    await editArticle([
-      sort,
-      title,
-      author,
-      source,
-      time,
-      content,
-      path,
-      type,
-      id
-    ]);
-    //true表示之前是轮播图，false表示之前不是轮播图
-    let flag = true;
-    //检测他之前是否是轮播图
-    let banner = await getBanner();
-    let result = banner.filter(item => {
-      if (id == item.id && sort == item.sort) {
-        return 1;
-      }
-    });
-    
-    //之前是轮播图
-    if(result.length > 0){
 
-        //取消轮播
-        if(isbanner == 0){
-          
-          //总轮播图小于4个时，拒绝取消
-          if(banner.length < 4){
-            ctx.response.body = {
-              code: 500,
-              msg: "总轮播图小于3个!"
-            };
-            return;
-          }else{
-      
-            changeBanner([sort,isbanner,id,type]);
-
-            //之前是轮播图，则删掉之前的数据
-            deleteBannerById([id, sort]);
-          }
-         
-          
-        }else{
-          updateBanner([type, path, title,id,sort]).catch(e => {
-            throw e;
-          });
-        
-        }
-    //之前不是轮播图    
-    }else{
-      changeBanner([sort,isbanner,id,type]);
-      
-      if(banner.length === 5){
-        
-        saveBanner(sort, type, id, path, title,false);
-      
-      }else{
-      
-        saveBanner(sort, type, id, path, title,true);
-        
-      }
-      
+  await editArticle([
+    sort,
+    title,
+    author,
+    source,
+    time,
+    content,
+    path,
+    type,
+    id
+  ]);
+  //true表示之前是轮播图，false表示之前不是轮播图
+  let flag = true;
+  //检测他之前是否是轮播图
+  let banner = await getBanner();
+  let result = banner.filter(item => {
+    if (id == item.id && sort == item.sort) {
+      return 1;
     }
-  
-    ctx.response.body = {
-      code: 200,
-      msg: "修改成功"
-    };
-  
-  
-})
+  });
+
+  //之前是轮播图
+  if (result.length > 0) {
+    //取消轮播
+    if (isbanner == 0) {
+      //总轮播图小于4个时，拒绝取消
+      if (banner.length < 4) {
+        ctx.response.body = {
+          code: 500,
+          msg: "总轮播图小于3个!"
+        };
+        return;
+      } else {
+        changeBanner([sort, isbanner, id, type]);
+
+        //之前是轮播图，则删掉之前的数据
+        deleteBannerById([id, sort]);
+      }
+    } else {
+      updateBanner([type, path, title, id, sort]).catch(e => {
+        throw e;
+      });
+    }
+    //之前不是轮播图
+  } else {
+    changeBanner([sort, isbanner, id, type]);
+
+    if (banner.length === 5) {
+      saveBanner(sort, type, id, path, title, false);
+    } else {
+      saveBanner(sort, type, id, path, title, true);
+    }
+  }
+
+  ctx.response.body = {
+    code: 200,
+    msg: "修改成功"
+  };
+});
 
 //获取文章目录
-router.get("/catalog", async (ctx, next) => {
+router.get("/article/catalog", async (ctx, next) => {
   const sort = ctx.query.sort;
   const type = ctx.query.type;
   let start = parseInt(ctx.query.start) || 0;
@@ -359,27 +343,25 @@ router.post("/article/batchMove", async (ctx, next) => {
   let data = ctx.request.body.article;
   let sort = ctx.request.body.sort;
   let type = ctx.request.body.type;
-  let sortNEW =  ctx.request.body.column[0]
+  let sortNEW = ctx.request.body.column[0];
   let typeNEW = ctx.request.body.column[1];
 
   for (let i = 0, len = data.length; i < len; i++) {
     const id = data[i].id;
-    
-      let articles = await getArticleOne(sort, id, type);
-      const article = articles[0];
-      article.type = parseInt(typeNEW);
-     
-      await deleteArticle(sort, id, type);
-      
-      article.id = null;
-      let result = await saveArticle(sortNEW, article);
-      const idNEW =parseInt(result.insertId);
+
+    let articles = await getArticleOne(sort, id, type);
+    const article = articles[0];
+    article.type = parseInt(typeNEW);
+
+    await deleteArticle(sort, id, type);
+
+    article.id = null;
+    let result = await saveArticle(sortNEW, article);
+    const idNEW = parseInt(result.insertId);
     if (article.isbanner) {
-      updateBannerAll([typeNEW,sortNEW,idNEW,id,sort]).catch(e => {
+      updateBannerAll([typeNEW, sortNEW, idNEW, id, sort]).catch(e => {
         throw e;
       });
-        
-      
     }
     if (i === len - 1) {
       ctx.response.body = {
@@ -388,8 +370,6 @@ router.post("/article/batchMove", async (ctx, next) => {
       };
     }
   }
-
- 
 });
 //获取团队列表
 router.get("/team/catalog", async ctx => {
@@ -441,7 +421,7 @@ router.get("/team/person", async ctx => {
 //上传头像
 router.post("/team/person/avatar", async ctx => {
   const { files, fields } = await asyncBusboy(ctx.req);
-  await downImg(files[0],'person')
+  await downImg(files[0], "person")
     .then(path => {
       ctx.response.body = {
         code: 200,
@@ -450,7 +430,7 @@ router.post("/team/person/avatar", async ctx => {
       };
     })
     .catch(err => {
-      console.error(err)
+      console.error(err);
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -464,7 +444,7 @@ router.post("/team/person", async ctx => {
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
   const rank = await getPersonNum();
 
-  await saveTeam({ name, content, position, avatar, summary,rank})
+  await saveTeam({ name, content, position, avatar, summary, rank })
     .then(result => {
       ctx.response.body = {
         code: 200,
@@ -483,58 +463,40 @@ router.post("/team/person", async ctx => {
   };
 });
 //修改专家顺序
-router.post('/team/index', async ctx=>{
+router.post("/team/rank", async ctx => {
   let id = parseInt(ctx.request.body.id[0]);
   let rank = parseInt(ctx.request.body.rank[0]);
 
-  
-  await updatePersonIndex([rank,id]).then(async ()=>{
-    console.log(rank,id)
-    id = parseInt(ctx.request.body.id[1]);
-    rank = parseInt(ctx.request.body.rank[1]);
-    await updatePersonIndex([rank,id]).then(()=>{
-      ctx.response.body = {
-        code: 200,
-        msg: "修改成功"
-      };
-    }).catch(e=>{
+  await updatePersonIndex([rank, id])
+    .then(async () => {
+      console.log(rank, id);
+      id = parseInt(ctx.request.body.id[1]);
+      rank = parseInt(ctx.request.body.rank[1]);
+      await updatePersonIndex([rank, id])
+        .then(() => {
+          ctx.response.body = {
+            code: 200,
+            msg: "修改成功"
+          };
+        })
+        .catch(e => {
+          ctx.response.body = {
+            code: 400,
+            msg: "修改失败"
+          };
+          throw e;
+        });
+    })
+    .catch(e => {
       ctx.response.body = {
         code: 400,
         msg: "修改失败"
       };
       throw e;
-    })
-  }).catch(e=>{
-    ctx.response.body = {
-      code: 400,
-      msg: "修改失败"
-    };
-    throw e;
-    
-  })
-
-})
-//上传文章图片
-router.post("/person/uploadImg", async ctx => {
-  const { files, fields } = await asyncBusboy(ctx.req);
-  
-  await downImg(files[0],'person')
-    .then(path => {
-      
-      ctx.response.body = {
-        code: 200,
-        path,
-        msg: "获取成功"
-      };
-    })
-    .catch(err => {
-      console.log(err);
-      ctx.response.body = {
-        code: 500,
-        msg: "获取失败"
-      };
     });
 });
+//上传文章图片
+
 //修改专家信息
 router.post("/team/edit", async ctx => {
   let data = ctx.request.body;
@@ -569,7 +531,6 @@ router.get("/team/search", async ctx => {
         var pageCount = await getSearchNum("person", null, name);
         //一页15条
       }
-     
 
       ctx.response.body = {
         persons: result,
@@ -774,8 +735,8 @@ router.post("/feedback/delete", async ctx => {
 });
 //网站简介
 router.get("/intro", async ctx => {
-  
-await getIntro().then(data => {
+  await getIntro()
+    .then(data => {
       ctx.response.body = {
         code: 200,
         content: data[0].content,
@@ -792,47 +753,209 @@ await getIntro().then(data => {
 
 //修改简介
 router.post("/intro", async ctx => {
-    let article = ctx.request.body;
-    
-    await updateIntro(article.content).then(() => {
+  let article = ctx.request.body;
+
+  await updateIntro(article.content)
+    .then(() => {
       ctx.response.body = {
         code: 200,
         msg: "修改成功"
       };
-    }).catch( e=>{
+    })
+    .catch(e => {
       ctx.response.body = {
-            code: 500,
-             msg: "更新失败!"
-           };
+        code: 500,
+        msg: "更新失败!"
+      };
       throw e;
     });
 });
 
 //研究方向
-router.get('/researchdir',async ctx=>{
+router.get("/researchdir", async ctx => {
   const data = await getResearchdir();
 
   ctx.response.body = {
-    content : data[0].content,
+    content: data[0].content,
     code: 200,
     msg: "成功"
   };
-})
+});
 //修改研究方向
-router.post('/researchdir',async ctx=>{
+router.post("/researchdir", async ctx => {
   let article = ctx.request.body;
-  await updateResearchdir(article.content).then(() => {
+  await updateResearchdir(article.content)
+    .then(() => {
+      ctx.response.body = {
+        code: 200,
+        msg: "修改成功"
+      };
+    })
+    .catch(e => {
+      ctx.response.body = {
+        code: 500,
+        msg: "更新失败!"
+      };
+      throw e;
+    });
+});
+
+//存储草稿
+router.post("/draft", async ctx => {
+  let article = ctx.request.body;
+  article.type = parseInt(article.type)
+  article.time = article.time.replace(/T.*$/, "");
+
+  try {
+    await saveDraft(article);
+
     ctx.response.body = {
       code: 200,
-      msg: "修改成功"
+      msg: "成功"
     };
-  }).catch( e=>{
+  } catch (error) {
     ctx.response.body = {
-          code: 500,
-           msg: "更新失败!"
-         };
-    throw e;  
-  });;
+      code: 500,
+      msg: "上传文章失败!"
+    };
+    throw error;
+    return;
+  }
+});
+//存储草稿
+router.post("/draft/update", async ctx => {
+  let article = ctx.request.body;
+  id = article.id;
+  delete article.id;
+  
+  article.time = article.time.replace(/T.*$/, "");
+
+  try {
+    await updateDraft([article.title, article.content, article.time, article.source, article.author,id]);
+
+    ctx.response.body = {
+      code: 200,
+      msg: "更新成功"
+    };
+  } catch (error) {
+    ctx.response.body = {
+      code: 500,
+      msg: "更新草稿失败!"
+    };
+    throw error;
+    return;
+  }
+});
+//获取单个草稿
+router.get("/draft", async ctx => {
+  const id = ctx.query.id;
+
+  await getDraftOne(id)
+    .then(async data => {
+      ctx.response.body = {
+        code: 200,
+        data: data[0],
+        msg: "获取成功"
+      };
+    })
+    .catch(err => {
+      console.log(err);
+      ctx.response.body = {
+        code: 500,
+        msg: "获取失败"
+      };
+    });
+});
+//获取草稿目录
+router.get("/draft/catalog", async (ctx, next) => {
+  let start = parseInt(ctx.query.start) || 0;
+
+  try {
+    await getDraft(start).then(async data => {
+      let pageCount = 0;
+      if (start === 0) {
+        pageCount = await getNum('draft', false);
+        //一页15条
+      }
+      ctx.response.body = {
+        data,
+        pageCount,
+        code: 200,
+        msg:'获取成功'
+      };
+    });
+  } catch (error) {
+    console.log(error);
+    ctx.response.body = {
+      code: 201,
+      msg: "搜索出现错误"
+    };
+  }
+});
+//直接发布草稿
+router.get("/draft/publish", async (ctx, next) => {
+  let id = parseInt(ctx.query.id);
+
  
-})
+  let result = await getDraftOne(id);
+  let article = result[0];
+      sort = article.sort;
+      idDraft   = article.id;  
+  delete article.sort;   
+  delete article.id;   
+  
+  article.isbanner = 0;
+  article.praise = 0;
+  article.browse = 1;
+
+  
+  article.summary = trimHtml(article.content, {
+    preserveTags: false,
+    limit: 30
+  }).html;
+  try {
+    let { data, path } = await matchImg(article.content);
+    article.content = data;
+    article.img = path;
+    await saveArticle(sort, article);
+    await deleteDraft(idDraft)
+    ctx.response.body = {
+      code: 200,
+      msg: "发布文章成功"
+    };
+  } catch (error) {
+    console.log(error)
+    ctx.response.body = {
+      code: 500,
+      msg: "发布文章失败!"
+    };
+  }
+ 
+});
+//删除目录
+router.post("/draft/delete", async ctx => {
+  let data = ctx.request.body.article;
+
+  for (let i = 0, len = data.length; i < len; i++) {
+    const id = data[i].id;
+     
+    await deleteDraft(id).then(() => {
+        if (i === len - 1) {
+          ctx.response.body = {
+            code: 200,
+            msg: "删除成功"
+          };
+        }
+      })
+      .catch(e => {
+        ctx.response.body = {
+          code: 500,
+          msg: "删除失败"
+        };
+      });
+  }
+  
+  
+});
+
 module.exports = router;

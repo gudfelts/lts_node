@@ -60,7 +60,7 @@ module.exports.getHotArticle = async sort => {
 module.exports.getIndex = (val) => query(SQL.getIndexData,val)
   
 
-
+//获取某栏目文章的总数量
 module.exports.getAllNum = async (sort) => {
  
     result = await query(SQL.getAllNum,sort);
@@ -171,3 +171,11 @@ module.exports.updateIntro = (content) => query(SQL.updateIntro,content);
 
 module.exports.getResearchdir = () => query(SQL.getResearchdir);
 module.exports.updateResearchdir = (val) => query(SQL.updateResearchdir,val);
+
+//草稿
+module.exports.saveDraft = (val) => query(SQL.saveDraft,val);
+module.exports.getDraft = (val) => query(SQL.getDraft,val);
+module.exports.getDraftOne = (val) => query(SQL.getDraftOne,val);
+module.exports.updateDraft = (val) => query(SQL.updateDraft,val);
+module.exports.deleteDraft = (val) => query(SQL.deleteDraft,val);
+

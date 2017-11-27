@@ -45,6 +45,13 @@ module.exports = {
         updateBanner : 'update  banner set type = ?, path = ?,title = ? where id = ? and sort = ?',
         updateBannerAll : 'update  banner set type = ?,sort = ? ,id = ? where id = ? and sort = ?',
         
+        //草稿
+        saveDraft: "insert into draft set ?",
+        getDraft: "select title,id,type,sort,author,time,source from draft limit ?,10",
+        getDraftOne: "select  * from draft where id = ? limit 1",
+        updateDraft: "update draft set title = ?, content = ?,time = ?,source = ? ,author = ?  where id = ? limit 1",
+        deleteDraft: "delete from draft where id = ? limit 1",
+        
         /*
         科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
         科研资讯，其中type数据：1为科研简讯，2为基地资讯，3为媒体报道
@@ -54,6 +61,7 @@ module.exports = {
         智库建设，其中type数据：1为名家百人讲座，2为智库动态
         */
         saveArticle: "insert into ?? set ?",
+   
         //删除文章
         deleteArticle: "delete from ?? where id = ? and type = ?",
         //删除文章
@@ -70,7 +78,7 @@ module.exports = {
         //获取总条数
         getNumNoTYPE: "select count(1) from ??",
         //更新内容
-        editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,type = ? where id = ?",
+        editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,type = ? where id = ? limit 1",
         //查找文章
         searchArticle : 'select title,author,id,type,img,browse,praise,summary,time,source from ?? where title like ? and type = ? order by id desc limit ?,15',
         //查找文章
@@ -90,7 +98,7 @@ module.exports = {
         saveFeedBack : 'insert into feedback set ?',
         getFeedBackCatalog : 'select id,time,title,isread from feedback limit ?,20',
         getFeedBackOne : 'select * from feedback where id = ? limit 1',
-        setFeedBackRead : 'update  feedback set isread = 1 where id = ?',
+        setFeedBackRead : 'update  feedback set isread = 1 where id = ? limit 1',
         deleteFeedBack : 'delete from feedback where id = ? limit 1',
 
         //网站介绍
