@@ -16,7 +16,7 @@ module.exports = {
         addPraise: "update ?? set praise = praise + 1 where id = ?",
         
         //获取团队列表
-        getTeam: "select * from team limit ?,20",
+        getTeam: "select * from team order by rank asc limit ?,20",
         //获取专家信息
         getPerson: "select * from team where id = ? limit 1",
         getTeamoOther: "select id,name,avatar from team where id != ? limit 5",
@@ -24,6 +24,9 @@ module.exports = {
         updatePerson: "update team set name = ?,position = ?,content = ? ,avatar = ? ,summary = ?where id = ? limit 1",
         //查找专家
         searchPerson : 'select * from team where name like ? order by id desc limit ?,15',
+        getPersonNum: "select count(1) from team",
+        updatePersonIndex: "update team set rank = ? where id = ?",
+        
         //
         getReacherNumPerson : 'select count(1) from team where name like ? ',
         //删除专家信息

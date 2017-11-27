@@ -73,7 +73,6 @@ function pagination() {
         sort
       }
 
-      console.log()
         $.ajax({
           type: "get",
           dataType: "json",
@@ -81,7 +80,6 @@ function pagination() {
 
           success: function(result) {
             //后台服务返回数据，重新加载数据
-            console.log(result)
             if (result.code === 200) {
               render(result.data, result.sort);
               $('html,body').animate({ scrollTop: 0 }, 700);  

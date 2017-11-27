@@ -16,6 +16,7 @@ module.exports.getArticleOne = (sort, id, type) => query(SQL.getArticleOne,[sort
 module.exports.searchArticle = (sort, title, type, start) => query(SQL.searchArticle,[sort, title, type, start]);
 
 module.exports.searchPerson = (name, start) => query(SQL.searchPerson,[name, start]);
+module.exports.updatePersonIndex = (val) => query(SQL.updatePersonIndex,val);
 
 //搜索类，获取全部结果的条数
 module.exports.getSearchNum = async (kind, sort, val, type) => {
@@ -93,6 +94,13 @@ module.exports.getPerson = id => query(SQL.getPerson,id);
 module.exports.getTeamoOther = id => query(SQL.getTeamoOther,id);
 module.exports.deletePerson = id => query(SQL.deletePerson,id);
 module.exports.updatePerson = (id, name, content, position, avatar,summary) =>query(SQL.updatePerson,[name, position, content, avatar,summary, id]);
+//获取表格条数
+module.exports.getPersonNum = async () => {
+  
+  result = await query(SQL.getPersonNum);
+
+  return result[0]["count(1)"];
+};
 
 /**
  * 存放banner

@@ -121,13 +121,11 @@ router.get("/feedback", async ctx => {
 //友情链接
 router.get("/links", async ctx => {
   const links = await getLinkCatalog();
-  console.log(links);
   await ctx.render("Links", { links });
 });
 //获取研究方向
 router.get("/introduction/researchdir", async ctx => {
   const data = await getResearchdir();
-  console.log(data)
   await ctx.render("./introduction/researchdir",{data:data[0].content});
 });
 //获取专家目录
@@ -143,7 +141,6 @@ router.get("/introduction/team/catalog", async ctx => {
     } else {
       pageCount = pageCount / 20;
     }
-    console.log(result);
     result.pageCount = pageCount;
   }
   await ctx.render("./introduction/team", result);

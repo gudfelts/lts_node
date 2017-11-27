@@ -15,6 +15,7 @@ const {
   saveTeam,
   updatePerson,
   deletePerson,
+  updatePersonIndex,
   getCatalog,
   getNum,
   saveBanner,
@@ -107,7 +108,6 @@ router.post("/article/uploadImg", async ctx => {
   
   await downImg(files[0],'article')
     .then(path => {
-      console.log(path)
       ctx.response.body = {
         code: 200,
         path,
@@ -443,8 +443,6 @@ router.post("/team/person/avatar", async ctx => {
   const { files, fields } = await asyncBusboy(ctx.req);
   await downImg(files[0],'person')
     .then(path => {
-      console.log("s")
-      console.log(path)
       ctx.response.body = {
         code: 200,
         path,
@@ -464,8 +462,9 @@ router.post("/team/person", async ctx => {
   let data = ctx.request.body;
   let { name, content, position, avatar } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
+  const rank = await getPersonNum();
 
-  await saveTeam({ name, content, position, avatar, summary })
+  await saveTeam({ name, content, position, avatar, summary,rank})
     .then(result => {
       ctx.response.body = {
         code: 200,
@@ -483,7 +482,38 @@ router.post("/team/person", async ctx => {
     msg: "增加成功"
   };
 });
+//修改专家顺序
+router.post('/team/index', async ctx=>{
+  let id = parseInt(ctx.request.body.id[0]);
+  let rank = parseInt(ctx.request.body.rank[0]);
 
+  
+  await updatePersonIndex([rank,id]).then(async ()=>{
+    console.log(rank,id)
+    id = parseInt(ctx.request.body.id[1]);
+    rank = parseInt(ctx.request.body.rank[1]);
+    await updatePersonIndex([rank,id]).then(()=>{
+      ctx.response.body = {
+        code: 200,
+        msg: "修改成功"
+      };
+    }).catch(e=>{
+      ctx.response.body = {
+        code: 400,
+        msg: "修改失败"
+      };
+      throw e;
+    })
+  }).catch(e=>{
+    ctx.response.body = {
+      code: 400,
+      msg: "修改失败"
+    };
+    throw e;
+    
+  })
+
+})
 //上传文章图片
 router.post("/person/uploadImg", async ctx => {
   const { files, fields } = await asyncBusboy(ctx.req);
@@ -775,11 +805,7 @@ router.post("/intro", async ctx => {
              msg: "更新失败!"
            };
       throw e;
-      
     });
-   
-  
-  
 });
 
 //研究方向
@@ -795,7 +821,6 @@ router.get('/researchdir',async ctx=>{
 //修改研究方向
 router.post('/researchdir',async ctx=>{
   let article = ctx.request.body;
-  console.log(article)
   await updateResearchdir(article.content).then(() => {
     ctx.response.body = {
       code: 200,

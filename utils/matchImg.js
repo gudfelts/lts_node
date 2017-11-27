@@ -17,7 +17,6 @@ module.exports = async (data,indexbanner = 0,isbanner = 0) => {
       
       path = "/images/article/" + (parseInt(Date.now()) +Math.ceil(Math.random()*10)) +".png";
       //去掉图片base64码前面部分data:image/png;base64
-      console.log(i++);
       let base64 = capture.replace(patt2, "");
       fs.writeFile("static" + path, base64, "base64", function(err) {
         if (err) {

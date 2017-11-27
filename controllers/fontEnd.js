@@ -76,7 +76,6 @@ router.get("/searchArticle", async (ctx, next) => {
   const sort = ctx.query.sort;
   const type = ctx.query.type;
   let start = parseInt(ctx.query.start) || 0;
-console.log(key)
   let result = await searchArticle(sort, key,  start).catch(() => {
     ctx.response.body = {
       code: 500,
