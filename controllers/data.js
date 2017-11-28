@@ -47,7 +47,8 @@ const {
   getDraft,
   getDraftOne,
   updateDraft,
-  deleteDraft
+  deleteDraft,
+  updateDraftColumn
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -245,11 +246,11 @@ router.post("/article/edit", async ctx => {
     indexbanner = parseInt(article.indexbanner),
     isbanner = parseInt(article.isbanner);
   delete article.indexbanner;
-    content = article.content,
-    title = article.title,
-    time = article.time,
-    source = article.source,
-    author = article.author;
+  (content = article.content),
+    (title = article.title),
+    (time = article.time),
+    (source = article.source),
+    (author = article.author);
   let { data, path } = await matchImg(content, indexbanner, isbanner);
   img = path;
 
@@ -803,7 +804,7 @@ router.post("/researchdir", async ctx => {
 //存储草稿
 router.post("/draft", async ctx => {
   let article = ctx.request.body;
-  article.type = parseInt(article.type)
+  article.type = parseInt(article.type);
   article.time = article.time.replace(/T.*$/, "");
 
   try {
@@ -827,11 +828,18 @@ router.post("/draft/update", async ctx => {
   let article = ctx.request.body;
   id = article.id;
   delete article.id;
-  
+
   article.time = article.time.replace(/T.*$/, "");
 
   try {
-    await updateDraft([article.title, article.content, article.time, article.source, article.author,id]);
+    await updateDraft([
+      article.title,
+      article.content,
+      article.time,
+      article.source,
+      article.author,
+      id
+    ]);
 
     ctx.response.body = {
       code: 200,
@@ -874,14 +882,14 @@ router.get("/draft/catalog", async (ctx, next) => {
     await getDraft(start).then(async data => {
       let pageCount = 0;
       if (start === 0) {
-        pageCount = await getNum('draft', false);
+        pageCount = await getNum("draft", false);
         //一页15条
       }
       ctx.response.body = {
         data,
         pageCount,
         code: 200,
-        msg:'获取成功'
+        msg: "获取成功"
       };
     });
   } catch (error) {
@@ -896,19 +904,17 @@ router.get("/draft/catalog", async (ctx, next) => {
 router.get("/draft/publish", async (ctx, next) => {
   let id = parseInt(ctx.query.id);
 
- 
   let result = await getDraftOne(id);
   let article = result[0];
-      sort = article.sort;
-      idDraft   = article.id;  
-  delete article.sort;   
-  delete article.id;   
-  
+  sort = article.sort;
+  idDraft = article.id;
+  delete article.sort;
+  delete article.id;
+
   article.isbanner = 0;
   article.praise = 0;
   article.browse = 1;
 
-  
   article.summary = trimHtml(article.content, {
     preserveTags: false,
     limit: 30
@@ -918,19 +924,18 @@ router.get("/draft/publish", async (ctx, next) => {
     article.content = data;
     article.img = path;
     await saveArticle(sort, article);
-    await deleteDraft(idDraft)
+    await deleteDraft(idDraft);
     ctx.response.body = {
       code: 200,
       msg: "发布文章成功"
     };
   } catch (error) {
-    console.log(error)
+    console.log(error);
     ctx.response.body = {
       code: 500,
       msg: "发布文章失败!"
     };
   }
- 
 });
 //删除目录
 router.post("/draft/delete", async ctx => {
@@ -938,8 +943,9 @@ router.post("/draft/delete", async ctx => {
 
   for (let i = 0, len = data.length; i < len; i++) {
     const id = data[i].id;
-     
-    await deleteDraft(id).then(() => {
+
+    await deleteDraft(id)
+      .then(() => {
         if (i === len - 1) {
           ctx.response.body = {
             code: 200,
@@ -954,8 +960,26 @@ router.post("/draft/delete", async ctx => {
         };
       });
   }
-  
-  
 });
+//草稿改变栏目
+router.get("/draft/batchMove", async (ctx, next) => {
+  let id = parseInt(ctx.query.id);
+  let sort = ctx.query.sort;
+  let type = parseInt(ctx.query.type);
 
+  await updateDraftColumn([sort, type, id])
+    .then(value => {
+      ctx.response.body = {
+        code: 200,
+        msg: "转移成功"
+      };
+    })
+    .catch(e => {
+      ctx.response.body = {
+        code: 500,
+        msg: "转移失败"
+      };
+      throw e;
+    });
+});
 module.exports = router;

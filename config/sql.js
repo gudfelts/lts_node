@@ -50,6 +50,7 @@ module.exports = {
         getDraft: "select title,id,type,sort,author,time,source from draft limit ?,10",
         getDraftOne: "select  * from draft where id = ? limit 1",
         updateDraft: "update draft set title = ?, content = ?,time = ?,source = ? ,author = ?  where id = ? limit 1",
+        updateDraftColumn: "update draft set sort = ?, type = ? where id = ? limit 1",
         deleteDraft: "delete from draft where id = ? limit 1",
         
         /*

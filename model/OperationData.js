@@ -178,4 +178,5 @@ module.exports.getDraft = (val) => query(SQL.getDraft,val);
 module.exports.getDraftOne = (val) => query(SQL.getDraftOne,val);
 module.exports.updateDraft = (val) => query(SQL.updateDraft,val);
 module.exports.deleteDraft = (val) => query(SQL.deleteDraft,val);
+module.exports.updateDraftColumn = (val) => query(SQL.updateDraftColumn,val);
 
