@@ -29,17 +29,28 @@ module.exports = {
     },
     research:{
       self:'科学研究',
-      
       childen:["课题研究", "调研考察"]
     },
     exchange: {
       self:'学术交流',
-      childen:["学术学会", "流通论坛", "来访交流" ]
+      childen:["学术会议", "流通论坛", "来访交流" ]
     },
     introduction :{
-      self:'机构介绍',
-      childen:['简介','研究方向','专家团队']
-    }
+      self:'研究院概况',
+      childen:['本院简介','研究方向','研究团队']
+    },
+    advisory:{
+      self:'咨询服务',
+      childen:['政府咨询','企业咨询','培训课程']
+    },
+    dynamic:{
+      self:'智库专家',
+      childen:['专家动态']
+    },
+    expert:{
+      self:'智库专家',
+      childen:['专家介绍']
+    },
   },
    logConfig : {
     appenders:[

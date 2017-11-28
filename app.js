@@ -23,7 +23,6 @@ const env = process.env.NODE_ENV;
 onerror(app);
 app.use(bodyParser({ formLimit: "200mb"}));
 
-
 app.keys = ["lts_node"];
 const CONFIG = {
   key: "lts_node" /** (string) cookie key (default is koa:sess) */,

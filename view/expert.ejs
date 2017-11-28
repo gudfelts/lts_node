@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style/common.css">
+    <link rel="stylesheet" href="/style/catalog.css">
+    <link rel="stylesheet" href="/style/pagination.css">
+    <link rel="stylesheet" href="/style/team.css">
+
+    <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.pagination.js"></script>
+    <script src='/js/common.js'></script>
+    <script src='/js/catalog.js'></script>
+
+
+    <title>专家介绍</title>
+</head>
+<body>
+      <%- include('./component/header')%>
+
+    <div class="container">
+        <!--左侧-->
+        <div class='container-types'>
+            <div class="boxLeft">
+                <!--左侧导航栏上面的装饰-->
+                <div class="navTitle">
+                       <a href="#">专家介绍</a>
+                </div>
+
+                <!--左侧导航栏-->
+                <ul class="itemUl">
+                   <li class="itemLi">
+                        <a href="/showArticle/expert/catalog" target='_blank' id='active'>专家介绍</a>
+                    </li>
+                   
+                    <li class="itemLi">
+                        <a target='_blank' href='/showArticle/catalog?sort=dynamic&type=1'>专家动向</a>
+                    
+                    </li> 
+                  
+                </ul>
+
+            </div>
+
+            <div class="boxRight">
+                <div class="part-title">
+                    专家介绍
+                </div>
+                <div class="detail_colu">
+             
+                <div class="colu_news">
+                    <div class="personList">
+
+                     <%if(person.length !== 0){%>
+                    
+                    
+                    
+                       <%for(var i =0,len=person.length;i<len;i++){%>
+                        <a class="list_item" href="/introduction/team/person?id=<%=person[i].id%>&sort=expert">
+                            <img  class="list_img" src="<%=person[i].avatar%>" alt="图片加载失败" title="7七月"><br>
+                            <span class="list_name"><%=person[i].name%></span>
+                            <span class="list_title"><%=person[i].position%></span>
+                            <div class="list_content"><%=person[i].summary%></div>
+                        </a>
+                       <%}%>
+                    <%}%>
+                       
+                    <%if(person.length === 0){%>
+                        <p class='content-warm'>暂无内容</p>
+                    <%}%>   
+                    </div>
+
+                </div>
+            </div>
+              
+            </div>
+        </div>
+    </div>
+    <%- include('./component/footer') -%>
+</body>
+</html>

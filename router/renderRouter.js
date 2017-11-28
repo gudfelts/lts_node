@@ -96,21 +96,14 @@ router.get("/showArticle/search", async (ctx, next) => {
   })
  
 });
-//获取专家
-router.get("/introduction/team/person", async ctx => {
-  const id = ctx.query.id;
 
-  const person = await getPerson(id);
-  const other = await getTeamoOther(id);
-  await ctx.render("./introduction/person", { person: person[0], other });
-});
 //获取研究方向目录
 
 router.get("/introduction/acgency", async ctx => {
 
   await ctx.render("./introduction/acgency");
 });
-//获取简介
+//获取本院简介
 router.get("/introduction/index", async ctx => {
   const data = await getIntro();
   await ctx.render("./introduction/index", { data : data[0].content });
@@ -128,13 +121,14 @@ router.get("/introduction/researchdir", async ctx => {
   const data = await getResearchdir();
   await ctx.render("./introduction/researchdir",{data:data[0].content});
 });
-//获取专家目录
+//获取研究团队目录
 router.get("/introduction/team/catalog", async ctx => {
   let start = parseInt(ctx.query.start) || 0;
   let result = {};
-  result.person = await getTeam(start);
+  let sort = 'team'
+  result.person = await getTeam([sort,start]);
   if (start === 0) {
-    let pageCount = await getNum("team");
+    let pageCount = await getNum(sort);
     //一页20条
     if (pageCount % 20 > 0) {
       pageCount = parseInt(pageCount / 20) + 1;
@@ -145,5 +139,31 @@ router.get("/introduction/team/catalog", async ctx => {
   }
   await ctx.render("./introduction/team", result);
 });
+//获取专家介绍目录
+router.get("/showArticle/expert/catalog", async ctx => {
+  let start = parseInt(ctx.query.start) || 0;
+  let result = {};
+  let sort = 'expert';
+  result.person = await getTeam([sort,start]);
+  if (start === 0) {
+    let pageCount = await getNum(sort);
+    //一页20条
+    if (pageCount % 20 > 0) {
+      pageCount = parseInt(pageCount / 20) + 1;
+    } else {
+      pageCount = pageCount / 20;
+    }
+    result.pageCount = pageCount;
+  }
+  await ctx.render("./expert", result);
+});
+//获取专家
+router.get("/introduction/team/person", async ctx => {
+  const id = ctx.query.id;
+  const sort = ctx.query.sort;
 
+  const person = await getPerson([sort,id]);
+  const other = await getTeamoOther([sort,id]);
+  await ctx.render("./introduction/person", { person: person[0], other ,sort});
+});
 module.exports = router;

@@ -15,7 +15,7 @@ module.exports.getArticleOne = (sort, id, type) => query(SQL.getArticleOne,[sort
 //搜索文章
 module.exports.searchArticle = (sort, title, type, start) => query(SQL.searchArticle,[sort, title, type, start]);
 
-module.exports.searchPerson = (name, start) => query(SQL.searchPerson,[name, start]);
+module.exports.searchPerson = (val) => query(SQL.searchPerson,val);
 module.exports.updatePersonIndex = (val) => query(SQL.updatePersonIndex,val);
 
 //搜索类，获取全部结果的条数
@@ -29,17 +29,15 @@ module.exports.getSearchNum = async (kind, sort, val, type) => {
         type
       ]);
       break;
-    case "person":
-      result = await query(SQL.getReacherNumPerson, val);
+    default:
+      result = await query(SQL.getReacherNumPerson, [sort,val]);
       break;
    
   }
- 
   return result[0]["count(1)"];
 };
 //获取目录
 module.exports.getCatalog = async (sort, type, start) => {
-  
     let title = TYPE[sort].self;
     
       let data = await query(SQL.getCatalog,[sort, type, start]).catch(e => {
@@ -87,17 +85,17 @@ module.exports.addPraise = async (sort, id) => {
 //增加浏览数
 module.exports.addBrowse = (sort, id, type) => query(SQL.addBrowse,[sort, id, type]);
 
-//专家团队
-module.exports.getTeam = start => query(SQL.getTeam,start);
+//研究团队
+module.exports.getTeam = val => query(SQL.getTeam,val);
 module.exports.saveTeam = value => query(SQL.saveTeam,value);
-module.exports.getPerson = id => query(SQL.getPerson,id);
-module.exports.getTeamoOther = id => query(SQL.getTeamoOther,id);
-module.exports.deletePerson = id => query(SQL.deletePerson,id);
-module.exports.updatePerson = (id, name, content, position, avatar,summary) =>query(SQL.updatePerson,[name, position, content, avatar,summary, id]);
+module.exports.getPerson = val => query(SQL.getPerson,val);
+module.exports.getTeamoOther = val => query(SQL.getTeamoOther,val);
+module.exports.deletePerson = val => query(SQL.deletePerson,val);
+module.exports.updatePerson = (val) =>query(SQL.updatePerson,val);
 //获取表格条数
-module.exports.getPersonNum = async () => {
+module.exports.getPersonNum = async (sort) => {
   
-  result = await query(SQL.getPersonNum);
+  result = await query(SQL.getPersonNum,sort);
 
   return result[0]["count(1)"];
 };

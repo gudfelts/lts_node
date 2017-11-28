@@ -2,3 +2,4 @@ node_modules/
 logs/
 static/images/article
 static/images/person
+static/images/uploadImg

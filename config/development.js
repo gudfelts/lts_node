@@ -17,16 +17,6 @@ module.exports = {
     database: "lts"
   },
 
-
-  // type: {
-  //   information: ["科研简讯", "媒体报道"],
-  //   achievement: ["学术论文", "著作", "研究报告"],
-  //   research: ["课题研究", "课题招标", "成果影响"],
-  //   exchange: ["来访交流", "调研考察", "主办年会", "流通论坛"],
-  //   train: ["资讯顾问", "企业策划", "专家培训"],
-  //   // construction: ["名家百人讲座", "智库动态"],
-  //   introduction :['简介','研究方向','研究方向','专家团队']
-  // },
   type: {
     information: {
       self : '科研资讯',
@@ -38,17 +28,28 @@ module.exports = {
     },
     research:{
       self:'科学研究',
-      
       childen:["课题研究", "调研考察"]
     },
     exchange: {
       self:'学术交流',
-      childen:["学术学会", "流通论坛", "来访交流" ]
+      childen:["学术会议", "流通论坛", "来访交流" ]
     },
     introduction :{
-      self:'机构介绍',
-      childen:['简介','研究方向','专家团队']
-    }
+      self:'研究院概况',
+      childen:['本院简介','研究方向','研究团队']
+    },
+    advisory:{
+      self:'咨询服务',
+      childen:['政府咨询','企业咨询','培训课程']
+    },
+    dynamic:{
+      self:'智库专家',
+      childen:['专家动态']
+    },
+    expert:{
+      self:'智库专家',
+      childen:['专家介绍']
+    },
   }
   
 };

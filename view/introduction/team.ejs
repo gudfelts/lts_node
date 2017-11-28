@@ -15,7 +15,7 @@
     <script src='/js/catalog.js'></script>
 
 
-    <title>专家团队</title>
+    <title>研究团队</title>
 </head>
 <body>
       <%- include('../component/header')%>
@@ -26,7 +26,7 @@
             <div class="boxLeft">
                 <!--左侧导航栏上面的装饰-->
                 <div class="navTitle">
-                       <a href="#">专家团队</a>
+                       <a href="#">研究团队</a>
                 </div>
 
                 <!--左侧导航栏-->
@@ -40,7 +40,7 @@
                     
                     </li> 
                     <li class="itemLi">
-                        <a href="/introduction/team/catalog" id='active'>专家团队</a>
+                        <a href="/introduction/team/catalog" id='active'>研究团队</a>
                     
                     </li>  
                 </ul>
@@ -49,7 +49,7 @@
 
             <div class="boxRight">
                 <div class="part-title">
-                    专家团队
+                    研究团队
                 </div>
                 <div class="detail_colu">
              
@@ -61,7 +61,7 @@
                     
                     
                        <%for(var i =0,len=person.length;i<len;i++){%>
-                        <a class="list_item" href="/introduction/team/person?id=<%=person[i].id%>">
+                        <a class="list_item" href="/introduction/team/person?id=<%=person[i].id%>&sort=team">
                             <img  class="list_img" src="<%=person[i].avatar%>" alt="图片加载失败" title="7七月"><br>
                             <span class="list_name"><%=person[i].name%></span>
                             <span class="list_title"><%=person[i].position%></span>
