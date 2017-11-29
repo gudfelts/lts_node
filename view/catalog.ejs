@@ -34,16 +34,16 @@
                 <%if(sort!=='dynamic'){%>
                     <% for(var i = 0;i < sorts.length;i++){%>
                     <li class="itemLi">
-                        <a target='_blank' href="/showArticle/catalog?type=<%=i+1%>&sort=<%=sort%>" <%if(i==type-1){%> id='active'<%}%> ><%=sorts[i]%></a>
+                        <a  href="/showArticle/catalog?type=<%=i+1%>&sort=<%=sort%>" <%if(i==type-1){%> id='active'<%}%> ><%=sorts[i]%></a>
                     </li>
                     <%}%>
                     <%}%>
                     <%if(sort==='dynamic'){%>
                     <li class="itemLi">
-                        <a target='_blank' href='/showArticle/expert/catalog'>专家介绍</a>
+                        <a  href='/showArticle/expert/catalog'>专家介绍</a>
                     </li>
                     <li class="itemLi">
-                        <a target='_blank' href='/showArticle/catalog?sort=dynamic&type=1' id='active'>专家动态</a>
+                        <a  href='/showArticle/catalog?sort=dynamic&type=1' id='active'>专家动态</a>
                     </li>
                     <%}%>
                 </ul>
@@ -54,8 +54,6 @@
             
             <div class="top-band-title" style="display: block;">
         
-        
-
                 <a class="no-comment-title">近期热门文章</a>
                 <em id="top-bandArrow" style="left: 145px;"></em>
             </div>
