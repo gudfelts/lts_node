@@ -5,7 +5,7 @@ module.exports = {
 
          
         //热门文章
-        getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from ?? order by id desc limit 20) as total order by browse",
+        getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from articles where sort = ?  order by id desc limit 20) as total order by browse",
     
         //获取管理员信息
         getUser: "select * from admin where account = ?",
@@ -61,29 +61,31 @@ module.exports = {
         咨询培训，其中type数据：1为资讯顾问，2为企业策划，3为专家培训
         智库建设，其中type数据：1为名家百人讲座，2为智库动态
         */
-        saveArticle: "insert into ?? set ?",
+        saveArticle: "insert into articles set ?",
    
         //删除文章
-        deleteArticle: "delete from ?? where id = ? and type = ?",
+        deleteArticle: "delete from articles where sort = ? and id = ? and type = ?",
         //删除文章
-        addBrowse: "update  ?? set browse = browse + 1 where id = ? and type = ?",
+        addBrowse: "update  articles set browse = browse + 1 where id = ? limit 1",
         //获取特定资讯
-        getArticleOne: "select * from ?? where id = ? and type = ? limit 1",
+        getArticleOne: "select * from articles where id = ? limit 1",
         //获取目录
-        getCatalog: "select  title,id,type,author,time,img,browse,praise,summary,source,isbanner from ?? where type = ? order by id desc  limit ?,10",
+        getCatalog: "select  title,id,type,author,time,img,browse,praise,summary,source,isbanner from articles where sort = ? and type = ?  order by id desc  limit ?,10",
         
         //获取总条数
         getNum: "select count(1) from ?? where type = ?",
+        getArticleNum: "select count(1) from articles where sort = ? and type = ?",
         //获取总条数
         getAllNum: "select count(1) from ??",
         //获取总条数
         getNumNoTYPE: "select count(1) from ??",
         //更新内容
-        editArticle: "update  ?? set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,type = ? where id = ? limit 1",
+        editArticle: "update  articles set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,type = ? where id = ? limit 1",
+        updateArticleColumn: "update  articles set sort = ?,type = ? where id = ? limit 1",
         //查找文章
-        searchArticle : 'select title,author,id,type,img,browse,praise,summary,time,source from ?? where title like ? and type = ? order by id desc limit ?,15',
+        searchArticle : 'select title,author,id,type,img,browse,praise,summary,time,source from articles where title like ? and type = ? and sort = ? order by id desc limit ?,15',
         //查找文章
-        getReacherNumArticle : 'select count(1) from ?? where title like ? ',
+        getReacherNumArticle : 'select count(1) from articles where title like ? and sort = ? and type = ?',
     
         //
         changeBanner : 'update  ?? set isbanner = ? where id = ? and type = ?',

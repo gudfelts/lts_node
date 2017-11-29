@@ -10,13 +10,15 @@ const {
   deleteArticle,
   getArticleOne,
   editArticle,
+  getArticleNum,
+  updateArticleColumn,
   getTeam,
   getPerson,
   getPersonNum,
   saveTeam,
   updatePerson,
   deletePerson,
- exchangePersonIndex,
+  exchangePersonIndex,
   getCatalog,
   getNum,
   saveBanner,
@@ -69,6 +71,7 @@ router.post("/article", async ctx => {
   delete article.selectedOptions;
   delete article.indexbanner;
   article.type = type[1];
+  article.sort = type[0];
   article.praise = 0;
   article.browse = 1;
 
@@ -83,15 +86,15 @@ router.post("/article", async ctx => {
     var { data, path } = await matchImg(article.content, indexbanner, isbanner);
     article.content = data;
     article.img = path;
-    const result = await saveArticle(type[0], article);
+    const result = await saveArticle(article);
     const id = result.insertId;
     //储存banner
     if (isbanner === 1) {
       let banner = await geBannerOne();
       if (banner.length === 5) {
-        saveBanner(type[0], article.type, id, path, article.title, false);
+        saveBanner(article.sort, article.type, id, path, article.title, false);
       } else {
-        saveBanner(type[0], article.type, id, path, article.title, true);
+        saveBanner(article.sort, article.type, id, path, article.title, true);
       }
     }
 
@@ -158,7 +161,7 @@ router.post("/article/delete", async (ctx, next) => {
       }
     }
 
-    await deleteArticle(sort, id, type)
+    await deleteArticle([sort, id, type])
       .then(() => {
         if (i === len - 1) {
           ctx.response.body = {
@@ -183,7 +186,7 @@ router.get("/article", async ctx => {
     type = ctx.query.type;
 
   //获取当前banner
-  await getArticleOne(sort, id, type)
+  await getArticleOne(id)
     .then(async data => {
       data = data[0];
       const isbanner = parseInt(data.isbanner);
@@ -217,7 +220,7 @@ router.get("/article/search", async (ctx, next) => {
   const sort = ctx.query.sort;
   const type = parseInt(ctx.query.type);
   let start = parseInt(ctx.query.start) || 0;
-  await searchArticle(sort, title, type, start)
+  await searchArticle([title, type, sort, start])
     .then(async result => {
       if (start == 0) {
         var pageCount = await getSearchNum("article", sort, title, type);
@@ -247,16 +250,15 @@ router.post("/article/edit", async ctx => {
     indexbanner = parseInt(article.indexbanner),
     isbanner = parseInt(article.isbanner);
   delete article.indexbanner;
-  (content = article.content),
-    (title = article.title),
-    (time = article.time),
-    (source = article.source),
-    (author = article.author);
+  let content = article.content,
+    title = article.title,
+    time = article.time,
+    source = article.source,
+    author = article.author;
   let { data, path } = await matchImg(content, indexbanner, isbanner);
   img = path;
 
   await editArticle([
-    sort,
     title,
     author,
     source,
@@ -325,7 +327,7 @@ router.get("/article/catalog", async (ctx, next) => {
     await getCatalog(sort, type, start).then(async result => {
       let pageCount = 0;
       if (start === 0) {
-        pageCount = await getNum(sort, type);
+        pageCount = await getArticleNum([sort, type]);
         //一页15条
       }
       result.pageCount = pageCount;
@@ -343,23 +345,16 @@ router.get("/article/catalog", async (ctx, next) => {
 //修改栏目
 router.post("/article/batchMove", async (ctx, next) => {
   let data = ctx.request.body.article;
-  let sort = ctx.request.body.sort;
-  let type = ctx.request.body.type;
+  
   let sortNEW = ctx.request.body.column[0];
   let typeNEW = ctx.request.body.column[1];
 
   for (let i = 0, len = data.length; i < len; i++) {
     const id = data[i].id;
 
-    let articles = await getArticleOne(sort, id, type);
-    const article = articles[0];
-    article.type = parseInt(typeNEW);
-
-    await deleteArticle(sort, id, type);
-
-    article.id = null;
-    let result = await saveArticle(sortNEW, article);
-    const idNEW = parseInt(result.insertId);
+    const result = await  updateArticleColumn([sortNEW, typeNEW,id]);
+    
+    const article = await getArticleOne(id);
     if (article.isbanner) {
       updateBannerAll([typeNEW, sortNEW, idNEW, id, sort]).catch(e => {
         throw e;
@@ -882,7 +877,7 @@ router.get("/draft/catalog", async (ctx, next) => {
     await getDraft(start).then(async data => {
       let pageCount = 0;
       if (start === 0) {
-        pageCount = await getNum("draft", false);
+        pageCount = await getNum("draft");
         //一页15条
       }
       ctx.response.body = {

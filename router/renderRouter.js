@@ -5,6 +5,7 @@ const HOST = require('config-lite')(__dirname).HOST;
 
 const {
   getHotArticle,
+  getArticleNum,
   getTeamoOther,
   addBrowse,
   getTeam,
@@ -24,10 +25,10 @@ router.get("/showArticle/article", async ctx => {
     sort = ctx.query.sort,
     type = ctx.query.type;
 
-  const data = await getArticleOne(sort, id, type);
+  const data = await getArticleOne(id);
   const HotArticle = await getHotArticle(sort);
   //增加浏览数
-  addBrowse(sort, id, type);
+  addBrowse(id);
   let route = [{name:'流通所首页',path:HOST},{name:TYPE[sort].self,path:`${HOST}/showArticle/catalog?sort=${sort}&type=${type}`}];
   
   await ctx.render("article", { data: data[0], HotArticle, sort, route });
@@ -47,7 +48,7 @@ router.get("/showArticle/catalog", async ctx => {
   let result = await getCatalog(sort, type, start);
   //获取近期热门文章
   let HotArticle = await getHotArticle(sort);
-  let pageCount = await getNum(sort, type);
+  let pageCount = await getArticleNum([sort, type]);
 
   if (pageCount % 10 > 0) {
     pageCount = parseInt(pageCount / 10) + 1;
@@ -68,9 +69,9 @@ router.get("/showArticle/search", async (ctx, next) => {
   const type = parseInt(ctx.query.type);
   let start = parseInt(ctx.query.start) || 0;
   
-  let data = await searchArticle(sort, key,  start).catch(() => {
+  let data = await searchArticle([ key, type,sort,start]).catch((e) => {
     
-    ctx.throw(500, "搜索出现错误");
+    ctx.throw(500, e);
   });
 
   if (start === 0) {
@@ -98,7 +99,6 @@ router.get("/showArticle/search", async (ctx, next) => {
 });
 
 //获取研究方向目录
-
 router.get("/introduction/acgency", async ctx => {
 
   await ctx.render("./introduction/acgency");
