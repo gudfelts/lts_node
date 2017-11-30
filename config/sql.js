@@ -23,8 +23,8 @@ module.exports = {
         //查找专家
         searchPerson : 'select * from ?? where name like ? order by id desc limit ?,15',
         
-        //交换专家的顺序
-        exchangePersonIndex: "update ?? set rank = ? where id = ?",
+        //更新专家的顺序
+        updatePersonIndex: "update ?? set rank = ? where id = ?",
         
         //获取搜索专家的数量
         getReacherNumPerson : 'select count(1) from ?? where name like ? ',
@@ -46,12 +46,16 @@ module.exports = {
             
         //草稿
         saveDraft: "insert into draft set ?",
-        getDraft: "select title,id,type,sort,author,time,source from draft limit ?,10",
+        getDraft: "select title,id,type,sort,author,time,source,draftTime from draft limit ?,10",
         getDraftOne: "select  * from draft where id = ? limit 1",
-        updateDraft: "update draft set title = ?, content = ?,time = ?,source = ? ,author = ?  where id = ? limit 1",
+        updateDraft: "update draft set title = ?, content = ?,time = ?,source = ? ,author = ?,draftTime = ?  where id = ? limit 1",
         updateDraftColumn: "update draft set sort = ?, type = ? where id = ? limit 1",
         deleteDraft: "delete from draft where id = ? limit 1",
         
+        //修改草稿的时间
+        saveDraftTime :'insert into drafttime set ?',
+        getDraftTime :' select draftTime from drafttime where id = ?',
+        deleteDraftTime :'delete from drafttime where id = ?',
         /*
         科研成果，其中type数据：1为学术论文，2为著作，3为研究报告
         科研资讯，其中type数据：1为科研简讯，2为基地资讯，3为媒体报道
@@ -87,7 +91,7 @@ module.exports = {
         //查找文章
         getReacherNumArticle : 'select count(1) from articles where title like ? and sort = ? and type = ?',
     
-        //
+        //更新isbanner
         changeBanner : 'update articles set isbanner = ? where id = ?',
        
     
@@ -108,7 +112,6 @@ module.exports = {
 
         getIntro : 'select content from intro limit 1',
         updateIntro : 'update intro set content = ?',
-        
         getResearchdir:'select * from researchdir limit 1',
         updateResearchdir : 'update researchdir set content = ?',
         

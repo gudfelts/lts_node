@@ -5,6 +5,8 @@ const downImg = require("../utils/downImg");
 const matchBanner = require("../utils/matchBanner");
 const asyncBusboy = require("async-busboy");
 const trimHtml = require("../utils/trim-html");
+const moment = require('moment');
+
 // import {format} from 'date-fns/esm'
 const {
   saveArticle,
@@ -19,7 +21,7 @@ const {
   saveTeam,
   updatePerson,
   deletePerson,
-  exchangePersonIndex,
+  updatePersonIndex,
   getCatalog,
   getNum,
   saveBanner,
@@ -48,7 +50,10 @@ const {
   getDraftOne,
   updateDraft,
   deleteDraft,
-  updateDraftColumn
+  updateDraftColumn,
+  saveDraftTime,
+  getDraftTime,
+  deleteDraftTime,
 } = require("../model/OperationData");
 
 /* HTTP动词
@@ -424,13 +429,12 @@ router.post("/team/person", async ctx => {
 router.post("/team/rank", async ctx => {
   let id = parseInt(ctx.request.body.id[0]);
   let rank = parseInt(ctx.request.body.rank[0]);
-  let sort = parseInt(ctx.request.body.sort);
-
-  awaitexchangePersonIndex([sort,rank, id])
+  let sort = ctx.request.body.sort;
+  await updatePersonIndex([sort,rank, id])
     .then(async () => {
       id = parseInt(ctx.request.body.id[1]);
       rank = parseInt(ctx.request.body.rank[1]);
-      awaitexchangePersonIndex([sort,rank, id])
+      await updatePersonIndex([sort,rank, id])
         .then(() => {
           ctx.response.body = {
             code: 200,
@@ -763,10 +767,11 @@ router.post("/draft", async ctx => {
   let article = ctx.request.body;
   article.type = parseInt(article.type);
   article.time = article.time.replace(/T.*$/, "");
-  // const draftTime = format(new Date(2014, 1, 11), 'MM/DD/YYYY')
-  try {
-    await saveDraft(article);
+  article.draftTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
+  try {
+    let result = await saveDraft(article);
+    saveDraftTime({draftTime : article.draftTime ,id : result.insertId})
     ctx.response.body = {
       code: 200,
       msg: "成功"
@@ -787,7 +792,8 @@ router.post("/draft/update", async ctx => {
   delete article.id;
 
   article.time = article.time.replace(/T.*$/, "");
-
+  article.draftTime = moment().format('YYYY-MM-DD HH:mm:ss');
+  
   try {
     await updateDraft([
       article.title,
@@ -795,9 +801,10 @@ router.post("/draft/update", async ctx => {
       article.time,
       article.source,
       article.author,
+      article.draftTime,
       id
     ]);
-
+    saveDraftTime({draftTime:article.draftTime,id})
     ctx.response.body = {
       code: 200,
       msg: "更新成功"
@@ -817,9 +824,12 @@ router.get("/draft", async ctx => {
 
   await getDraftOne(id)
     .then(async data => {
+
+      let result = await getDraftTime(id);
       ctx.response.body = {
         code: 200,
         data: data[0],
+        draftTime : result,
         msg: "获取成功"
       };
     })
@@ -859,12 +869,12 @@ router.get("/draft/catalog", async (ctx, next) => {
 });
 //直接发布草稿
 router.get("/draft/publish", async (ctx, next) => {
-  let id = parseInt(ctx.query.id);
+  let idDraft = parseInt(ctx.query.id);
 
-  let result = await getDraftOne(id);
+  let result = await getDraftOne(idDraft);
   let article = result[0];
   sort = article.sort;
-  idDraft = article.id;
+
   delete article.sort;
   delete article.id;
 
@@ -880,8 +890,10 @@ router.get("/draft/publish", async (ctx, next) => {
     let { data, path } = await matchImg(article.content);
     article.content = data;
     article.img = path;
-    await saveArticle(sort, article);
-    await deleteDraft(idDraft);
+    
+    saveArticle(sort, article);
+    deleteDraft(idDraft);
+    deleteDraftTime(idDraft);
     ctx.response.body = {
       code: 200,
       msg: "发布文章成功"

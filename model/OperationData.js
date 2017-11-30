@@ -150,15 +150,15 @@ module.exports.getFeedBackCatalog = (start) => query(SQL.getFeedBackCatalog,star
 module.exports.setFeedBackRead = id => query(SQL.setFeedBackRead,id);
 module.exports.deleteFeedBack = id => query(SQL.deleteFeedBack,id);
 module.exports.getFeedBackOne  = id => {
-
+  //设置为已读
   query(SQL.setFeedBackRead,id);
   return query(SQL.getFeedBackOne,id);
 }
-
+//研究所概况
 module.exports.getIntro = () => query(SQL.getIntro);
 module.exports.updateIntro = content => query(SQL.updateIntro,content);
 
-
+//研究方向
 module.exports.getResearchdir = () => query(SQL.getResearchdir);
 module.exports.updateResearchdir = val => query(SQL.updateResearchdir,val);
 
@@ -170,3 +170,6 @@ module.exports.updateDraft = val => query(SQL.updateDraft,val);
 module.exports.deleteDraft = val => query(SQL.deleteDraft,val);
 module.exports.updateDraftColumn = val => query(SQL.updateDraftColumn,val);
 
+module.exports.saveDraftTime = val => query(SQL.saveDraftTime,val);
+module.exports.getDraftTime = val => query(SQL.getDraftTime,val);
+module.exports.deleteDraftTime = val => query(SQL.deleteDraftTime,val);
