@@ -51,23 +51,19 @@ module.exports.getCatalog = async (sort, type, start) => {
  
 };
 //获取近期热门文章
-module.exports.getHotArticle = async sort => {
-  let result = await query(SQL.getHotArticle,sort);
-  return result.splice(15);
-};
-
+module.exports.getHotArticle =  sort =>  query(SQL.getHotArticle,sort);
+ 
 //首页获取数据
-module.exports.getIndexData = val => query(SQL.getIndexData,val)
+module.exports.getIndexData = val => query(SQL.getIndexData,val);
   
-
-//获取某栏目文章的总数量
+//获取某大栏目文章的总数量
 module.exports.getArticlsTotal = async (sort) => {
  
   let  result = await query(SQL.getArticlsTotal,sort);
   
   return result[0]["count(1)"];
 };
-//获取某栏目文章的总数量
+//获取分栏目文章的总数量
 module.exports.getArticleNum = async val => {
   
    let  result = await query(SQL.getArticleNum,val);
@@ -76,9 +72,7 @@ module.exports.getArticleNum = async val => {
  };
 //获取表格条数
 module.exports.getNum = async sort => {
-  let result = null;
-
-  result = await query(SQL.getNumNoTYPE,sort);
+  let result = await query(SQL.getNum,sort);
   
   return result[0]["count(1)"];
 };
@@ -97,13 +91,7 @@ module.exports.getPerson = val => query(SQL.getPerson,val);
 module.exports.getTeamoOther = val => query(SQL.getTeamoOther,val);
 module.exports.deletePerson = val => query(SQL.deletePerson,val);
 module.exports.updatePerson = val =>query(SQL.updatePerson,val);
-//获取表格条数
-module.exports.getPersonNum = async sort => {
-  
-  result = await query(SQL.getPersonNum,sort);
 
-  return result[0]["count(1)"];
-};
 
 /**
  * 存放banner
@@ -114,18 +102,18 @@ module.exports.getPersonNum = async sort => {
  * @param {*} title 
  * @param {*} flag flag为false表示当前banner有5个，需要删除一个
  */
-module.exports.saveBanner =   (sort, type, id, path,title,flag = false) => {
+module.exports.saveBanner =   (id, path,title,flag = false) => {
     return new Promise(async(resolve, reject) => {
     try {
         
          if(!flag){
           let result = await query(SQL.geBannerOne); 
-          let {id,sort,type} = result[0]
-          query(SQL.changeBanner,[sort,0,id,type]); 
+          let {id,type} = result[0]
+          query(SQL.changeBanner,[0,id]); 
           await query(SQL.deleteBanner)
          }
          
-          query(SQL.saveBanner,{ sort, type, id, path,title});
+          query(SQL.saveBanner,{ id, path,title});
       } catch (error) {
         reject(error)
       }
@@ -136,10 +124,10 @@ module.exports.saveBanner =   (sort, type, id, path,title,flag = false) => {
 };
 //获取banner
 module.exports.getBanner =  () => query(SQL.getBanner);
-module.exports.changeBanner  =  val => query(SQL.changeBanner,val );
+module.exports.getArticleIsBanner =  id => query(SQL.getArticleIsBanner,id);
 module.exports.updateBanner  =  val => query(SQL.updateBanner,val );
 module.exports.geBannerOneById  =  val => query(SQL.geBannerOneById,val );
-module.exports.updateBannerAll  =  val => query(SQL.updateBannerAll,val );
+
 module.exports.deleteBannerById =  val => query(SQL.deleteBannerById,val);
 //增加链接
 module.exports.addLink =  val => query(SQL.addLink,val);

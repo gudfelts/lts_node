@@ -1,20 +1,21 @@
+
 const router = require("koa-router")();
 const matchImg = require("../utils/matchImg");
 const downImg = require("../utils/downImg");
 const matchBanner = require("../utils/matchBanner");
 const asyncBusboy = require("async-busboy");
 const trimHtml = require("../utils/trim-html");
-
+// import {format} from 'date-fns/esm'
 const {
   saveArticle,
   deleteArticle,
   getArticleOne,
+  getArticleIsBanner,
   editArticle,
   getArticleNum,
   updateArticleColumn,
   getTeam,
   getPerson,
-  getPersonNum,
   saveTeam,
   updatePerson,
   deletePerson,
@@ -25,9 +26,7 @@ const {
   getBanner,
   geBannerOneById,
   deleteBannerById,
-  changeBanner,
   updateBanner,
-  updateBannerAll,
   searchArticle,
   getSearchNum,
   getLinkCatalog,
@@ -44,7 +43,6 @@ const {
   searchPerson,
   getResearchdir,
   updateResearchdir,
-
   saveDraft,
   getDraft,
   getDraftOne,
@@ -73,7 +71,7 @@ router.post("/article", async ctx => {
   article.sort = type[0];
   article.praise = 0;
   article.browse = 1;
-
+  console.log(isbanner)
   article.time = article.time.replace(/T.*$/, "");
 
   try {
@@ -91,9 +89,9 @@ router.post("/article", async ctx => {
     if (isbanner === 1) {
       let banner = await geBanner();
       if (banner.length === 5) {
-        saveBanner(article.sort, article.type, id, path, article.title, false);
+        saveBanner(id, path, article.title, false);
       } else {
-        saveBanner(article.sort, article.type, id, path, article.title, true);
+        saveBanner(id, path, article.title, true);
       }
     }
 
@@ -156,7 +154,7 @@ router.post("/article/delete", async (ctx, next) => {
           return;
         }
       } else {
-        deleteBannerById([id, sort]);
+        deleteBannerById(id);
       }
     }
 
@@ -243,73 +241,43 @@ router.get("/article/search", async (ctx, next) => {
 });
 //修改文章
 router.post("/article/edit", async ctx => {
-  let article = ctx.request.body;
-  const id = parseInt(article.id),
-    sort = article.selectedOptions[0],
-    type = parseInt(article.selectedOptions[1]),
-    indexbanner = parseInt(article.indexbanner),
-    isbanner = parseInt(article.isbanner);
-  delete article.indexbanner;
+  let article = ctx.request.body,
+      id = parseInt(article.id),
+      indexbanner = parseInt(article.indexbanner),
+      isbanner = parseInt(article.isbanner);
+  
   let content = article.content,
     title = article.title,
     time = article.time,
     source = article.source,
     author = article.author;
-  let { data, path } = await matchImg(content, indexbanner, isbanner);
-  img = path;
 
-  await editArticle([
-    title,
-    author,
-    source,
-    time,
-    content,
-    path,
-    type,
-    id
-  ]);
-  //true表示之前是轮播图，false表示之前不是轮播图
-  let flag = true;
-  //检测他之前是否是轮播图
-  let banner = await getBanner();
-  let result = banner.filter(item => {
-    if (id == item.id && sort == item.sort) {
-      return 1;
-    }
-  });
-
-  //之前是轮播图
-  if (result.length > 0) {
-    //取消轮播
-    if (isbanner == 0) {
-      //总轮播图小于4个时，拒绝取消
-      if (banner.length < 4) {
-        ctx.response.body = {
-          code: 500,
-          msg: "总轮播图小于3个!"
-        };
-        return;
-      } else {
-        changeBanner([sort, isbanner, id, type]);
-
-        //之前是轮播图，则删掉之前的数据
-        deleteBannerById([id, sort]);
-      }
-    } else {
-      updateBanner([type, path, title, id, sort]).catch(e => {
+  article = await getArticleIsBanner(id);
+  let isbannerOld = article[0].isbanner;
+  let path  = await matchImg(content, indexbanner, isbanner);
+  editArticle([title,author,source,time,content,path,isbanner,id]);
+  
+  if(isbannerOld == 1){
+    //以前是banner
+    if(isbanner == 1){
+      updateBanner([path, title, id]).catch(e => {
         throw e;
       });
+    }else{
+      deleteBannerById(id);
     }
-    //之前不是轮播图
-  } else {
-    changeBanner([sort, isbanner, id, type]);
+  }else{
+    //以前不是banner
+     let bannerNum = await getNum('banner'); 
+     if(isbanner == 1){
 
-    if (banner.length === 5) {
-      saveBanner(sort, type, id, path, title, false);
-    } else {
-      saveBanner(sort, type, id, path, title, true);
-    }
-  }
+     if(bannerNum === 5){
+      saveBanner(id, path, title, false);
+     }else{
+      saveBanner(id, path, title, true);
+      
+     }
+  } }
 
   ctx.response.body = {
     code: 200,
@@ -353,13 +321,7 @@ router.post("/article/batchMove", async (ctx, next) => {
     const id = data[i].id;
 
     const result = await  updateArticleColumn([sortNEW, typeNEW,id]);
-    
-    const article = await getArticleOne(id);
-    if (article.isbanner) {
-      updateBannerAll([typeNEW, sortNEW, idNEW, id, sort]).catch(e => {
-        throw e;
-      });
-    }
+       
     if (i === len - 1) {
       ctx.response.body = {
         code: 200,
@@ -438,7 +400,7 @@ router.post("/team/person", async ctx => {
   let data = ctx.request.body;
   let { name, content, position, avatar,sort } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
-  const rank = await getPersonNum(sort);
+  const rank = await getNum(sort);
 
   await saveTeam([sort,{ name, content, position, avatar, summary, rank }])
     .then(result => {
@@ -801,7 +763,7 @@ router.post("/draft", async ctx => {
   let article = ctx.request.body;
   article.type = parseInt(article.type);
   article.time = article.time.replace(/T.*$/, "");
-
+  // const draftTime = format(new Date(2014, 1, 11), 'MM/DD/YYYY')
   try {
     await saveDraft(article);
 

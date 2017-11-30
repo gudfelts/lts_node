@@ -4,7 +4,7 @@ module.exports = {
         getIndexData: "select title,id,content,isbanner,img,summary from articles where sort = ? order by id desc limit ?,?",
 
         //热门文章
-        getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from articles where sort = ?  order by id desc limit 20) as total order by browse", 
+        getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from articles where sort = ?  order by id desc limit 5) as total order by browse limit 50", 
         //获取管理员信息
         getUser: "select * from admin where account = ?",
         //更新密码
@@ -22,8 +22,7 @@ module.exports = {
         updatePerson: "update ?? set name = ?,position = ?,content = ? ,avatar = ? ,summary = ?where id = ? limit 1",
         //查找专家
         searchPerson : 'select * from ?? where name like ? order by id desc limit ?,15',
-        //获取专家的总数量
-        getPersonNum: "select count(1) from ??",
+        
         //交换专家的顺序
         exchangePersonIndex: "update ?? set rank = ? where id = ?",
         
@@ -39,14 +38,12 @@ module.exports = {
         deleteBanner: "delete from banner limit 1",
         getBanner: "select * from banner limit 5",
         //当目前banner为5个时，获取最后一个banner的id，修改这个文章的isbanner
-        geBannerOne: "select id,sort,type from banner limit 1",
+        geBannerOne: "select id,type from banner limit 1",
         //了解该文章的banner图为第几张
-        geBannerOneById: "select id,sort,type,path from banner where id = ? limit 1",
-        deleteBannerById: "delete from banner where id = ? and sort = ? limit 1",
-        
-        updateBanner : 'update  banner set type = ?, path = ?,title = ? where id = ? and sort = ?',
-        updateBannerAll : 'update  banner set type = ?,sort = ? ,id = ? where id = ? and sort = ?',
-        
+        geBannerOneById: "select path from banner where id = ? limit 1",
+        deleteBannerById: "delete from banner where id = ? limit 1",     
+        updateBanner : 'update  banner set path = ?,title = ? where id = ?',
+            
         //草稿
         saveDraft: "insert into draft set ?",
         getDraft: "select title,id,type,sort,author,time,source from draft limit ?,10",
@@ -71,18 +68,19 @@ module.exports = {
         addBrowse: "update  articles set browse = browse + 1 where id = ? limit 1",
         //获取特定资讯
         getArticleOne: "select * from articles where id = ? limit 1",
+        getArticleIsBanner: "select isbanner from articles where id = ? limit 1",
         //获取目录
         getCatalog: "select  title,id,type,author,time,img,browse,praise,summary,source,isbanner from articles where sort = ? and type = ?  order by id desc  limit ?,10",
         
-        //获取总条数
-        getNum: "select count(1) from ?? where type = ?",
+       
         getArticleNum: "select count(1) from articles where sort = ? and type = ?",
         //获取文章总条数
         getArticlsTotal: "select count(1) from articles where sort = ?",
+
         //获取总条数
-        getNumNoTYPE: "select count(1) from ??",
+        getNum: "select count(1) from ??",
         //更新内容
-        editArticle: "update  articles set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,type = ? where id = ? limit 1",
+        editArticle: "update  articles set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,isbanner = ? where id = ? limit 1",
         updateArticleColumn: "update  articles set sort = ?,type = ? where id = ? limit 1",
         //查找文章
         searchArticle : 'select title,author,id,type,img,browse,praise,summary,time,source from articles where title like ? and type = ? and sort = ? order by id desc limit ?,15',
@@ -90,7 +88,7 @@ module.exports = {
         getReacherNumArticle : 'select count(1) from articles where title like ? and sort = ? and type = ?',
     
         //
-        changeBanner : 'update  ?? set isbanner = ? where id = ? and type = ?',
+        changeBanner : 'update articles set isbanner = ? where id = ?',
        
     
         //友情链接

@@ -30,11 +30,13 @@
     "koa-multer": "1.0.2",
     "koa-onerror": "3.1.0",
     "koa-router": "7.2.1",
+    "koa-session": "5.5.1",
     "koa-static": "4.0.1",
     "koa-static-cache": "5.1.1",
     "koa-views": "6.1.1",
     "koa2-cors": "2.0.3",
     "log4js": "0.6.6",
+    "moment": "2.19.3",
     "mysql": "2.15.0",
     "path": "0.12.7"
   }

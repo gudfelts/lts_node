@@ -1,3 +1,4 @@
+
 const koa = require("koa");
 const static = require("koa-static");
 const path = require("path");
@@ -18,6 +19,7 @@ const catchError = require("./middleware/catchError").catchError;
 const logUtil = require("./utils/log");
 const routers = router();
 const app = new koa();
+const moment = require('moment');
 
 const env = process.env.NODE_ENV;
 onerror(app);
@@ -102,6 +104,9 @@ app.on("error", (err, ctx) => {
   // ctx.status = 404;
 });
 
+const draftTime = moment().format('YYYY-MM-DD HH:mm:ss');
+// console.log(draftTime)
 app.listen(config.serverPort, () =>
   console.log(`Server is running at ${config.serverPort}`)
 );
+

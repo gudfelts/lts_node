@@ -50,5 +50,5 @@ module.exports = async (data,indexbanner = 0,isbanner = 0) => {
     }
       
   }
-  return { data, path: IMG };
+  return IMG ;
 };
