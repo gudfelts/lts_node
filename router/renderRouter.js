@@ -21,11 +21,12 @@ const {
 } = require("../model/OperationData");
 //获取文章
 router.get("/showArticle/article", async ctx => {
-  const id = ctx.query.id,
-    sort = ctx.query.sort,
-    type = ctx.query.type;
+  const id = ctx.query.id;
 
-  const data = await getArticleOne(id);
+  const data = await getArticleOne(id),
+  sort = data[0].sort,
+  type = data[0].type;
+  
   const HotArticle = await getHotArticle(sort);
   //增加浏览数
   addBrowse(id);

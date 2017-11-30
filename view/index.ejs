@@ -30,7 +30,7 @@
         <section class='container-types'>
         <div class='banner'>
         <%for(var i =0,len = banner.length;i < len;i++){%>
-            <a target='_blank' class='banner-link' href='/showArticle/article?id=<%=banner[i].id%>&type=<%=banner[i].type%>&sort=<%=banner[i].sort%>'>
+            <a target='_blank' class='banner-link' href='/showArticle/article?id=<%=banner[i].id%>%>'>
                 <img src=<%=banner[i].path%> alt="1">
                 <div class='banner-title'>
                    
@@ -47,7 +47,7 @@
             <p class='part-title info-title'>科研资讯</p>
             <div class='flexbox'>
                 <div class='newsLeft'>
-                    <a target='_blank' href='/showArticle/article?id=<%=info.banner.id%>&type=<%=info.banner.type%>&sort=information'>
+                    <a target='_blank' href='/showArticle/article?id=<%=info.banner.id%>'>
                         <img src=<%=info.banner.src%>>
                         <h4><%=info.banner.title%></h4>
                     </a>
@@ -58,7 +58,7 @@
                     <ul class='news-box'>
                     <%for(var i = 0;i < 8;i++){%>
                         <li class='new-item'>
-                            <a target='_blank' href='/showArticle/article?id=<%=info.aNew[i].id%>&type=<%=info.aNew[i].type%>&sort=information'><%=info.aNew[i].title%></a>
+                            <a target='_blank' href='/showArticle/article?id=<%=info.aNew[i].id%>'><%=info.aNew[i].title%></a>
                         </li>
                         <%}%>
                     </ul>
@@ -77,12 +77,12 @@
     
                     </p>
                     <div class='box1-content'>
-                        <a target='_blank' href='/showArticle/article?id=<%=research.id%>&type=<%=research.type%>&sort=research'>
+                        <a target='_blank' href='/showArticle/article?id=<%=research.id%>'>
                             <img src=<%=research.src%> >
                         </a>
                         <div class='secient-content'>
                             <h3>
-                                <a target='_blank' href='/showArticle/article?id=<%=research.id%>&type=<%=research.type%>&sort=research'><%=research.title%></a>
+                                <a target='_blank' href='/showArticle/article?id=<%=research.id%>'><%=research.title%></a>
                             </h3>
                             <p>
                                 <%-research.summary%></p>
@@ -99,7 +99,7 @@
                     <div class='box2-content'>
                         <div class='box2-box'>
                         <%for(var i = 0, len = exchange.length; i < len;i++){%>
-                            <a target='_blank' href='/showArticle/article?id=<%=exchange[i].id%>&type=<%=exchange[i].type%>&sort=exchange' class='box2-item'>
+                            <a target='_blank' href='/showArticle/article?id=<%=exchange[i].id%>' class='box2-item'>
                                <%-exchange[i].title%>                           
                             </a>
                             <%}%>

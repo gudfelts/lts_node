@@ -68,7 +68,7 @@
                                   <%}%>
                                 </div>
                                  <div class='item-content'>
-                                    <a target='_blank' href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
+                                    <a target='_blank' href='/showArticle/article?id=<%=HotArticle[i].id%>'>
                                     <%=HotArticle[i].title %>
                                 </a>
                                  </div>     </li>
@@ -106,13 +106,13 @@
                         <%for(var i =  0;i < data.length ;i++){%>
                     
                         <li>
-                            <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><h3 class='new-title'><%=data[i].title %></h3></a>
+                            <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>'><h3 class='new-title'><%=data[i].title %></h3></a>
                             <div class='new-box'>
                                 <%if(data[i].img !=='0'){%>
                                 <img src=<%=data[i].img%> class='new-img' onerror="this.src='/images/error.jpg'">
                               
                                 <div class='new-content'>
-                                    <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
+                                    <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>' class='new-content-summary'>
                                     <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
                                     </a>
@@ -120,7 +120,7 @@
                                 
                                 <%}else{%>
                                      <div class='new-content-other'>
-                                         <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
+                                         <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>' class='new-content-summary'>
                                     <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
                                     </a>
