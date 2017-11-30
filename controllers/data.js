@@ -24,7 +24,6 @@ const {
   saveBanner,
   getBanner,
   geBannerOneById,
-  geBannerOne,
   deleteBannerById,
   changeBanner,
   updateBanner,
@@ -90,7 +89,7 @@ router.post("/article", async ctx => {
     const id = result.insertId;
     //储存banner
     if (isbanner === 1) {
-      let banner = await geBannerOne();
+      let banner = await geBanner();
       if (banner.length === 5) {
         saveBanner(article.sort, article.type, id, path, article.title, false);
       } else {
@@ -192,8 +191,9 @@ router.get("/article", async ctx => {
       const isbanner = parseInt(data.isbanner);
       let indexbanner = 0;
 
+      //了解该文章的banner图为第几张
       if (isbanner) {
-        let banner = await geBannerOneById([data.id, sort]);
+        let banner = await geBannerOneById(data.id);
         indexbanner = matchBanner(data.content, banner[0].path);
         data.indexbanner = indexbanner;
       }

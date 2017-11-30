@@ -1,4 +1,4 @@
-const { getBanner, getAllNum, getIndex } = require("../model/OperationData");
+const { getBanner, getArticlsTotal, getIndexData } = require("../model/OperationData");
 const SQL = require("../config/sql");
 
 /**
@@ -39,11 +39,11 @@ const getInfo = async () => {
     info_n = 8;
   let info = {};
   //获取表格行数
-  const NUM = await getAllNum("information");
+  const NUM = await getArticlsTotal("information");
   //获取从info_m到info_n的数据
   let aNew;
 
-  aNew = await getIndex(["information", info_m, info_n]);
+  aNew = await getIndexData(["information", info_m, info_n]);
 
   //获取带图的文章
   let data = pick(aNew);
@@ -65,7 +65,7 @@ const getInfo = async () => {
     }
 
     while (NUM >= info_n) {
-      aNew = await getIndex(["information",info_m, info_n]);
+      aNew = await getIndexData(["information",info_m, info_n]);
       let data = pick(aNew);
 
       if (!!data) {
@@ -94,11 +94,11 @@ const getResearch = async () => {
     info_n = 4;
   let research = {};
   //获取表格行数
-  const NUM = await getAllNum("research");
+  const NUM = await getArticlsTotal("research");
 
   while (NUM >= info_n) {
     //获取从info_m到info_n的数据
-    let aNew = await getIndex(["research", info_m, info_n]);
+    let aNew = await getIndexData(["research", info_m, info_n]);
     //获取带图的文章
     let { banner } = pick(aNew);
 
@@ -122,7 +122,7 @@ const getResearch = async () => {
 };
 
 const getExchange = async () => {
-  let aNew = await getIndex(["exchange",0, 8]);
+  let aNew = await getIndexData(["exchange",0, 8]);
   return aNew;
 };
 

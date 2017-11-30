@@ -1,12 +1,10 @@
 module.exports = {
     
         //首页科研资讯
-        getIndexData: "select title,id,type,content,isbanner,img,summary from ?? order by id desc limit ?,?",
+        getIndexData: "select title,id,content,isbanner,img,summary from articles where sort = ? order by id desc limit ?,?",
 
-         
         //热门文章
-        getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from articles where sort = ?  order by id desc limit 20) as total order by browse",
-    
+        getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from articles where sort = ?  order by id desc limit 20) as total order by browse", 
         //获取管理员信息
         getUser: "select * from admin where account = ?",
         //更新密码
@@ -24,10 +22,12 @@ module.exports = {
         updatePerson: "update ?? set name = ?,position = ?,content = ? ,avatar = ? ,summary = ?where id = ? limit 1",
         //查找专家
         searchPerson : 'select * from ?? where name like ? order by id desc limit ?,15',
+        //获取专家的总数量
         getPersonNum: "select count(1) from ??",
+        //交换专家的顺序
         exchangePersonIndex: "update ?? set rank = ? where id = ?",
         
-        //
+        //获取搜索专家的数量
         getReacherNumPerson : 'select count(1) from ?? where name like ? ',
         //删除专家信息
         deletePerson: "delete from ?? where id = ?",
@@ -38,8 +38,10 @@ module.exports = {
         saveBanner: "insert into banner set ?",
         deleteBanner: "delete from banner limit 1",
         getBanner: "select * from banner limit 5",
+        //当目前banner为5个时，获取最后一个banner的id，修改这个文章的isbanner
         geBannerOne: "select id,sort,type from banner limit 1",
-        geBannerOneById: "select id,sort,type,path from banner where id = ? and sort = ? limit 1",
+        //了解该文章的banner图为第几张
+        geBannerOneById: "select id,sort,type,path from banner where id = ? limit 1",
         deleteBannerById: "delete from banner where id = ? and sort = ? limit 1",
         
         updateBanner : 'update  banner set type = ?, path = ?,title = ? where id = ? and sort = ?',
@@ -75,8 +77,8 @@ module.exports = {
         //获取总条数
         getNum: "select count(1) from ?? where type = ?",
         getArticleNum: "select count(1) from articles where sort = ? and type = ?",
-        //获取总条数
-        getAllNum: "select count(1) from ??",
+        //获取文章总条数
+        getArticlsTotal: "select count(1) from articles where sort = ?",
         //获取总条数
         getNumNoTYPE: "select count(1) from ??",
         //更新内容

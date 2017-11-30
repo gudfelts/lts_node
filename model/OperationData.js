@@ -57,13 +57,13 @@ module.exports.getHotArticle = async sort => {
 };
 
 //首页获取数据
-module.exports.getIndex = val => query(SQL.getIndexData,val)
+module.exports.getIndexData = val => query(SQL.getIndexData,val)
   
 
 //获取某栏目文章的总数量
-module.exports.getAllNum = async (sort) => {
+module.exports.getArticlsTotal = async (sort) => {
  
-  let  result = await query(SQL.getAllNum,sort);
+  let  result = await query(SQL.getArticlsTotal,sort);
   
   return result[0]["count(1)"];
 };
@@ -139,7 +139,6 @@ module.exports.getBanner =  () => query(SQL.getBanner);
 module.exports.changeBanner  =  val => query(SQL.changeBanner,val );
 module.exports.updateBanner  =  val => query(SQL.updateBanner,val );
 module.exports.geBannerOneById  =  val => query(SQL.geBannerOneById,val );
-module.exports.geBannerOne  =  () => query(SQL.getBanner);
 module.exports.updateBannerAll  =  val => query(SQL.updateBannerAll,val );
 module.exports.deleteBannerById =  val => query(SQL.deleteBannerById,val);
 //增加链接
