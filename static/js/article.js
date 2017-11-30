@@ -51,7 +51,9 @@ $().ready(function(e) {
     });
     var url = window.location.href;
     var summary = window.trimHtml($('.content-main').html(), { preserveTags: false, limit: 50 }).html
-   
+    $('img').error(function(){
+        $(this).attr('src',"/images/error.jpg");
+    })
     window.jiathis_config = { 
         url: url, 
         title: document.title, 

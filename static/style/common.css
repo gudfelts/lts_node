@@ -133,14 +133,18 @@ header {
 .header_banner {
   vertical-align: top;
   display: inline-block;
+  padding-top: 10px;
   height: 100%;
   line-height: 125px;
   margin: 0 20px;
 }
 
-.banner_a1 {
+.header_banner p {
   font-size: 22px;
   color: #007579 !important;
+  cursor: default;
+  font-weight: bold;
+  line-height: 50px;
 }
 
 .header_nav {
@@ -160,7 +164,7 @@ header {
 }
 
 .nav_box {
-  width: 1000px;
+  width: 1000px !important;
   display: flex;
   justify-content: space-around;
 }

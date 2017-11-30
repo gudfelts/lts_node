@@ -109,7 +109,7 @@
                             <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><h3 class='new-title'><%=data[i].title %></h3></a>
                             <div class='new-box'>
                                 <%if(data[i].img !=='0'){%>
-                                <img src=<%=data[i].img%> class='new-img' alt=''>
+                                <img src=<%=data[i].img%> class='new-img' onerror="this.src='/images/error.jpg'">
                               
                                 <div class='new-content'>
                                     <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>

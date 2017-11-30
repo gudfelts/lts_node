@@ -63,5 +63,8 @@ $().ready(function(e) {
     $('body').css('min-height',$(window).height()-10);
   
   }
+  $('img').error(function(){
+    $(this).attr('src',"/images/error.jpg");
+  })
   // toTop();
 });
