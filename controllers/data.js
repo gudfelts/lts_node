@@ -790,8 +790,9 @@ router.post("/draft", async ctx => {
 });
 //更新草稿
 router.post("/draft/update", async ctx => {
-  let article = ctx.request.body;
-  id = article.id;
+  let article = ctx.request.body,
+  id = article.id,
+  type = parseInt(article.type);
   delete article.id;
 
   article.time = article.time.replace(/T.*$/, "");
@@ -805,6 +806,8 @@ router.post("/draft/update", async ctx => {
       article.source,
       article.author,
       article.draftTime,
+      article.sort,
+      type,  
       id
     ]);
     saveDraftTime({draftTime:article.draftTime,id})
