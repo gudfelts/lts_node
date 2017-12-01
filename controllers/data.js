@@ -85,8 +85,8 @@ router.post("/article", async ctx => {
       limit: 30
     }).html;
 
-    var { data, path } = await matchImg(article.content, indexbanner, isbanner);
-    article.content = data;
+    var path= await matchImg(article.content, indexbanner, isbanner);
+  
     article.img = path;
     const result = await saveArticle(article);
     const id = result.insertId;
@@ -878,10 +878,11 @@ router.get("/draft/publish", async (ctx, next) => {
 
   let result = await getDraftOne(idDraft);
   let article = result[0];
-  sort = article.sort;
+  console.log(article)
+ 
 
-  delete article.sort;
   delete article.id;
+  delete article.draftTime;
 
   article.isbanner = 0;
   article.praise = 0;
@@ -892,11 +893,10 @@ router.get("/draft/publish", async (ctx, next) => {
     limit: 30
   }).html;
   try {
-    let { data, path } = await matchImg(article.content);
-    article.content = data;
+    let path = await matchImg(article.content);
     article.img = path;
     
-    saveArticle(sort, article);
+    saveArticle(article);
     deleteDraft(idDraft);
     deleteDraftTime(idDraft);
     ctx.response.body = {

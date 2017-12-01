@@ -3,14 +3,14 @@ function render(data, sort) {
   $detailBox.html("");
   var aLi = [];
   for (var i = 0; i < data.length; i++) {
-    let href = '/showArticle/article?id=' +data[i].id +'&type=' +data[i].type +'&sort=' +sort;
+    let href = '/showArticle/article?id=' +data[i].id;
 
     let title =$('<a></a>').attr('href',href).append('<h3 class="new-title">' +data[i].title +'</h3>')
     let oDiv = $('<div class="new-box"></div>');
     if (data[i].img !== "0") {
 
       let img = $('<img class="new-img" alt="" src='+data[i].img+'>');
-      let summary = $('<a class="new-content-summary"></a>').attr('href',href).html(data[i].summary);
+      let summary = $('<a class="new-content-summary "target=_blank"></a>').attr('href',href).html(data[i].summary);
       let content = $('<div class="new-content"></div>').append(summary);
 
       oDiv.append(img,content);
