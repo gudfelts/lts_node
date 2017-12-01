@@ -121,8 +121,16 @@ const getResearch = async () => {
   return research;
 };
 
+const getDynamic = async () => {
+  let aNew = await getIndexData(["dynamic",0, 8]);
+  return aNew;
+};
 const getExchange = async () => {
   let aNew = await getIndexData(["exchange",0, 8]);
+  return aNew;
+};
+const getAdvisory = async () => {
+  let aNew = await getIndexData(["advisory",0, 8]);
   return aNew;
 };
 
@@ -133,8 +141,11 @@ module.exports =  async () => {
     let info = await getInfo();
     let research = await getResearch();
     let exchange = await getExchange();
+    let dynamic = await getDynamic();
+    let advisory = await getAdvisory();
     let banner = await getBanner();
-    return { info, research, exchange, banner};
+    console.log(dynamic,advisory)
+    return { info, research, exchange, dynamic,advisory,banner};
  
 };
 

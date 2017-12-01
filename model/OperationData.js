@@ -46,7 +46,7 @@ module.exports.getCatalog = async (sort, type, start) => {
         throw e;
       });
     
-      return { data, title, sorts: TYPE[sort].childen, sort, code: 200 };
+      return { data, title, sorts: TYPE[sort].childen, sort,sortName:TYPE[sort].childen[type-1], code: 200 };
   
  
 };

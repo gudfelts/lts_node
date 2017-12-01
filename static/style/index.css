@@ -375,34 +375,34 @@ body {
   background-repeat: no-repeat;
 }
 
-/*咨询培训 Consultation training*/
+/*咨询服务 Consultation advisorying*/
 .bottom-block {
   height: 500px;
 }
 
-.train-title::after {
-  content: "Consultation Training";
+.advisory-title::after {
+  content: "Consultation Service";
 }
 
-.construction-title::after {
-  content: "Construction";
+.dynamic-title::after {
+  content: "Think Tank Dynamic";
 }
 
-.train,
-.construction {
+.advisory,
+.dynamic {
   float: left;
   width: 42%;
-  margin: 48px;
+  margin: 0px 48px;
 }
 
-.train-box,
-.construction-box {
+.advisory-box,
+.dynamic-box {
   width: 90%;
-  margin: 0 auto;
+  margin: -20px auto 0 auto;
 }
 
-.train-item,
-.construction-item {
+.advisory-item,
+.dynamic-item {
   display: inline-block;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -410,11 +410,12 @@ body {
   max-height: 30px;
   overflow: hidden;
   margin: 10px 25px;
+  font-size: 20px;
   position: relative;
 }
 
-.train-item::before,
-.construction-item::before {
+.advisory-item::before,
+.dynamic-item::before {
   content: "";
   display: block;
   width: 10px;

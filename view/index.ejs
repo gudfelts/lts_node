@@ -130,7 +130,42 @@
     
         </section>
         <!--咨询培训、智库建设-->
-       
+       <section class='container-types bottom-block'>
+      <div class='advisory'>
+        <p class='part-title advisory-title'>
+            咨询服务
+            <a href="/showArticle/catalog?sort=advisory&type=1" class='toMore'>more</a>
+
+        </p>
+
+        <div class='advisory-box'>
+            
+          
+
+           <%if(advisory && advisory.length > 0){
+            for(var i =  0;i < advisory.length;i++){%>
+                <a class='advisory-item' target='_blank' href='/showArticle/article?id=<%=advisory[i].id%>'><%-advisory[i].title%></a>          
+                      
+            <%}}%>
+           
+        </div>
+      </div>
+      <div class='dynamic'>
+        <p class='part-title dynamic-title'>
+            智库动态    
+            <a href="/showArticle/catalog?sort=dynamic&type=1" class='toMore'>more</a>
+
+        </p>
+
+        <div class='dynamic-box'>
+             <%if(dynamic && dynamic.length > 0){
+            for(var i =  0;i < dynamic.length ;i++){%>
+                <a class='dynamic-item' target='_blank' href='/showArticle/article?id=<%dynamic[i].id%>'><%-dynamic[i].title%></a>          
+                      
+            <%}}%>
+        </div>
+      </div>
+    </section>
        
         <!-- </div> -->
     
