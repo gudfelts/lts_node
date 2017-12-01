@@ -141,7 +141,7 @@ router.post("/article/delete", async (ctx, next) => {
   for (let i = 0, len = data.length; i < len; i++) {
     const id = data[i].id,
       type = data[i].type;
-    if (data[i].isbanner) {
+    if (data[i].isbanner == 1) {
       let banner = await getBanner();
 
       if (banner.length === 3) {
@@ -255,12 +255,15 @@ router.post("/article/edit", async ctx => {
     title = article.title,
     time = article.time,
     source = article.source,
-    author = article.author;
+    author = article.author,
+    sort   = article.selectedOptions[0],
+    type   = parseInt(article.selectedOptions[1]);
 
+    console.log(article.selectedOptions)
   article = await getArticleIsBanner(id);
   let isbannerOld = article[0].isbanner;
   let path  = await matchImg(content, indexbanner, isbanner);
-  editArticle([title,author,source,time,content,path,isbanner,id]);
+  editArticle([title,author,source,time,content,path,isbanner,sort,type,id]);
   
   if(isbannerOld == 1){
     //以前是banner
@@ -825,11 +828,10 @@ router.get("/draft", async ctx => {
   await getDraftOne(id)
     .then(async data => {
 
-      let result = await getDraftTime(id);
+      data[0].draftTime = await getDraftTime(id);
       ctx.response.body = {
         code: 200,
         data: data[0],
-        draftTime : result,
         msg: "获取成功"
       };
     })

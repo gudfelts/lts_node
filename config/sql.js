@@ -84,7 +84,7 @@ module.exports = {
         //获取总条数
         getNum: "select count(1) from ??",
         //更新内容
-        editArticle: "update  articles set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,isbanner = ? where id = ? limit 1",
+        editArticle: "update  articles set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,isbanner = ? ,sort = ?,type = ? where id = ? limit 1",
         updateArticleColumn: "update  articles set sort = ?,type = ? where id = ? limit 1",
         //查找文章
         searchArticle : 'select title,author,id,type,img,browse,praise,summary,time,source from articles where title like ? and type = ? and sort = ? order by id desc limit ?,15',
