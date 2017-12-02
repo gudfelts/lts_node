@@ -128,10 +128,9 @@ module.exports.getArticleIsBanner =  id => query(SQL.getArticleIsBanner,id);
 module.exports.updateBanner  =  val => query(SQL.updateBanner,val );
 module.exports.getBannerOneById  =  val => query(SQL.getBannerOneById,val );
 
-module.exports.deleteBannerById =  val => {
-  query(SQL.deleteBannerById,val);
+module.exports.deleteBannerById =  val => query(SQL.deleteBannerById,val);
 
-}
+
 //增加链接
 module.exports.addLink =  val => query(SQL.addLink,val);
 //获取链接
@@ -143,7 +142,7 @@ module.exports.deleteLink = id => query(SQL.deleteLink,id);
 
 //后台用户
 module.exports.getUser = account => query(SQL.getUser,account);
-module.exports.updateUser = pass => query(SQL.changePassword,pass);
+module.exports.changePassword = pass => query(SQL.changePassword,pass);
 module.exports.updateUserTime = val => query(SQL.updateUserTime,val);
 
 
