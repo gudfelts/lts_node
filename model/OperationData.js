@@ -108,7 +108,7 @@ module.exports.saveBanner =   (id, path,title,flag = false) => {
         
          if(!flag){
           let result = await query(SQL.getBannerOne); 
-          let {id,type} = result[0]
+          let {id} = result[0]
           query(SQL.changetBanner,[0,id]); 
           await query(SQL.deleteBanner)
          }
