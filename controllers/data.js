@@ -26,7 +26,7 @@ const {
   getNum,
   saveBanner,
   getBanner,
-  geBannerOneById,
+  getBannerOneById,
   deleteBannerById,
   updateBanner,
   searchArticle,
@@ -76,7 +76,6 @@ router.post("/article", async ctx => {
   article.sort = type[0];
   article.praise = 0;
   article.browse = 1;
-  console.log(isbanner)
   article.time = article.time.replace(/T.*$/, "");
 
   try {
@@ -84,15 +83,13 @@ router.post("/article", async ctx => {
       preserveTags: false,
       limit: 30
     }).html;
-
-    var path= await matchImg(article.content, indexbanner, isbanner);
-  
+    let path= await matchImg(article.content, indexbanner, isbanner);
     article.img = path;
     const result = await saveArticle(article);
     const id = result.insertId;
     //储存banner
     if (isbanner === 1) {
-      let banner = await geBanner();
+      let banner = await getBanner();
       if (banner.length === 5) {
         saveBanner(id, path, article.title, false);
       } else {
@@ -105,11 +102,11 @@ router.post("/article", async ctx => {
       msg: "发布文章成功"
     };
   } catch (error) {
+    console.log(error)
     ctx.response.body = {
       code: 500,
       msg: "发布文章失败!"
     };
-    throw error;
     return;
   }
 });
@@ -126,7 +123,6 @@ router.post("/article/uploadImg", async ctx => {
       };
     })
     .catch(err => {
-      console.log(err);
       ctx.response.body = {
         code: 500,
         msg: "获取失败"
@@ -159,7 +155,8 @@ router.post("/article/delete", async (ctx, next) => {
           return;
         }
       } else {
-        deleteBannerById(id);
+        
+        deleteBannerById(id)
       }
     }
 
@@ -196,7 +193,7 @@ router.get("/article", async ctx => {
 
       //了解该文章的banner图为第几张
       if (isbanner) {
-        let banner = await geBannerOneById(data.id);
+        let banner = await getBannerOneById(data.id);
         indexbanner = matchBanner(data.content, banner[0].path);
         data.indexbanner = indexbanner;
       }

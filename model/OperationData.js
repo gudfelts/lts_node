@@ -107,9 +107,9 @@ module.exports.saveBanner =   (id, path,title,flag = false) => {
     try {
         
          if(!flag){
-          let result = await query(SQL.geBannerOne); 
+          let result = await query(SQL.getBannerOne); 
           let {id,type} = result[0]
-          query(SQL.changeBanner,[0,id]); 
+          query(SQL.changetBanner,[0,id]); 
           await query(SQL.deleteBanner)
          }
          
@@ -126,9 +126,12 @@ module.exports.saveBanner =   (id, path,title,flag = false) => {
 module.exports.getBanner =  () => query(SQL.getBanner);
 module.exports.getArticleIsBanner =  id => query(SQL.getArticleIsBanner,id);
 module.exports.updateBanner  =  val => query(SQL.updateBanner,val );
-module.exports.geBannerOneById  =  val => query(SQL.geBannerOneById,val );
+module.exports.getBannerOneById  =  val => query(SQL.getBannerOneById,val );
 
-module.exports.deleteBannerById =  val => query(SQL.deleteBannerById,val);
+module.exports.deleteBannerById =  val => {
+  query(SQL.deleteBannerById,val);
+
+}
 //增加链接
 module.exports.addLink =  val => query(SQL.addLink,val);
 //获取链接

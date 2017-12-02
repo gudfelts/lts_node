@@ -38,9 +38,9 @@ module.exports = {
         deleteBanner: "delete from banner limit 1",
         getBanner: "select * from banner limit 5",
         //当目前banner为5个时，获取最后一个banner的id，修改这个文章的isbanner
-        geBannerOne: "select id,type from banner limit 1",
+        getBannerOne: "select id,type from banner limit 1",
         //了解该文章的banner图为第几张
-        geBannerOneById: "select path from banner where id = ? limit 1",
+        getBannerOneById: "select path from banner where id = ? limit 1",
         deleteBannerById: "delete from banner where id = ? limit 1",     
         updateBanner : 'update  banner set path = ?,title = ? where id = ?',
             
@@ -92,7 +92,7 @@ module.exports = {
         getReacherNumArticle : 'select count(1) from articles where title like ? and sort = ? and type = ?',
     
         //更新isbanner
-        changeBanner : 'update articles set isbanner = ? where id = ?',
+        changetBanner : 'update articles set isbanner = ? where id = ?',
        
     
         //友情链接
