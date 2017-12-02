@@ -16,8 +16,6 @@ module.exports = (file)=>{
             }
              else {
                  resolve( config.HOST+""+target_path)
-                 
-
             } 
             
           });

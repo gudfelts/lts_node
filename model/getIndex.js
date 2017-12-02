@@ -144,7 +144,6 @@ module.exports =  async () => {
     let dynamic = await getDynamic();
     let advisory = await getAdvisory();
     let banner = await getBanner();
-    console.log(dynamic,advisory)
     return { info, research, exchange, dynamic,advisory,banner};
  
 };

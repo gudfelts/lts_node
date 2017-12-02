@@ -386,20 +386,20 @@ router.get("/team/person", async ctx => {
 router.post("/team/person/avatar", async ctx => {
   const { files, fields } = await asyncBusboy(ctx.req);
   await downImg(files[0], "person")
-    .then(path => {
-      ctx.response.body = {
-        code: 200,
-        path,
-        msg: "获取成功"
-      };
-    })
-    .catch(err => {
-      console.error(err);
-      ctx.response.body = {
-        code: 500,
-        msg: "获取失败"
-      };
-    });
+  .then(path => {
+    ctx.response.body = {
+      code: 200,
+      path,
+      msg: "获取成功"
+    };
+  })
+  .catch(err => {
+    console.error(err);
+    ctx.response.body = {
+      code: 500,
+      msg: "获取失败"
+    };
+  });
 });
 //增加专家信息
 router.post("/team/person", async ctx => {
@@ -876,7 +876,6 @@ router.get("/draft/publish", async (ctx, next) => {
 
   let result = await getDraftOne(idDraft);
   let article = result[0];
-  console.log(article)
  
 
   delete article.id;
