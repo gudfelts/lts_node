@@ -49,6 +49,7 @@ $().ready(function(e) {
     $('.share_qzone').click(function(){
         $('.jiathis_button_qzone').click();
     });
+   
     var url = window.location.href;
     var summary = window.trimHtml($('.content-main').html(), { preserveTags: false, limit: 50 }).html
     $('img').error(function(){

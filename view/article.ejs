@@ -22,36 +22,16 @@
     <%- include('./component/header')%>
 
         <div class="container-types">
-            <div class='side-section left-section'>
+            <div class='side-section left-section' style='top: 240px;position: fixed;'>
              
-                    <div class="post_topshare">
-						<p class="post_topshare_title">分享到：</p>
-						<ul class=" post_share " >
-							
-							<li class="share_weixin" action-type="top">
-							    <a href="javascript:;" target="_self"><i title="分享到微信" ></i><span></span>微信</a>
-							</li>
-							<li class="share_qzone" action-type="qzone">
-								<a href="javascript:;" target="_self"><i title="分享到QQ空间"></i><span></span>QQ空间</a>
-							</li>
-							<li class="share_weibo" action-type="weibo">
-								<a href="javascript:;" target="_self"><i title="分享到新浪微博"></i><span></span>微博</a>
-							</li>
-						</ul>
-                            <div class="js_qrcode_wrap hidden" id="js_qrcode_top">
-                                <div class="js_qrcode_arr"></div>
-                                <a href="javascript:;" target="_self" class="js_qrcode_close" data-type="top" title="关闭"></a>
-                                <p>用微信扫码二维码</p>
-                                <p>分享至好友和朋友圈</p>
-                            </div>
-					</div>
                     
-                  <div class="jiathis_style_24x24 hidden">
-        <a class="jiathis_button_qzone"></a>
-        <a class="jiathis_button_tsina"></a>
-        <a class="jiathis_button_tqq"></a>
-        <a class="jiathis_button_weixin"></a>
-    </div>
+                    <div class="share-title through"><span>分享</span></div>
+                    <div class="share" data-bosszone="share">
+                        <a class="jiathis_button_weixin wxWrap"><i class="iconfont icon-icon-"></i></a>
+                        <a class="jiathis_button_qzone"><i class="iconfont icon-qqkongjian"></i></a>
+                        <a class="jiathis_button_tsina"><i class="iconfont icon-weibo1 share_weibo" ></i></a>
+                    </div>
+                   
             </div>   
             <div class="content">
                 <article>
