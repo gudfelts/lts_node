@@ -114,10 +114,11 @@ module.exports.saveBanner =   (id, path,title,flag = false) => {
          }
          
           query(SQL.saveBanner,{ id, path,title});
+          resolve();
+      
       } catch (error) {
         reject(error)
       }
-      resolve();
     })
   
 

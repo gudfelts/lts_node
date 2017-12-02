@@ -38,7 +38,7 @@ module.exports = {
         deleteBanner: "delete from banner limit 1",
         getBanner: "select * from banner limit 5",
         //当目前banner为5个时，获取最后一个banner的id，修改这个文章的isbanner
-        getBannerOne: "select id,type from banner limit 1",
+        getBannerOne: "select id from banner limit 1",
         //了解该文章的banner图为第几张
         getBannerOneById: "select path from banner where id = ? limit 1",
         deleteBannerById: "delete from banner where id = ? limit 1",     
