@@ -36,7 +36,7 @@
                     <li class="itemLi">
                         <a  href="/showArticle/catalog?type=<%=i+1%>&sort=<%=sort%>" <%if(i==type-1){%> id='active'<%}%> ><%=sorts[i]%></a>
                     </li>
-                    <%}%>
+                        <%}%>
                     <%}%>
                     <%if(sort==='dynamic'){%>
                     <li class="itemLi">
@@ -61,17 +61,22 @@
                     <%if(!!HotArticle){
                      for(var i =  0;i < HotArticle.length ;i++){%>
                      
-                        <li class="hot-item ">
-                             <div class='item-img'>
-                                     <%if(HotArticle[i].img !=='0'){%>
+                        <li class="hot-item">
+                            <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
+                                <%if(HotArticle[i].img !=='0'){%>
+                                <div class='item-img'>
+                                    
                                         <img src=<%=HotArticle[i].img%> class='hot-img' alt=''>
-                                  <%}%>
                                 </div>
+                                  <%}%>
+                                
                                  <div class='item-content'>
-                                    <a target='_blank' href='/showArticle/article?id=<%=HotArticle[i].id%>'>
+                                    
                                     <%=HotArticle[i].title %>
-                                </a>
-                                 </div>     </li>
+                              
+                                 </div>
+                            </a>
+                            </li>
                         <%}}%>
                     
                     </ul>
@@ -108,15 +113,17 @@
                         <li>
                             <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>'><h3 class='new-title'><%=data[i].title %></h3></a>
                             <div class='new-box'>
+
                                 <%if(data[i].img !=='0'){%>
-                                <img src=<%=data[i].img%> class='new-img' onerror="this.src='/images/error.jpg'">
+                                <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>' class='new-content-summary'>
+                                <img src=<%=data[i].img%> class='new-img' onerror="this.src='/images/error.jpg'" alt='<%-data[i].summary%>'>
                               
                                 <div class='new-content'>
-                                    <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>' class='new-content-summary'>
+                                    
                                     <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
-                                    </a>
                                 </div>
+                                    </a>
                                 
                                 <%}else{%>
                                      <div class='new-content-other'>

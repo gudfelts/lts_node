@@ -90,9 +90,7 @@ router.get("/showArticle/search", async (ctx, next) => {
     key : ctx.query.key,
     pageCount,
     code :200,
-    sort,
-    data,
-    type,
+    data,  
     title : TYPE[sort].childen[type-1],
     sorts: TYPE[sort].childen
   })

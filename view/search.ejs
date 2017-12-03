@@ -15,7 +15,7 @@
     <script src='/js/catalog.js'></script>
 
 
-    <title><%=title%></title>
+    <title><%=key%></title>
 </head>
 <body>
       <%- include('./component/header')%>
@@ -23,32 +23,15 @@
     <div class="container">
         <!--左侧-->
         <div class='container-types'>
-            <div class="boxLeft">
-                <!--左侧导航栏上面的装饰-->
-                <div class="navTitle">
-                       <a href="#"><%=title%></a>
-                </div>
-
-                <!--左侧导航栏-->
-                <ul class="itemUl">
-                    <% for(var i = 0;i < sorts.length;i++){%>
-                    <li class="itemLi">
-                        <a href="/showArticle/catalog?type=<%=i+1%>&sort=<%=sort%>" <%if(i==type-1){%> id='active'<%}%> ><%=sorts[i]%></a>
-                    </li>
-                    <%}%>
-                </ul>
-           </div>
-            
-            <div class="boxRight">
-                <div class="part-title">
-                    <%=title%>
+                      
+        <div class="boxRight" style='width:100%;'>
+            <div class="part-title">
+                搜索结果
 
         <div class="s-bar">
         <form action='/showArticle/search' method="get" id='search'>
                  <input type="text"  class="search-input" placeholder="点击搜索" name='key'>
-                 <input type="hidden"  value='<%=sort%>' name='sort'>
                  <input type="hidden"  value='0' name='start'>
-                 <input type="hidden"  value=<%=type%> name='type'>
                  <input type='submit' val='搜索'>
             <a  class='search-icon'></a>
         </form>
@@ -65,13 +48,13 @@
                         <%for(var i =  0;i < data.length ;i++){%>
                     
                         <li>
-                            <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><h3 class='new-title'><%=data[i].title %></h3></a>
+                            <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><h3 class='new-title'><%=data[i].title %></h3></a>
                             <div class='new-box'>
                                 <%if(data[i].img !=='0'){%>
-                                <img src=<%=data[i].img%> class='new-img' alt=''>
+                                <img src=<%=data[i].img%> class='new-img' alt='<%-data[i].summary%>' style='height: 190px;'>
                               
                                 <div class='new-content'>
-                                    <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
+                                    <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
                                     <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
                                     </a>
@@ -79,7 +62,7 @@
                                 
                                 <%}else{%>
                                      <div class='new-content-other'>
-                                         <a href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
+                                         <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
                                     <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
                                     </a>
