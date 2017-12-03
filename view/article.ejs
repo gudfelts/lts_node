@@ -78,24 +78,27 @@
         
 
                 <a class="no-comment-title">近期热门文章</a>
-            <em id="top-bandArrow" style="left: 174px;"></em>
+            <em id="top-bandArrow" style="left: 164px;"></em>
             </div>
                     <ul class='hotBox'>
                         <%if(!!HotArticle){
                         for(var i =  0;i < HotArticle.length ;i++){%>
 
-                            <li class="hot-item ">
+                            <li class="hot-item">
+                            <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
+                                <%if(HotArticle[i].img !=='0'){%>
                                 <div class='item-img'>
-                                     <%if(HotArticle[i].img !=='0'){%>
+                                    
                                         <img src=<%=HotArticle[i].img%> class='hot-img' alt=''>
-                                  <%}%>
                                 </div>
-                                 <div class='item-content'>
-                                    <a href='/showArticle/article?id=<%=HotArticle[i].id%>&type=<%=HotArticle[i].type%>&sort=<%=sort%>'>
-                                    <%=HotArticle[i].title %>
-                                </a>
-                                 </div>
+                                  <%}%>
                                 
+                                 <div class='item-content'>
+                                    
+                                    <%=HotArticle[i].title %>
+                              
+                                 </div>
+                            </a>
                             </li>
                         <%}}%>
                     </ul>

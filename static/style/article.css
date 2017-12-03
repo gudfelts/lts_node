@@ -82,7 +82,46 @@
     text-align: center;
     
 }
+/*热门推荐*/
+.hot-item{
+    -webkit-flex-flow: row wrap;
+}
 
+.item-img{
+    
+    margin:0 auto;
+    width: 280px;
+    height:150px;
+    overflow: hidden;
+}
+.hot-img{
+    width: 280px;
+    height:150px;
+    margin:0 auto;
+    margin-bottom:10px;
+}
+.hot-img{
+    -webkit-transition: -webkit-transform .3s ease-out;
+    transition: -webkit-transform .3s ease-out;
+    -o-transition: transform .3s ease-out;
+    transition: transform .3s ease-out;
+    transition: transform .3s ease-out,-webkit-transform .3s ease-out;
+    transform-origin:50% 50%;
+    
+}
+.hot-img:hover{
+    transform:scale(1.05,1.05);
+    
+}
+.item-content{
+    width: 300px;
+    text-align: center;
+    font-size: 16px;
+    padding-top: 10px;
+}
+.item-content:hover{
+    color:#06A3B1;
+}
 /*标题*/
 .content-title h1 {
     font: bold 36px/1 "Microsoft Yahei";
