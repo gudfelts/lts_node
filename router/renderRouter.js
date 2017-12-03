@@ -66,17 +66,14 @@ router.get("/showArticle/catalog", async ctx => {
 //搜索
 router.get("/showArticle/search", async (ctx, next) => {
   const key = "%" + ctx.query.key + "%";
-  const sort = ctx.query.sort;
-  const type = parseInt(ctx.query.type);
   let start = parseInt(ctx.query.start) || 0;
-  
-  let data = await searchArticle([ key, type,sort,start]).catch((e) => {
+  let data = await searchArticle([ key,start]).catch((e) => {
     
     ctx.throw(500, e);
   });
 
   if (start === 0) {
-    var pageCount = await getSearchNum("article", sort, key);
+    var pageCount = await getSearchNum("article", key, null, null);
     //一页15条
 
     if (pageCount % 15 > 0) {
@@ -85,14 +82,13 @@ router.get("/showArticle/search", async (ctx, next) => {
       pageCount = pageCount / 15;
     }
   }
-
+  console.log(data)
   await ctx.render('search',{
     key : ctx.query.key,
     pageCount,
     code :200,
     data,  
-    title : TYPE[sort].childen[type-1],
-    sorts: TYPE[sort].childen
+    title : key,
   })
  
 });

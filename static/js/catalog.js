@@ -8,15 +8,19 @@ function render(data, sort) {
     let title =$('<a></a>').attr('href',href).append('<h3 class="new-title">' +data[i].title +'</h3>')
     let oDiv = $('<div class="new-box"></div>');
     if (data[i].img !== "0") {
-
-      let img = $('<img class="new-img" alt="" src='+data[i].img+'>');
-      let summary = $('<a class="new-content-summary "target=_blank"></a>').attr('href',href).html(data[i].summary);
-      let content = $('<div class="new-content"></div>').append(summary);
-
-      oDiv.append(img,content);
+      let strImg = ''
+      let img = $('<img class="new-img" alt="" src='+data[i].img+'> ' ).error(function(){
+        $(this).attr('src',"/images/error.jpg");
+      }).css('height',"220px");
+      
+      
+      let content = $('<a class="new-content-summary target="_blank"></a>').attr('href',href);
+      let summary = $('<div class="new-content"></div>').html(data[i].summary);
+      content.append([img,summary]);
+      oDiv.append(content);
     } else {
       
-      let summary = $('<a class="new-content-summary"></a>').attr('href',href).html(data[i].summary);
+      let summary = $('<a></a>').attr('href',href).html(data[i].summary);
       let content = $('<div class="new-content-other"></div>').append(summary);
       oDiv.append(content);
       
@@ -58,10 +62,6 @@ function pagination() {
 
         url =  "/OperationData/searchArticle?key=" +
         key +
-        "&type=" +
-        type +
-        "&sort=" +
-        sort +
         "&start=" +
         start
       }else{
@@ -105,4 +105,7 @@ $().ready(function(e) {
   $(".search-icon").click(function() {
     $("#search").submit()
   });
+  $('img').error(function(){
+    $(this).attr('src',"/images/error.jpg");
+  })
 });

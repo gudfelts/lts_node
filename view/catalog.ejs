@@ -66,7 +66,7 @@
                                 <%if(HotArticle[i].img !=='0'){%>
                                 <div class='item-img'>
                                     
-                                        <img src=<%=HotArticle[i].img%> class='hot-img' alt=''>
+                                        <img src=<%=HotArticle[i].img%> class='hot-img' alt='<%=HotArticle[i].title %> 'onerror="this.src='/images/error.jpg'">
                                 </div>
                                   <%}%>
                                 
@@ -92,10 +92,8 @@
         <div class="s-bar">
         <form action='/showArticle/search' method="get" id='search'>
                  <input type="text"  class="search-input" placeholder="点击搜索" name='key'>
-                 <input type="hidden"  value='<%=sort%>' name='sort'>
                  <input type="hidden"  value='0' name='start'>
-                 <input type="hidden"  value=<%=type%> name='type'>
-                 <input type='submit' val='搜索'>
+                 <input type='submit' val='搜索' class='search-btn'>
             <a  class='search-icon'></a>
         </form>
         
@@ -127,8 +125,8 @@
                                 
                                 <%}else{%>
                                      <div class='new-content-other'>
-                                         <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>' class='new-content-summary'>
-                                    <%if(data[i].summary){%><%-data[i].summary%><%}%>
+                                         <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>'>
+                                            <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
                                     </a>
                                    </div>

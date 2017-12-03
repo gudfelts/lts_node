@@ -21,15 +21,16 @@ module.exports.searchPerson = val => query(SQL.searchPerson,val);
 module.exports.updatePersonIndex = val => query(SQL.updatePersonIndex,val);
 
 //搜索类，获取全部结果的条数
-module.exports.getSearchNum = async (kind, sort, val, type) => {
+module.exports.getSearchNum = async (kind, val, sort,type) => {
   let result = null;
   switch (kind) {
     case "article":
-      result = await query(SQL.getReacherNumArticle, [
-        val,
-        sort,
-        type
-      ]);
+    if(sort === null){
+      result = await query(SQL.getReacherNumArticleUmLimit, val);
+      
+    }else{
+      result = await query(SQL.getReacherNumArticle, [val, sort, type]);   
+    }
       break;
     default:
       result = await query(SQL.getReacherNumPerson, [sort,val]);
@@ -38,6 +39,7 @@ module.exports.getSearchNum = async (kind, sort, val, type) => {
   }
   return result[0]["count(1)"];
 };
+
 //获取目录
 module.exports.getCatalog = async (sort, type, start) => {
     let title = TYPE[sort].self;

@@ -223,7 +223,7 @@ router.get("/article/search", async (ctx, next) => {
   await searchArticle([title, type, sort, start])
     .then(async result => {
       if (start == 0) {
-        var pageCount = await getSearchNum("article", sort, title, type);
+        var pageCount = await getSearchNum("article", title,sort, type);
         //一页15条
       }
 
@@ -487,11 +487,11 @@ router.get("/team/search", async ctx => {
   const name = "%" + ctx.query.name + "%";
   const sort = ctx.query.sort;
   let start = parseInt(ctx.query.start) || 0;
-  console.log(sort)
+ 
   await searchPerson([sort,name, start])
     .then(async result => {
       if (start === 0) {
-        var pageCount = await getSearchNum(sort, sort, name);
+        var pageCount = await getSearchNum(sort, name,sort);
         //一页15条
       }
 

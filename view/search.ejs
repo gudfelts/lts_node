@@ -32,7 +32,7 @@
         <form action='/showArticle/search' method="get" id='search'>
                  <input type="text"  class="search-input" placeholder="点击搜索" name='key'>
                  <input type="hidden"  value='0' name='start'>
-                 <input type='submit' val='搜索'>
+                 <input type='submit' val='搜索' class='search-btn'>
             <a  class='search-icon'></a>
         </form>
         
@@ -45,25 +45,27 @@
                 
                     <ul class='detail-box'>
                     
-                        <%for(var i =  0;i < data.length ;i++){%>
+                      <%for(var i =  0;i < data.length ;i++){%>
                     
                         <li>
-                            <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>'><h3 class='new-title'><%=data[i].title %></h3></a>
+                            <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>'><h3 class='new-title'><%=data[i].title %></h3></a>
                             <div class='new-box'>
+
                                 <%if(data[i].img !=='0'){%>
-                                <img src=<%=data[i].img%> class='new-img' alt='<%-data[i].summary%>' style='height: 190px;'>
+                                <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>' class='new-content-summary'>
+                                <img src=<%=data[i].img%> class='new-img' onerror="this.src='/images/error.jpg'" alt='<%-data[i].summary%>'style='height:200px'>
                               
                                 <div class='new-content'>
-                                    <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
+                                    
                                     <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
-                                    </a>
                                 </div>
+                                    </a>
                                 
                                 <%}else{%>
                                      <div class='new-content-other'>
-                                         <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>&type=<%=data[i].type%>&sort=<%=sort%>' class='new-content-summary'>
-                                    <%if(data[i].summary){%><%-data[i].summary%><%}%>
+                                         <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>'>
+                                            <%if(data[i].summary){%><%-data[i].summary%><%}%>
                                     
                                     </a>
                                    </div>
@@ -81,7 +83,7 @@
                 </div>
                 <%if(data.length > 0){%>
                 <!--分页组件-->
-                <div class="M-box" search-type = '1' data-page=<%=pageCount%> data-sort=<%=sort%> data-type=<%=type%> data-key=<%=key%>></div>
+                <div class="M-box" search-type = '1' data-page=<%=pageCount%>  data-key=<%=key%>></div>
                 <%}%>
             </div>
         </div>

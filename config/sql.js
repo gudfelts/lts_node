@@ -87,9 +87,10 @@ module.exports = {
         editArticle: "update  articles set title = ?,author = ?,source = ?,time = ?, content = ? ,img = ? ,isbanner = ? ,sort = ?,type = ? where id = ? limit 1",
         updateArticleColumn: "update  articles set sort = ?,type = ? where id = ? limit 1",
         //查找文章
-        searchArticle : 'select title,author,id,type,img,browse,praise,summary,time,source from articles where title like ? and type = ? and sort = ? order by id desc limit ?,15',
+        searchArticle : 'select title,author,id,type,img,browse,praise,summary,time,source from articles where title like ?  order by id desc limit ?,15',
         //查找文章
-        getReacherNumArticle : 'select count(1) from articles where title like ? and sort = ? and type = ?',
+        getReacherNumArticle : 'select count(1) from articles where title like ? and type = ? and sort = ?',
+        getReacherNumArticleUmLimit : 'select count(1) from articles where title like ?',
     
         //更新isbanner
         changetBanner : 'update articles set isbanner = ? where id = ?',
