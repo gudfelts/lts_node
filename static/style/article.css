@@ -349,12 +349,10 @@ article{
     background: #21b3f7;
   }
   .share > a:nth-child(3):hover:after {
-    background: #f8c514;
-  }
-  .share > a:nth-child(4):hover:after {
     background: #ff5757;
   }
-  .share > a:nth-child(3) .iconfont {
+  
+  .share > a:nth-child(2) .iconfont,.share > a:nth-child(3) .iconfont {
     position: relative;
     top: -2px;
   }

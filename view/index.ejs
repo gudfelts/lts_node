@@ -160,7 +160,7 @@
         <div class='dynamic-box'>
              <%if(dynamic && dynamic.length > 0){
             for(var i =  0;i < dynamic.length ;i++){%>
-                <a class='dynamic-item' target='_blank' href='/showArticle/article?id=<%dynamic[i].id%>'><%-dynamic[i].title%></a>          
+                <a class='dynamic-item' target='_blank' href='/showArticle/article?id=<%=dynamic[i].id%>'><%-dynamic[i].title%></a>          
                       
             <%}}%>
         </div>
