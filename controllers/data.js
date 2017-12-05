@@ -256,7 +256,6 @@ router.post("/article/edit", async ctx => {
     sort   = article.selectedOptions[0],
     type   = parseInt(article.selectedOptions[1]);
 
-    console.log(article.selectedOptions)
   article = await getArticleIsBanner(id);
   let isbannerOld = article[0].isbanner;
   let path  = await matchImg(content, indexbanner, isbanner);
@@ -464,7 +463,6 @@ router.post("/team/edit", async ctx => {
   let data = ctx.request.body;
   let { id, name, content, position, avatar,sort } = data;
   const summary = trimHtml(content, { preserveTags: false, limit: 70 }).html;
-  console.log(id, name, content, position, avatar,sort)
   id = parseInt(id);
 
   await updatePerson([sort, name, position, content, avatar, summary,id])
@@ -475,7 +473,7 @@ router.post("/team/edit", async ctx => {
       };
     })
     .catch(err => {
-      
+      console.log(err)
       ctx.response.body = {
         code: 500,
         msg: "修改失败"
