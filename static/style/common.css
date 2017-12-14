@@ -159,14 +159,8 @@ header {
 .header_top {
   display: inline-block;
   margin: 0 auto;
-  min-width: 900px;
+  max-width: 840px;
   height: 100%;
-}
-
-.nav_box {
-  width: 1000px !important;
-  display: flex;
-  justify-content: space-around;
 }
 
 .nav_item {

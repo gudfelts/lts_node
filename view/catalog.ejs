@@ -95,23 +95,16 @@
                  <input type="hidden"  value='0' name='start'>
                  <input type='submit' val='搜索' class='search-btn'>
             <a  class='search-icon'></a>
-        </form>
-        
-           
+        </form>     
           </div>
-
                 </div>
                 <div class="detail">
-                    <%if(data.length > 0){%>
-                
-                    <ul class='detail-box'>
-                    
-                        <%for(var i =  0;i < data.length ;i++){%>
-                    
+                    <%if(data.length > 0){%>              
+                    <ul class='detail-box'>                   
+                        <%for(var i =  0;i < data.length ;i++){%>                   
                         <li>
                             <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>'><h3 class='new-title'><%=data[i].title %></h3></a>
                             <div class='new-box'>
-
                                 <%if(data[i].img !=='0'){%>
                                 <a target='_blank' href='/showArticle/article?id=<%=data[i].id%>' class='new-content-summary'>
                                 <img src=<%=data[i].img%> class='new-img' onerror="this.src='/images/error.jpg'" alt='<%-data[i].summary%>'>
