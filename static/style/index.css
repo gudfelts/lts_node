@@ -392,11 +392,14 @@ body {
   content: "Think Tank Dynamic";
 }
 
+.advisory {
+  margin-right: 48px;
+}
+
 .advisory,
 .dynamic {
   float: left;
-  width: 42%;
-  margin: 0px 48px;
+  width: 47%;
 }
 
 .advisory-box,
@@ -407,14 +410,12 @@ body {
 
 .advisory-item,
 .dynamic-item {
-  display: inline-block;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  display: block;
   padding: 5px 0 5px 20px;
   max-height: 30px;
   overflow: hidden;
   margin: 10px 25px;
-  font-size: 20px;
+  font-size: 18px;
   position: relative;
 }
 
