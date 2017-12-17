@@ -21,8 +21,10 @@ body {
 
 /*前往子页面*/
 .toMore {
-  font-size: 35px;
+  font-size: 25px;
   font-family: 楷体;
+  color: gray;
+  margin-top: 8px;
 }
 
 .toMore::after {
@@ -31,7 +33,6 @@ body {
   width: 15px;
   height: 15px;
   margin-left: 10px;
-  margin-bottom: 2px;
   background-image: url("../images/icons/toMore.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -297,18 +298,6 @@ body {
   box-sizing: border-box;
 }
 
-.box2-item::before {
-  content: "";
-  display: block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #006771;
-  position: absolute;
-  top: 5px;
-  left: 0px;
-}
-
 .box2-item:nth-child(3),
 .box2-item:nth-child(6) {
   border-right: 0;
@@ -419,15 +408,23 @@ body {
   position: relative;
 }
 
-.advisory-item::before,
-.dynamic-item::before {
+.title::before {
   content: "";
   display: block;
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background-color: #006771;
+}
+
+.box2-item::before {
   position: absolute;
-  top: 15px;
-  left: 0px;
+  top: 20%;
+  left: 0;
+}
+
+.advisory-item::before, .dynamic-item::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
 }

@@ -100,7 +100,7 @@
                     <div class='box2-content'>
                         <div class='box2-box'>
                         <%for(var i = 0, len = exchange.length; i < len;i++){%>
-                            <a target='_blank' href='/showArticle/article?id=<%=exchange[i].id%>' class='box2-item'>
+                            <a target='_blank' href='/showArticle/article?id=<%=exchange[i].id%>' class='box2-item title'>
                                <%-exchange[i].title%>                           
                             </a>
                             <%}%>
@@ -145,7 +145,7 @@
 
            <%if(advisory && advisory.length > 0){
             for(var i =  0;i < advisory.length;i++){%>
-                <a class='advisory-item' target='_blank' href='/showArticle/article?id=<%=advisory[i].id%>'><%-advisory[i].title%></a>          
+                <a class='advisory-item title' target='_blank' href='/showArticle/article?id=<%=advisory[i].id%>'><%-advisory[i].title%></a>          
                       
             <%}}%>
            
@@ -161,7 +161,7 @@
         <div class='dynamic-box'>
              <%if(dynamic && dynamic.length > 0){
             for(var i =  0;i < dynamic.length ;i++){%>
-                <a class='dynamic-item' target='_blank' href='/showArticle/article?id=<%=dynamic[i].id%>'><%-dynamic[i].title%></a>          
+                <a class='dynamic-item title' target='_blank' href='/showArticle/article?id=<%=dynamic[i].id%>'><%-dynamic[i].title%></a>          
                       
             <%}}%>
         </div>

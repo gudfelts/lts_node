@@ -60,6 +60,7 @@ img {
   font-size: 30px;
   position: relative;
   margin-bottom: 40px;
+  color: #007579;
 }
 
 /*标题后面的英文*/
@@ -69,6 +70,7 @@ img {
   font-style: italic;
   font-size: 20px;
   margin-left: 8px;
+  color: #007579;
 }
 
 /*标题下面的横线*/
@@ -125,7 +127,7 @@ header {
 }
 
 .logo_img {
-  width: 250px;
+  width: 270px;
   /*兼容ie*/
   border: 0px;
 }
