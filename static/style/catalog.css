@@ -2,7 +2,7 @@
 
 
 .boxRight{
-    width: 800px;
+    width: 850px;
     /* border: 1px solid rgb(230, 230, 230); */
 }
 .part-title{
@@ -39,7 +39,7 @@
     /*list-style-type: square;*/
     margin-top: 12.8px;
     font-size: 16px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     border-bottom:1px solid rgb(209, 209, 209);
 }
 
@@ -78,7 +78,7 @@
 }
 .new-content-data {
     display: inline-block;
-    margin-top: 30px;
+    margin-top: 10px;
     width: 100%;
     text-align: right;
 }
@@ -104,9 +104,7 @@
     text-align: right;
     width: 100%;
 }
-.new-content {
-   
-}
+
 .data-time::before,.data-browse::before,.data-praise::before{
     content: '';
     display: inline-block;
@@ -141,26 +139,27 @@
 .s-bar{
     float: right;
     position: relative;
+    margin-top: -5px;
   }
   
  
   
   .search-icon{
-    width: 40px;
-    height: 30px;
+    width: 35px;
+    height: 25px;
     display: inline-block;
     cursor: pointer;
-    background: url('/images/icons/search.png') no-repeat;
+    background: url(/images/icons/search.png) no-repeat;
     background-size: 100% 100%;
     position: absolute;
-    left: 240px;
-    top: 5px;
+    left: 210px;
+    top: 4px;
   }
   
   .search-input
   {
-      width: 280px;
-      height: 41px;
+      width: 250px;
+      height: 31px;
       color: #bababa;
       font-size: 14px;
       border:1px #ececec solid;
@@ -174,6 +173,7 @@
   }
   .search-btn{
       width: 100px;
+      height: 31px;
       cursor: pointer;
       transition: background-color .5s;
       

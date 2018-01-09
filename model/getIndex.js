@@ -1,6 +1,7 @@
 const { getBanner, getArticlsTotal, getIndexData } = require("../model/OperationData");
 const SQL = require("../config/sql");
-
+let info_m = 0,
+      info_n = 10;
 /**
  * 选取带图新闻
  * @param {*} aNew 
@@ -35,8 +36,7 @@ const pick = aNew => {
  * 获取首页科研资讯，选取一个带图的文章作为左边大图展示。
  */
 const getInfo = async () => {
-  let info_m = 0,
-    info_n = 8;
+  
   let info = {};
   //获取表格行数
   const NUM = await getArticlsTotal("information");

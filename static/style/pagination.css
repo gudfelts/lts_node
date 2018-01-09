@@ -67,8 +67,8 @@ input{
     float: left;
     margin:0 5px;
     width: 38px;
-    height: 38px;
-    line-height: 38px;
+    height: 31px
+    line-height: 31px;
     text-align: center;
     background: #fff;
     border: 1px solid #ebebeb;
