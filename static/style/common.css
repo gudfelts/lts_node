@@ -236,6 +236,8 @@ footer {
   background-color: #f8fafc;
   -webkit-box-shadow: 0 -2px 8px 0 rgba(7, 17, 27, 0.06);
   box-shadow: 0 -2px 8px 0 rgba(7, 17, 27, 0.06);
+  background: url("/images/foot_bg.jpg") no-repeat;
+  background-size: 100% 100%;
 }
 
 .footer-box {
@@ -250,7 +252,7 @@ footer {
 
 .footer-link a {
   font-size: 19px;
-  padding: 0 10px;
+  padding: 0 10px 0 0;
   color: #99a1a6;
 }
 
@@ -258,24 +260,43 @@ footer {
   color: black;
 }
 
-.footer-copyright {
-  padding-top: 10px;
-  text-align: center;
+.qr-box {
+  display: inline-block;
+  margin-left: 30px;
 }
 
-.footer-copyright p {
+.qr-box p {
   color: #99a1a6;
-  font-size: 17px;
-  cursor: default;
+  margin-bottom: 5px;
+}
+
+.footer-qr {
+  width: 100px;
+  height: 100px;
 }
 
 .copyright-left {
   display: inline-block;
+  margin-left: 250px;
+}
+
+.copyright-left p {
+  color: #99a1a6;
+  font-size: 13px;
+  line-height: 21px;
+  text-align: left;
 }
 
 .copyright-right {
+  float: right;
   display: inline-block;
-  margin-left: 100px;
+  margin-right: 250px;
+}
+
+.copyright-right p {
+  font-size: 13px;
+  line-height: 21px;
+  text-align: left;
 }
 
 /*
