@@ -216,7 +216,7 @@ header {
 }
 
 .mix-box {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .minx-box1-title::after {
@@ -256,12 +256,12 @@ header {
 
 .secient-content p {
   color: gray;
-  margin-top: 20px;
-  font-size: 17px;
+  margin-top: 10px;
+  font-size: 15px;
   max-height: 110px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 6;
   overflow: hidden;
 }
 
@@ -297,7 +297,6 @@ header {
 /*mix的右边框*/
 .mixRight {
   width: 400px;
-  margin-top: 40px;
   float: right;
 }
 
