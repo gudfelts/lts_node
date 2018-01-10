@@ -232,10 +232,13 @@ header{
 
 .box1-content > a {
   display: inline-block;
-  width: 260px;
+  width: 280px;
+  height: 200px;
+  
 }
 .box1-content a img {
   width: inherit;
+  height: inherit;
   &:hover {
     @extend %boxshadow;
     -webkit-transition: -webkit-box-shadow 0.4s;
