@@ -6,7 +6,7 @@ const ejs = require('ejs');
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
-
+const jwt = require('jsonwebtoken');
 const {getUser, changePassword, updateUserTime} = require("../model/OperationData");
 
 
