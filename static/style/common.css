@@ -230,12 +230,10 @@ a:hover {
 /*底部栏*/
 footer {
   width: 100%;
-  height: 190px;
+  height: 170px;
   padding: 36px 0;
   min-width: 1300px;
   background-color: #f8fafc;
-  -webkit-box-shadow: 0 -2px 8px 0 rgba(7, 17, 27, 0.06);
-  box-shadow: 0 -2px 8px 0 rgba(7, 17, 27, 0.06);
   background: url("/images/foot_bg.jpg") no-repeat;
   background-size: 100% 100%;
 }
