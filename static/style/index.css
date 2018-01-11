@@ -155,12 +155,12 @@ header {
 
 .newsLeft p {
   color: gray;
-  max-height: 100px;
+  max-height: 80px;
   font-size: 15px;
   margin-top: 10px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 3;
   overflow: hidden;
   line-height: 25px;
 }
@@ -172,13 +172,14 @@ header {
 
 .news-box {
   width: 750px;
+  padding-top: 20px;
 }
 
 /*新闻链接*/
 .new-item {
   width: 340px;
   height: 48px;
-  margin: 0 30px 20px 0;
+  margin: 0 30px 10px 0;
   position: relative;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
@@ -195,11 +196,10 @@ header {
 }
 
 .new-item a {
-  display: block;
   height: 100%;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   overflow: hidden;
 }
 
@@ -256,9 +256,13 @@ header {
   width: 400px;
 }
 
+.secient-content h3 {
+  font-size: 23px;
+}
+
 .secient-content p {
   color: gray;
-  margin-top: 10px;
+  margin-top: 30px;
   font-size: 15px;
   max-height: 110px;
   display: -webkit-box;
