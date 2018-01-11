@@ -1,7 +1,7 @@
 module.exports = {
     
         //首页科研资讯
-        getIndexData: "select title,id,content,isbanner,img,summary from articles where sort = ? order by id desc limit ?,?",
+        getIndexData: "select title,id,content,isbanner,img,summary,time from articles where sort = ? order by id desc limit ?,?",
 
         //热门文章
         getHotArticle: "select title,id,type,img from(select title,id,type,browse,img from articles where sort = ?  order by id desc limit 5) as total order by browse limit 50", 

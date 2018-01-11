@@ -60,9 +60,9 @@
                 </div>
                 <div class='newsRight'>
                     <ul class='news-box'>
-                    <%for(var i = 0;i < 10;i++){%>
+                    <%for(var i = 0;i < 7;i++){%>
                         <li class='new-item title'>
-                            <a target='_blank' href='/showArticle/article?id=<%=info.aNew[i].id%>'><%=info.aNew[i].title%></a>
+                            <a target='_blank' href='/showArticle/article?id=<%=info.aNew[i].id%>'><%=info.aNew[i].title%>  <span class='new-item-time'><%=info.aNew[i].time%></span></span></a>
                         </li>
                         <%}%>
                     </ul>
