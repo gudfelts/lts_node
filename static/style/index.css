@@ -146,6 +146,7 @@ header {
 }
 
 .newsLeft a h4 {
+  font-weight: bolder;
   margin-top: 10px;
 }
 
@@ -160,7 +161,7 @@ header {
   margin-top: 10px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   line-height: 25px;
 }
@@ -212,7 +213,6 @@ header {
 .mixLeft {
   display: inline-block;
   width: 760px;
-  margin-left: 10px;
 }
 
 .mix-box {
@@ -228,11 +228,6 @@ header {
 }
 
 /*科学研究栏目内容*/
-.box1-content,
-.box2-content {
-  padding: 0 20px;
-}
-
 .box1-content > a {
   display: inline-block;
   width: 280px;
